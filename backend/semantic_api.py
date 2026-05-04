@@ -1,28 +1,34 @@
 import requests
 
 def fetch_papers(query: str, limit: int = 30):
-    # Endpoint для поиска из технической документации
-    url = "https://api.semanticscholar.org/graph/v1/paper/search" #
+    # Основной адрес API Semantic Scholar
+    url = "https://api.semanticscholar.org/graph/v1/paper/search"
     
-    # Параметры запроса
+    # "Паспорт" запроса, чтобы сервер не принял нас за бота
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    }
+    
+    # Параметры: что ищем, сколько штук и какие поля нам нужны
     params = {
-        "query": query, #[cite: 1]
-        "limit": limit, #[cite: 1]
-        "fields": "paperId,title,abstract,year,authors,citations" #[cite: 1]
+        "query": query,
+        "limit": limit,
+        "fields": "paperId,title,abstract,year,authors,citations"
     }
     
     try:
-        # Отправляем GET-запрос к Semantic Scholar
-        response = requests.get(url, params=params)
-        response.raise_for_status() # Проверяем, не вернул ли сервер ошибку (например, 404 или 500)
+        # Отправляем запрос
+        response = requests.get(url, params=params, headers=headers)
         
-        # Превращаем ответ в удобный словарь Python
+        # Если сервер ответил ошибкой (например, 403), сработает блок except
+        response.raise_for_status() 
+        
         data = response.json()
         
-        # Возвращаем только массив данных (список статей) или пустой список, если ничего нет
+        # Возвращаем список статей из ключа 'data'
         return data.get("data", [])
         
     except Exception as e:
-        # Безопасный код: если интернет отпал или API недоступно, возвращаем пустой список
-        print(f"Ошибка при обращении к Semantic Scholar: {e}")
+        # Если что-то пошло не так, пишем ошибку в консоль и возвращаем пустой список
+        print(f"Ошибка API: {str(e)}")
         return []
