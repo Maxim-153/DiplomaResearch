@@ -117,7 +117,7 @@ function App() {
       // Сначала просто фильтруем, чтобы оставить только уникальные (новые) статьи
       const rawUniqueNodes = fetchedNodes.filter(n => !existingNodeIds.has(n.id));
 
-      // --- ИЗМЕНЕНИЕ: "Одеваем" новые узлы перед тем, как добавить на экран ---
+      // --- ИЗМЕНЕНИЕ 1: "Одеваем" новые узлы в НЕОНОВУЮ РАМКУ перед тем, как добавить на экран ---
       const styledNewNodes = rawUniqueNodes.map((node) => {
         return {
           ...node,
@@ -126,8 +126,10 @@ function App() {
             backgroundColor: getClusterColor(node.data.group), // Красим по ML-кластеру
             borderRadius: '8px',
             padding: '10px',
-            border: '2px solid #333',
-            boxShadow: '2px 2px 5px rgba(0,0,0,0.2)' 
+            // Делаем толстую пунктирную границу золотого цвета и свечение для НОВЫХ карточек!
+            border: '3px dashed #FFD700', 
+            boxShadow: '0px 0px 15px rgba(255, 215, 0, 0.6)',
+            transition: 'all 0.5s ease' // Плавное появление
           }
         };
       });
@@ -159,6 +161,9 @@ function App() {
       // 5. Обновляем состояния React
       setNodes(layouted.nodes);
       setEdges(layouted.edges);
+
+      // --- ИЗМЕНЕНИЕ 2: Четкое уведомление для пользователя ---
+      alert(`Связи успешно развернуты!\nДобавлено новых статей: ${styledNewNodes.length}`);
 
       // Полет камеры к обновленному графу
       setTimeout(() => {
