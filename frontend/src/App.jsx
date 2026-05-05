@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { fetchGraphData } from './api'; // Наш почтальон к Python
 import GraphMap from './components/GraphMap'; // Наш холст для графа
 import { getLayoutedElements } from './layoutUtils';
+import Sidebar from './components/Sidebar';
 
 function App() {
   // --- СОСТОЯНИЯ (Память нашего компонента) ---
   const [searchQuery, setSearchQuery] = useState(''); // То, что юзер вводит в поиск
   const [nodes, setNodes] = useState([]); // Узлы графа
-  const [edges, setEdges] = useState([]); // Связи графа[cite: 1]
+  const [edges, setEdges] = useState([]); // Связи графа
   const [isLoading, setIsLoading] = useState(false); // Крутилка загрузки
   const [error, setError] = useState(null); // Текст ошибки, если что-то сломалось
+  const [selectedNode, setSelectedNode] = useState(null); // Память для кликнутой статьи
 
 // --- ПАЛИТРА ИИ-КЛАСТЕРОВ ---
   // Эта функция берет номер группы от бэкенда и выдает красивый цвет
@@ -103,8 +105,21 @@ function App() {
         </div>
       )}
 
-      {/* Отрисовка холста графа */}
-      <GraphMap nodes={nodes} edges={edges} />
+{/* Отрисовка холста графа */}
+      <div style={{ position: 'relative' }}>
+        <GraphMap 
+          nodes={nodes} 
+          edges={edges} 
+          // React Flow сам передаст нам событие (event) и узел (node), на который кликнули
+          onNodeClick={(event, node) => setSelectedNode(node)} 
+        />
+        
+        {/* Выводим боковую панель. Если selectedNode пустой, она будет скрыта */}
+        <Sidebar 
+          node={selectedNode} 
+          onClose={() => setSelectedNode(null)} 
+        />
+      </div>
     </div>
   );
 }
