@@ -1,35 +1,45 @@
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import KMeans
-import numpy as np
 
-# Загружаем компактную, но мощную модель ИИ для работы с текстом
+# 1. Загружаем легковесную ИИ-модель для понимания текста
+# Она скачается один раз при первом запуске
+print("Загрузка ML-модели...")
 model = SentenceTransformer('all-MiniLM-L6-v2')
+print("Модель готова!")
 
-def process_clusters(papers, n_clusters=5):
-    if not papers:
-        return []
+def process_clusters(papers, num_clusters=3):
+    """
+    Принимает список статей, анализирует их тексты и добавляет каждой поле 'group'.
+    """
+    # ЗАЩИТА: Если статей меньше, чем кластеров, уменьшаем количество групп
+    if len(papers) < num_clusters:
+        num_clusters = max(1, len(papers))
 
-    # 1. Собираем все аннотации (abstract) в один список
-    # Если у статьи нет аннотации, используем название
     texts = []
-    for p in papers:
-        content = p.get("abstract") or p.get("title") or ""
-        texts.append(content)
+    valid_papers = []
 
-    # 2. ВЕКТОРИЗАЦИЯ: Превращаем тексты в числа (эмбеддинги)
-    # ИИ анализирует смысл и выдает уникальный числовой код для каждого текста
+    # 2. Подготавливаем тексты
+    for paper in papers:
+        # Пытаемся взять абстракт. Если его нет (None) - берем заголовок.
+        text = paper.get("abstract") or paper.get("title") or ""
+        
+        if text.strip(): # Если текст не пустой
+            texts.append(text)
+            valid_papers.append(paper)
+
+    # ЗАЩИТА: Если нет ни одного текста для анализа
+    if not texts:
+        return papers
+
+    # 3. Векторизация: превращаем человеческий текст в массивы чисел
     embeddings = model.encode(texts)
 
-    # 3. КЛАСТЕРИЗАЦИЯ: Группируем похожие векторы
-    # Если статей меньше, чем мы хотим групп, уменьшаем кол-во групп
-    actual_clusters = min(n_clusters, len(papers))
-    kmeans = KMeans(n_clusters=actual_clusters, n_init=10, random_state=42)
-    
-    # Алгоритм присваивает каждой статье номер группы (0, 1, 2...)
-    cluster_labels = kmeans.fit_predict(embeddings)
+    # 4. Кластеризация (K-Means): находим 'num_clusters' центров и группируем статьи
+    kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
+    kmeans.fit(embeddings)
 
-    # 4. Добавляем номер группы в данные каждой статьи
-    for i, paper in enumerate(papers):
-        paper["cluster"] = int(cluster_labels[i])
+    # 5. Раздаем статьям номера их групп (0, 1, 2...)
+    for i, paper in enumerate(valid_papers):
+        paper["group"] = int(kmeans.labels_[i])
 
-    return papers
+    return valid_papers
