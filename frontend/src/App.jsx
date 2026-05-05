@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchGraphData } from './api'; 
+import { fetchGraphData, expandGraphData } from './api'; 
 import GraphMap from './components/GraphMap'; 
 import { getLayoutedElements } from './layoutUtils';
 import Sidebar from './components/Sidebar';
@@ -12,6 +12,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false); 
   const [error, setError] = useState(null); 
   const [selectedNode, setSelectedNode] = useState(null); 
+  const [rfInstance, setRfInstance] = useState(null); // Хранилище для пульта от камеры
 
   // --- НОВЫЕ СОСТОЯНИЯ: Память для годов ---
   const [yearFrom, setYearFrom] = useState('');
@@ -24,7 +25,7 @@ function App() {
   };
 
   // --- ФУНКЦИЯ ПОИСКА ---
-  const handleSearch = async (e) => {
+ const handleSearch = async (e) => {
     e.preventDefault(); 
 
     if (!searchQuery.trim()) return; 
@@ -33,7 +34,7 @@ function App() {
     setError(null); 
 
     try {
-      // ИЗМЕНЕНИЕ: Передаем года в нашу обновленную API-функцию
+      // Идем на бэкенд за статьями
       const data = await fetchGraphData(searchQuery, yearFrom, yearTo);
       console.log("Данные от Бэкенда:", data);
       
@@ -45,11 +46,12 @@ function App() {
       }
 
       // БЕЗОПАСНЫЙ ПАРСИНГ И РАСКРАСКА УЗЛОВ
-      const safeNodes = data.nodes.map((node, index) => {
+      const safeNodes = data.nodes.map((node) => {
         return {
           ...node, 
           position: { x: 0, y: 0 },
           style: { 
+            // Убедись, что у тебя есть функция getClusterColor в App.jsx!
             backgroundColor: getClusterColor(node.data.group),
             borderRadius: '8px',
             padding: '10px',
@@ -66,14 +68,21 @@ function App() {
       );
 
       // ПРОПУСКАЕМ ЧЕРЕЗ АЛГОРИТМ РАССТАНОВКИ 
-      const { layoutedNodes, layoutedEdges } = getLayoutedElements(
-        safeNodes, 
-        safeEdges 
-      );
+      // --- ИЗМЕНЕНИЕ: Ждем ключи nodes и edges! ---
+      const layouted = getLayoutedElements(safeNodes, safeEdges);
 
-      setNodes(layoutedNodes);
-      setEdges(layoutedEdges);
+      // Сохраняем правильные данные в стейт React
+      setNodes(layouted.nodes);
+      setEdges(layouted.edges);
       
+      // --- ИЗМЕНЕНИЕ: Добавили полет камеры ---
+      // Даем React чуть-чуть времени на рендер карточек (100 мс), а затем летим к графу
+      setTimeout(() => {
+        if (rfInstance) {
+          rfInstance.fitView({ padding: 0.2, duration: 800 });
+        }
+      }, 100);
+
     } catch (err) {
       console.error(err);
       setError("Не удалось загрузить граф. Проверь консоль браузера.");
@@ -82,6 +91,89 @@ function App() {
     }
   };
 
+// НОВАЯ ФУНКЦИЯ: Догрузка связей по клику на статью (С КАМЕРОЙ, ЛОГАМИ И СТИЛЯМИ)
+  const handleExpand = async (paperId) => {
+    setIsLoading(true); // Включаем крутилку загрузки
+    setError(null);
+
+    try {
+      // 1. Идем на бэкенд за новыми данными
+      const newData = await expandGraphData(paperId);
+      const fetchedNodes = newData?.nodes || [];
+      const fetchedEdges = newData?.edges || [];
+
+      if (fetchedNodes.length === 0) {
+        alert("Для этой статьи не найдено цитирований в нашей базе OpenAlex.");
+        setIsLoading(false);
+        return;
+      }
+
+      // 2. БЕЗОПАСНОЕ ОТСЕИВАНИЕ ДУБЛИКАТОВ
+      const safeNodes = nodes || [];
+      const safeEdges = edges || [];
+
+      const existingNodeIds = new Set(safeNodes.map(n => n.id));
+      
+      // Сначала просто фильтруем, чтобы оставить только уникальные (новые) статьи
+      const rawUniqueNodes = fetchedNodes.filter(n => !existingNodeIds.has(n.id));
+
+      // --- ИЗМЕНЕНИЕ: "Одеваем" новые узлы перед тем, как добавить на экран ---
+      const styledNewNodes = rawUniqueNodes.map((node) => {
+        return {
+          ...node,
+          position: { x: 0, y: 0 }, // Обязательное поле для React Flow
+          style: { 
+            backgroundColor: getClusterColor(node.data.group), // Красим по ML-кластеру
+            borderRadius: '8px',
+            padding: '10px',
+            border: '2px solid #333',
+            boxShadow: '2px 2px 5px rgba(0,0,0,0.2)' 
+          }
+        };
+      });
+
+      const existingEdgeIds = new Set(safeEdges.map(e => e.id));
+      const uniqueNewEdges = fetchedEdges.filter(e => !existingEdgeIds.has(e.id));
+
+      console.log(`Пришло узлов: ${fetchedNodes.length}. Из них уникальных (новых): ${styledNewNodes.length}`);
+      if (styledNewNodes.length === 0) {
+        alert("Новые цитирования найдены, но все эти статьи УЖЕ отображены на экране!");
+        setIsLoading(false);
+        return;
+      }
+
+      // 3. Склеиваем старый граф и новые УЖЕ ОДЕТЫЕ данные
+      const combinedNodes = [...safeNodes, ...styledNewNodes];
+      const rawCombinedEdges = [...safeEdges, ...uniqueNewEdges];
+
+      // --- КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: ЗАЩИТА ОТ "ВЗРЫВА СВЯЗЕЙ" ---
+      // Убиваем связи-призраки, из-за которых рисовались бесконечные нитки
+      const allCombinedNodeIds = new Set(combinedNodes.map(n => n.id));
+      const combinedEdges = rawCombinedEdges.filter(edge => 
+        allCombinedNodeIds.has(edge.source) && allCombinedNodeIds.has(edge.target)
+      );
+
+      // 4. Пересчитываем координаты через Dagre
+      const layouted = getLayoutedElements(combinedNodes, combinedEdges);
+
+      // 5. Обновляем состояния React
+      setNodes(layouted.nodes);
+      setEdges(layouted.edges);
+
+      // Полет камеры к обновленному графу
+      setTimeout(() => {
+        if (rfInstance) {
+          rfInstance.fitView({ padding: 0.2, duration: 800 });
+        }
+      }, 100);
+
+    } catch (err) {
+      console.error("Ошибка при расширении графа:", err);
+      setError("Не удалось загрузить связи для этой статьи.");
+    } finally {
+      setIsLoading(false); 
+    }
+  };
   // --- ИНТЕРФЕЙС ---
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '1200px', margin: '0 auto' }}>
@@ -135,11 +227,13 @@ function App() {
           nodes={nodes} 
           edges={edges} 
           onNodeClick={(event, node) => setSelectedNode(node)} 
+          onInit={setRfInstance}
         />
         
         <Sidebar 
           node={selectedNode} 
           onClose={() => setSelectedNode(null)} 
+          onExpand={handleExpand}
         />
       </div>
     </div>

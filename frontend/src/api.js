@@ -1,4 +1,3 @@
-// Файл: /frontend/src/api.js
 import axios from 'axios';
 
 // Настраиваем "почтальона", который знает адрес нашего FastAPI-сервера
@@ -38,6 +37,25 @@ export const fetchGraphData = async (searchQuery, yearFrom, yearTo) => {
         console.error("Ошибка при получении данных с бэкенда:", error);
         
         // Возвращаем пустую структуру, чтобы React Flow не сломался
+        return { nodes: [], edges: [] };
+    }
+};
+export const expandGraphData = async (paperId) => {
+    try {
+        // Делаем GET-запрос на наш новый эндпоинт, передавая ID статьи
+        const response = await apiClient.get('/api/expand', {
+            params: { paper_id: paperId }
+        });
+        
+        // Возвращаем новые узлы и связи от Бэкенда
+        return response.data;
+        
+    } catch (error) {
+        // Обязательный перехват ошибок
+        console.error(`Ошибка при расширении графа для статьи ${paperId}:`, error);
+        
+        // В случае ошибки (например, упал сервер), возвращаем пустые массивы,
+        // чтобы React Flow не завис с белым экраном
         return { nodes: [], edges: [] };
     }
 };

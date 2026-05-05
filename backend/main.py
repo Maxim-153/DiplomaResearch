@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from semantic_api import fetch_papers
+from semantic_api import fetch_papers, fetch_citations_for_paper 
 from ml_processor import process_clusters
 
 app = FastAPI()
@@ -77,4 +77,59 @@ async def search(query: str, year_from: int = None, year_to: int = None):
 
     except Exception as e:
         # Если что-то упало, сервер не должен "молчать"
+        return {"error": str(e), "status": "failed"}
+
+@app.get("/api/expand")
+async def expand_graph(paper_id: str):
+    try:
+        # 1. Скачиваем 15 статей, которые цитируют выбранную статью
+        raw_papers = fetch_citations_for_paper(paper_id)
+        
+        # Если никто её не цитировал (или API вернуло пустоту)
+        if not raw_papers:
+            return {"nodes": [], "edges": []}
+
+        # 2. Прогоняем новые статьи через ML (чтобы они тоже получили цвета и имена групп)
+        processed_papers = process_clusters(raw_papers)
+
+        # 3. Форматируем узлы и связи
+        nodes = []
+        edges = []
+
+        for paper in processed_papers:
+            nodes.append({
+                "id": paper.get("paperId"),
+                "position": {"x": 0, "y": 0},
+                "data": {
+                    "label": paper.get("title"),
+                    "abstract": paper.get("abstract", ""),
+                    "group": paper.get("group", 0),
+                    "year": paper.get("year", 0),
+                    "authors": paper.get("authors", []),
+                    "group_name": paper.get("group_name"),
+                    "url": paper.get("url")
+                }
+            })
+
+            # ВАЖНО: Мы ЖЕСТКО создаем связь между новой статьей и оригинальной, 
+            # по которой мы кликнули. Иначе они опять будут висеть в воздухе!
+            edges.append({
+                "id": f"e-{paper.get('paperId')}-{paper_id}",
+                "source": paper.get("paperId"), # Кто ссылается (новая статья)
+                "target": paper_id              # На кого ссылаются (оригинал)
+            })
+
+            # На всякий случай сохраняем и внутренние ссылки между новыми статьями
+            if "citations" in paper:
+                for citation in paper["citations"]:
+                    edges.append({
+                        "id": f"e-{paper.get('paperId')}-{citation.get('paperId')}",
+                        "source": paper.get("paperId"),
+                        "target": citation.get("paperId")
+                    })
+
+        return {"nodes": nodes, "edges": edges}
+
+    except Exception as e:
+        print(f"Критическая ошибка при расширении графа: {e}")
         return {"error": str(e), "status": "failed"}

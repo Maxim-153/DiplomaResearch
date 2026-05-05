@@ -1,6 +1,8 @@
+// Файл: /frontend/src/components/Sidebar.jsx
 import React from 'react';
 
-const Sidebar = ({ node, onClose }) => {
+// ИЗМЕНЕНИЕ 1: Добавили onExpand сюда
+const Sidebar = ({ node, onClose, onExpand }) => {
   if (!node) return null;
 
   const authorsText = node.data.authors && node.data.authors.length > 0
@@ -9,18 +11,9 @@ const Sidebar = ({ node, onClose }) => {
 
   return (
     <div style={{
-      position: 'absolute',
-      right: 0,
-      top: 0,
-      width: '350px',
-      height: '100%', // Занимает всю высоту экрана
-      backgroundColor: '#f8f9fa',
-      boxShadow: '-2px 0 10px rgba(0,0,0,0.1)',
-      padding: '20px',
-      zIndex: 10,
-      display: 'flex',
-      flexDirection: 'column',
-      // --- ИЗМЕНЕНИЕ 1: ДОБАВЛЯЕМ СКРОЛЛ ---
+      position: 'absolute', right: 0, top: 0, width: '350px', height: '100%',
+      backgroundColor: '#f8f9fa', boxShadow: '-2px 0 10px rgba(0,0,0,0.1)',
+      padding: '20px', zIndex: 10, display: 'flex', flexDirection: 'column',
       overflowY: 'auto' 
     }}>
       
@@ -42,33 +35,37 @@ const Sidebar = ({ node, onClose }) => {
         <p style={{ margin: 0 }}><strong>ИИ Кластер:</strong> {node.data.group_name || 'Без группы'}</p>
       </div>
 
-      {/* --- ИЗМЕНЕНИЕ 2: КНОПКА ССЫЛКИ ТЕПЕРЬ СВЕРХУ --- */}
-      {node.data.url ? (
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+      {/* --- ИЗМЕНЕНИЕ 2: БЛОК С ДВУМЯ КНОПКАМИ --- */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+        
+        {/* Твоя старая кнопка: Читать оригинал */}
+        {node.data.url ? (
           <a 
             href={node.data.url} 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{ 
-              display: 'block', // Кнопка на всю ширину
-              padding: '12px', 
-              backgroundColor: '#007bff', 
-              color: 'white', 
-              textDecoration: 'none', 
-              borderRadius: '6px',
-              fontWeight: 'bold',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-              transition: 'background-color 0.2s'
-            }}
+            style={{ display: 'block', textAlign: 'center', padding: '12px', backgroundColor: '#007bff', color: 'white', textDecoration: 'none', borderRadius: '6px', fontWeight: 'bold', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}
           >
             Читать оригинал ↗
           </a>
-        </div>
-      ) : (
-        <div style={{ textAlign: 'center', marginBottom: '20px', padding: '12px', backgroundColor: '#e9ecef', color: '#6c757d', borderRadius: '6px' }}>
-          Ссылка недоступна
-        </div>
-      )}
+        ) : (
+          <div style={{ textAlign: 'center', padding: '12px', backgroundColor: '#e9ecef', color: '#6c757d', borderRadius: '6px' }}>
+            Ссылка недоступна
+          </div>
+        )}
+
+        {/* НОВАЯ КНОПКА: Развернуть связи */}
+        <button 
+          onClick={() => onExpand(node.id)} 
+          style={{ 
+            padding: '12px', backgroundColor: '#28a745', color: 'white', 
+            border: 'none', borderRadius: '6px', fontWeight: 'bold', 
+            cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' 
+          }}
+        >
+          Развернуть связи
+        </button>
+      </div>
 
       {/* Абстракт */}
       <h4 style={{ borderBottom: '1px solid #ddd', paddingBottom: '8px', marginTop: 0 }}>Абстракт:</h4>
