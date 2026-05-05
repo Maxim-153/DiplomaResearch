@@ -39,7 +39,9 @@ async def search(query: str):
                 "data": {
                     "label": paper["title"],
                     "abstract": paper.get("abstract", ""),
-                    "group": paper.get("group", 0) # Группа от K-Means
+                    "group": paper.get("group", 0), # Группа от K-Means
+                    "year": paper.get("year", 0),
+                 "authors": paper.get("authors", [])
                 }
             })
 

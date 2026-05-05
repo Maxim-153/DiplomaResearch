@@ -13,7 +13,7 @@ function App() {
   const [error, setError] = useState(null); // Текст ошибки, если что-то сломалось
   const [selectedNode, setSelectedNode] = useState(null); // Память для кликнутой статьи
 
-// --- ПАЛИТРА ИИ-КЛАСТЕРОВ ---
+  // --- ПАЛИТРА ИИ-КЛАСТЕРОВ ---
   // Эта функция берет номер группы от бэкенда и выдает красивый цвет
   const getClusterColor = (groupNumber) => {
     // Массив пастельных цветов для наших тем
@@ -33,6 +33,7 @@ function App() {
 
     try {
       const data = await fetchGraphData(searchQuery);
+      console.log("Данные от Бэкенда:", data);
       
       if (!data.nodes || data.nodes.length === 0) {
         setError("По вашему запросу ничего не найдено или сработал лимит API.");
@@ -41,11 +42,10 @@ function App() {
         return;
       }
 
-// 🛡️ БЕЗОПАСНЫЙ ПАРСИНГ И РАСКРАСКА
+      //  БЕЗОПАСНЫЙ ПАРСИНГ И РАСКРАСКА УЗЛОВ
       const safeNodes = data.nodes.map((node, index) => {
         return {
           ...node, 
-          // Убираем старую "лесенку" { x: index * 200, y: index * 100 }
           // Ставим нули, так как Dagre всё равно их перезапишет
           position: { x: 0, y: 0 },
           style: { 
@@ -58,17 +58,28 @@ function App() {
         };
       });
 
-      // 🔥 ПРОПУСКАЕМ ЧЕРЕЗ АЛГОРИТМ РАССТАНОВКИ 🔥
-      const { layoutedNodes, layoutedEdges } = getLayoutedElements(
-        safeNodes, 
-        data.edges || []
+      //  ЗАЩИТА ОТ "ВЗРЫВА СВЯЗЕЙ" (EDGE FILTERING)
+      // 1. Создаем сверхбыстрый список (Set) из ID тех 30 статей, которые мы реально скачали
+      const existingNodeIds = new Set(safeNodes.map(node => node.id));
+
+      // 2. Просеиваем связи. Оставляем ТОЛЬКО те, где оба конца линии существуют на экране
+      const safeEdges = (data.edges || []).filter(edge => 
+        existingNodeIds.has(edge.source) && existingNodeIds.has(edge.target)
       );
 
-      // Сохраняем уже красивые, расставленные узлы!
+      // ПРОПУСКАЕМ ЧЕРЕЗ АЛГОРИТМ РАССТАНОВКИ 
+      // Важно: передаем очищенные safeEdges, а не все подряд!
+      const { layoutedNodes, layoutedEdges } = getLayoutedElements(
+        safeNodes, 
+        safeEdges 
+      );
+
+      // Сохраняем уже красивые, расставленные узлы и правильные связи
       setNodes(layoutedNodes);
       setEdges(layoutedEdges);
       
     } catch (err) {
+      console.error(err);
       setError("Не удалось загрузить граф. Проверь консоль браузера.");
     } finally {
       setIsLoading(false); 
@@ -78,7 +89,7 @@ function App() {
   // --- ИНТЕРФЕЙС ---
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '1200px', margin: '0 auto' }}>
-      <h2>🎓 Semantic Research Graph</h2>
+      <h2>Semantic Research Graph</h2>
       
       {/* Форма поиска */}
       <form onSubmit={handleSearch} style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
@@ -86,7 +97,7 @@ function App() {
           type="text" 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Например: Machine Learning..."
+          placeholder="Например: Blockchain..."
           style={{ padding: '10px', fontSize: '16px', width: '300px', borderRadius: '4px', border: '1px solid #ccc' }}
         />
         <button 
@@ -105,7 +116,7 @@ function App() {
         </div>
       )}
 
-{/* Отрисовка холста графа */}
+      {/* Отрисовка холста графа */}
       <div style={{ position: 'relative' }}>
         <GraphMap 
           nodes={nodes} 

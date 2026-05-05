@@ -1,0 +1,6001 @@
+[
+  {
+    "paperId": "W2392113277",
+    "title": "Blockchains and Smart Contracts for the Internet of Things",
+    "abstract": "Motivated by the recent explosion of interest around blockchains, we examine whether they make a good fit for the Internet of Things (IoT) sector. Blockchains allow us to have a distributed peer-to-peer network where non-trusting members can interact with each other without a trusted intermediary, in a verifiable manner. We review how this mechanism works and also look into smart contracts-scripts that reside on the blockchain that allow for the automation of multi-step processes. We then move into the IoT domain, and describe how a blockchain-IoT combination: 1) facilitates the sharing of services and resources leading to the creation of a marketplace of services between devices and 2) allows us to automate in a cryptographically verifiable manner several existing, time-consuming workflows. We also point out certain issues that should be considered before the deployment of a blockchain network in an IoT setting: from transactional privacy to the expected value of the digitized assets traded on the network. Wherever applicable, we identify solutions and workarounds. Our conclusion is that the blockchain-IoT combination is powerful and can cause significant transformations across several industries, paving the way for new business models and novel, distributed applications.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Konstantinos Christidis"
+      },
+      {
+        "name": "Michael Devetsikiotis"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W179922057"
+      },
+      {
+        "paperId": "W570498881"
+      },
+      {
+        "paperId": "W1520914943"
+      },
+      {
+        "paperId": "W1794148987"
+      },
+      {
+        "paperId": "W1850597240"
+      },
+      {
+        "paperId": "W2022932831"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2156580773"
+      },
+      {
+        "paperId": "W2181397138"
+      },
+      {
+        "paperId": "W2303936851"
+      },
+      {
+        "paperId": "W2335755599"
+      },
+      {
+        "paperId": "W2486460265"
+      },
+      {
+        "paperId": "W2503779953"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2553854225"
+      },
+      {
+        "paperId": "W2556017076"
+      },
+      {
+        "paperId": "W2729396025"
+      },
+      {
+        "paperId": "W2949388988"
+      },
+      {
+        "paperId": "W2964262836"
+      },
+      {
+        "paperId": "W3137092842"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W4253860523"
+      },
+      {
+        "paperId": "W4297669678"
+      },
+      {
+        "paperId": "W6638848706"
+      },
+      {
+        "paperId": "W6678832241"
+      },
+      {
+        "paperId": "W6682904396"
+      },
+      {
+        "paperId": "W6685807058"
+      },
+      {
+        "paperId": "W6698141899"
+      },
+      {
+        "paperId": "W6726548542"
+      },
+      {
+        "paperId": "W6729722957"
+      }
+    ]
+  },
+  {
+    "paperId": "W893234787",
+    "title": "Blockchain: Blueprint for a New Economy",
+    "abstract": "Bitcoin is starting to come into its own as a digital currency, but the blockchain technology behind it could prove to be much more significant. This book takes you beyond the currency (Blockchain 1.0) and smart contracts (Blockchain 2.0) to demonstrate how the blockchain is in position to become the fifth disruptive computing paradigm after mainframes, PCs, the Internet, and mobile/social networking. Author Melanie Swan, Founder of the Institute for Blockchain Studies, explains that the blockchain is essentially a public ledger with potential as a worldwide, decentralized record for the registration, inventory, and transfer of all assetsnot just finances, but property and intangible assets such as votes, software, health data, and ideas. Topics include:Concepts, features, and functionality of Bitcoin and the blockchain Using the blockchain for automated tracking of all digital endeavors Enabling censorship? resistant organizational modelsCreating a decentralized digital repository to verify identity Possibility of cheaper, more efficient services traditionally provided by nations Blockchain for science: making better use of the data-mining network Personal health record storage, including access to ones own genomic dataOpen access academic publishing on the blockchain This book is part of an ongoing OReilly series. Mastering Bitcoin: Unlocking Digital Crypto-Currencies introduces Bitcoin and describes the technology behind Bitcoin and the blockchain. Blockchain: Blueprint for a New Economy considers theoretical, philosophical, and societal impact of cryptocurrencies and blockchain technologies.",
+    "year": 2015,
+    "authors": [
+      {
+        "name": "Melanie Swan"
+      }
+    ],
+    "citations": []
+  },
+  {
+    "paperId": "W2754529701",
+    "title": "An Overview of Blockchain Technology: Architecture, Consensus, and Future Trends",
+    "abstract": "Blockchain, the foundation of Bitcoin, has received extensive attentions recently. Blockchain serves as an immutable ledger which allows transactions take place in a decentralized manner. Blockchain-based applications are springing up, covering numerous fields including financial services, reputation system and Internet of Things (IoT), and so on. However, there are still many challenges of blockchain technology such as scalability and security problems waiting to be overcome. This paper presents a comprehensive overview on blockchain technology. We provide an overview of blockchain architechture firstly and compare some typical consensus algorithms used in different blockchains. Furthermore, technical challenges and recent advances are briefly listed. We also lay out possible future trends for blockchain.",
+    "year": 2017,
+    "authors": [
+      {
+        "name": "Zibin Zheng"
+      },
+      {
+        "name": "Shaoan Xie"
+      },
+      {
+        "name": "Hong‐Ning Dai"
+      },
+      {
+        "name": "Xiangping Chen"
+      },
+      {
+        "name": "Huaimin Wang"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W69553326"
+      },
+      {
+        "paperId": "W1523833175"
+      },
+      {
+        "paperId": "W1589846406"
+      },
+      {
+        "paperId": "W1819513546"
+      },
+      {
+        "paperId": "W1988600100"
+      },
+      {
+        "paperId": "W2013613544"
+      },
+      {
+        "paperId": "W2013686672"
+      },
+      {
+        "paperId": "W2022932831"
+      },
+      {
+        "paperId": "W2043007983"
+      },
+      {
+        "paperId": "W2092068344"
+      },
+      {
+        "paperId": "W2100522554"
+      },
+      {
+        "paperId": "W2110471885"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2127612127"
+      },
+      {
+        "paperId": "W2157136508"
+      },
+      {
+        "paperId": "W2183126124"
+      },
+      {
+        "paperId": "W2189446046"
+      },
+      {
+        "paperId": "W2225278338"
+      },
+      {
+        "paperId": "W2295506186"
+      },
+      {
+        "paperId": "W2311567330"
+      },
+      {
+        "paperId": "W2335755599"
+      },
+      {
+        "paperId": "W2397661077"
+      },
+      {
+        "paperId": "W2483525606"
+      },
+      {
+        "paperId": "W2486460265"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2553353335"
+      },
+      {
+        "paperId": "W2553854225"
+      },
+      {
+        "paperId": "W2563871999"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2964262836"
+      },
+      {
+        "paperId": "W3030392202"
+      },
+      {
+        "paperId": "W3121906616"
+      },
+      {
+        "paperId": "W3125666255"
+      },
+      {
+        "paperId": "W3137092842"
+      },
+      {
+        "paperId": "W3151748982"
+      },
+      {
+        "paperId": "W3151869053"
+      },
+      {
+        "paperId": "W4220942018"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W4285719527"
+      },
+      {
+        "paperId": "W4301003748"
+      },
+      {
+        "paperId": "W6685807058"
+      },
+      {
+        "paperId": "W6712179443"
+      },
+      {
+        "paperId": "W6721635258"
+      },
+      {
+        "paperId": "W6729722957"
+      },
+      {
+        "paperId": "W6753751735"
+      },
+      {
+        "paperId": "W6793285265"
+      }
+    ]
+  },
+  {
+    "paperId": "W2897450989",
+    "title": "Blockchain challenges and opportunities: a survey",
+    "abstract": "Blockchain has numerous benefits such as decentralisation, persistency, anonymity and auditability. There is a wide spectrum of blockchain applications ranging from cryptocurrency, financial services, risk management, internet of things (IoT) to public and social services. Although a number of studies focus on using the blockchain technology in various application aspects, there is no comprehensive survey on the blockchain technology in both technological and application perspectives. To fill this gap, we conduct a comprehensive survey on the blockchain technology. In particular, this paper gives the blockchain taxonomy, introduces typical blockchain consensus algorithms, reviews blockchain applications and discusses technical challenges as well as recent advances in tackling the challenges. Moreover, this paper also points out the future directions in the blockchain technology.",
+    "year": 2018,
+    "authors": [
+      {
+        "name": "Zibin Zheng"
+      },
+      {
+        "name": "Shaoan Xie"
+      },
+      {
+        "name": "Hong‐Ning Dai"
+      },
+      {
+        "name": "Xiangping Chen"
+      },
+      {
+        "name": "Huaimin Wang"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W18125873"
+      },
+      {
+        "paperId": "W69553326"
+      },
+      {
+        "paperId": "W1559136758"
+      },
+      {
+        "paperId": "W1589846406"
+      },
+      {
+        "paperId": "W1663109347"
+      },
+      {
+        "paperId": "W1819513546"
+      },
+      {
+        "paperId": "W1972614536"
+      },
+      {
+        "paperId": "W1988600100"
+      },
+      {
+        "paperId": "W1990126021"
+      },
+      {
+        "paperId": "W2013613544"
+      },
+      {
+        "paperId": "W2013686672"
+      },
+      {
+        "paperId": "W2022932831"
+      },
+      {
+        "paperId": "W2043007983"
+      },
+      {
+        "paperId": "W2092068344"
+      },
+      {
+        "paperId": "W2100522554"
+      },
+      {
+        "paperId": "W2105103777"
+      },
+      {
+        "paperId": "W2110471885"
+      },
+      {
+        "paperId": "W2119046642"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2127612127"
+      },
+      {
+        "paperId": "W2176225732"
+      },
+      {
+        "paperId": "W2183126124"
+      },
+      {
+        "paperId": "W2189446046"
+      },
+      {
+        "paperId": "W2221133380"
+      },
+      {
+        "paperId": "W2225278338"
+      },
+      {
+        "paperId": "W2245534414"
+      },
+      {
+        "paperId": "W2288515487"
+      },
+      {
+        "paperId": "W2293877007"
+      },
+      {
+        "paperId": "W2294180185"
+      },
+      {
+        "paperId": "W2295506186"
+      },
+      {
+        "paperId": "W2311567330"
+      },
+      {
+        "paperId": "W2335755599"
+      },
+      {
+        "paperId": "W2392113277"
+      },
+      {
+        "paperId": "W2397575926"
+      },
+      {
+        "paperId": "W2397661077"
+      },
+      {
+        "paperId": "W2405518766"
+      },
+      {
+        "paperId": "W2410226093"
+      },
+      {
+        "paperId": "W2483525606"
+      },
+      {
+        "paperId": "W2486460265"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2553353335"
+      },
+      {
+        "paperId": "W2553854225"
+      },
+      {
+        "paperId": "W2563947283"
+      },
+      {
+        "paperId": "W2754529701"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2951095688"
+      },
+      {
+        "paperId": "W2952926927"
+      },
+      {
+        "paperId": "W2964262836"
+      },
+      {
+        "paperId": "W3030392202"
+      },
+      {
+        "paperId": "W3105959039"
+      },
+      {
+        "paperId": "W3123838901"
+      },
+      {
+        "paperId": "W3151748982"
+      }
+    ]
+  },
+  {
+    "paperId": "W2898069736",
+    "title": "Blockchain technology and its relationships to sustainable supply chain management",
+    "abstract": "Globalisation of supply chains makes their management and control more difficult. Blockchain technology, as a distributed digital ledger technology which ensures transparency, traceability, and security, is showing promise for easing some global supply chain management problems. In this paper, blockchain technology and smart contracts are critically examined with potential application to supply chain management. Local and global government, community, and consumer pressures to meet sustainability goals prompt us to further investigate how blockchain can address and aid supply chain sustainability. Part of this critical examination is how blockchains, a potentially disruptive technology that is early in its evolution, can overcome many potential barriers. Four blockchain technology adoption barriers categories are introduced; inter-organisational, intra-organisational, technical, and external barriers. True blockchain-led transformation of business and supply chain is still in progress and in its early stages; we propose future research propositions and directions that can provide insights into overcoming barriers and adoption of blockchain technology for supply chain management.",
+    "year": 2018,
+    "authors": [
+      {
+        "name": "Sara Saberi"
+      },
+      {
+        "name": "Mahtab Kouhizadeh"
+      },
+      {
+        "name": "Joseph Sarkis"
+      },
+      {
+        "name": "Lejia Shen"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W52169070"
+      },
+      {
+        "paperId": "W73253553"
+      },
+      {
+        "paperId": "W893234787"
+      },
+      {
+        "paperId": "W959859619"
+      },
+      {
+        "paperId": "W1586583084"
+      },
+      {
+        "paperId": "W1811348596"
+      },
+      {
+        "paperId": "W1847167502"
+      },
+      {
+        "paperId": "W1965746216"
+      },
+      {
+        "paperId": "W1967704669"
+      },
+      {
+        "paperId": "W1968284619"
+      },
+      {
+        "paperId": "W1979452968"
+      },
+      {
+        "paperId": "W1983277437"
+      },
+      {
+        "paperId": "W1992755577"
+      },
+      {
+        "paperId": "W1996686232"
+      },
+      {
+        "paperId": "W2002775023"
+      },
+      {
+        "paperId": "W2003310503"
+      },
+      {
+        "paperId": "W2003825788"
+      },
+      {
+        "paperId": "W2004633317"
+      },
+      {
+        "paperId": "W2005583520"
+      },
+      {
+        "paperId": "W2007144389"
+      },
+      {
+        "paperId": "W2009966651"
+      },
+      {
+        "paperId": "W2012094270"
+      },
+      {
+        "paperId": "W2012806630"
+      },
+      {
+        "paperId": "W2014530101"
+      },
+      {
+        "paperId": "W2018021847"
+      },
+      {
+        "paperId": "W2025883194"
+      },
+      {
+        "paperId": "W2026816730"
+      },
+      {
+        "paperId": "W2035320934"
+      },
+      {
+        "paperId": "W2035479739"
+      },
+      {
+        "paperId": "W2038331501"
+      },
+      {
+        "paperId": "W2039393712"
+      },
+      {
+        "paperId": "W2042865331"
+      },
+      {
+        "paperId": "W2052575833"
+      },
+      {
+        "paperId": "W2058451670"
+      },
+      {
+        "paperId": "W2059649613"
+      },
+      {
+        "paperId": "W2059663374"
+      },
+      {
+        "paperId": "W2061977616"
+      },
+      {
+        "paperId": "W2070854196"
+      },
+      {
+        "paperId": "W2070973912"
+      },
+      {
+        "paperId": "W2073051278"
+      },
+      {
+        "paperId": "W2075051877"
+      },
+      {
+        "paperId": "W2085637447"
+      },
+      {
+        "paperId": "W2090353899"
+      },
+      {
+        "paperId": "W2098007102"
+      },
+      {
+        "paperId": "W2100379340"
+      },
+      {
+        "paperId": "W2115350197"
+      },
+      {
+        "paperId": "W2126993164"
+      },
+      {
+        "paperId": "W2133720971"
+      },
+      {
+        "paperId": "W2135830619"
+      },
+      {
+        "paperId": "W2136039427"
+      },
+      {
+        "paperId": "W2137559805"
+      },
+      {
+        "paperId": "W2142326200"
+      },
+      {
+        "paperId": "W2144166639"
+      },
+      {
+        "paperId": "W2146614620"
+      },
+      {
+        "paperId": "W2152727262"
+      },
+      {
+        "paperId": "W2162617916"
+      },
+      {
+        "paperId": "W2166814848"
+      },
+      {
+        "paperId": "W2168043585"
+      },
+      {
+        "paperId": "W2176225732"
+      },
+      {
+        "paperId": "W2211112469"
+      },
+      {
+        "paperId": "W2222557215"
+      },
+      {
+        "paperId": "W2261894208"
+      },
+      {
+        "paperId": "W2269728983"
+      },
+      {
+        "paperId": "W2290426788"
+      },
+      {
+        "paperId": "W2293230997"
+      },
+      {
+        "paperId": "W2299164635"
+      },
+      {
+        "paperId": "W2346201682"
+      },
+      {
+        "paperId": "W2425051923"
+      },
+      {
+        "paperId": "W2468888906"
+      },
+      {
+        "paperId": "W2511580607"
+      },
+      {
+        "paperId": "W2523493757"
+      },
+      {
+        "paperId": "W2527800909"
+      },
+      {
+        "paperId": "W2531564265"
+      },
+      {
+        "paperId": "W2551742228"
+      },
+      {
+        "paperId": "W2555456100"
+      },
+      {
+        "paperId": "W2566856888"
+      },
+      {
+        "paperId": "W2569624698"
+      },
+      {
+        "paperId": "W2586492350"
+      },
+      {
+        "paperId": "W2594703892"
+      },
+      {
+        "paperId": "W2606440628"
+      },
+      {
+        "paperId": "W2618086190"
+      },
+      {
+        "paperId": "W2658668816"
+      },
+      {
+        "paperId": "W2670968272"
+      },
+      {
+        "paperId": "W2685621902"
+      },
+      {
+        "paperId": "W2740090788"
+      },
+      {
+        "paperId": "W2744028566"
+      },
+      {
+        "paperId": "W2745442108"
+      },
+      {
+        "paperId": "W2745580547"
+      },
+      {
+        "paperId": "W2746452552"
+      },
+      {
+        "paperId": "W2759600173"
+      },
+      {
+        "paperId": "W2765093693"
+      },
+      {
+        "paperId": "W2765871100"
+      },
+      {
+        "paperId": "W2765923635"
+      },
+      {
+        "paperId": "W2765992545"
+      },
+      {
+        "paperId": "W2766800499"
+      },
+      {
+        "paperId": "W2771012470"
+      },
+      {
+        "paperId": "W2782348312"
+      },
+      {
+        "paperId": "W2782764957"
+      },
+      {
+        "paperId": "W2784191413"
+      },
+      {
+        "paperId": "W2792445274"
+      },
+      {
+        "paperId": "W2793137875"
+      },
+      {
+        "paperId": "W2795982988"
+      },
+      {
+        "paperId": "W2810507576"
+      },
+      {
+        "paperId": "W2873726691"
+      },
+      {
+        "paperId": "W2889578227"
+      },
+      {
+        "paperId": "W2899109334"
+      },
+      {
+        "paperId": "W2907460162"
+      },
+      {
+        "paperId": "W2921921219"
+      },
+      {
+        "paperId": "W2970657937"
+      },
+      {
+        "paperId": "W3124536214"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W4229815470"
+      },
+      {
+        "paperId": "W4240596162"
+      },
+      {
+        "paperId": "W6624166757"
+      }
+    ]
+  },
+  {
+    "paperId": "W2527800909",
+    "title": "Where Is Current Research on Blockchain Technology?—A Systematic Review",
+    "abstract": "Blockchain is a decentralized transaction and data management technology developed first for Bitcoin cryptocurrency. The interest in Blockchain technology has been increasing since the idea was coined in 2008. The reason for the interest in Blockchain is its central attributes that provide security, anonymity and data integrity without any third party organization in control of the transactions, and therefore it creates interesting research areas, especially from the perspective of technical challenges and limitations. In this research, we have conducted a systematic mapping study with the goal of collecting all relevant research on Blockchain technology. Our objective is to understand the current research topics, challenges and future directions regarding Blockchain technology from the technical perspective. We have extracted 41 primary papers from scientific databases. The results show that focus in over 80% of the papers is on Bitcoin system and less than 20% deals with other Blockchain applications including e.g. smart contracts and licensing. The majority of research is focusing on revealing and improving limitations of Blockchain from privacy and security perspectives, but many of the proposed solutions lack concrete evaluation on their effectiveness. Many other Blockchain scalability related challenges including throughput and latency have been left unstudied. On the basis of this study, recommendations on future research directions are provided for researchers.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Jesse Yli-Huumo"
+      },
+      {
+        "name": "Deokyoon Ko"
+      },
+      {
+        "name": "Sujin Choi"
+      },
+      {
+        "name": "Sooyong Park"
+      },
+      {
+        "name": "Kari Smolander"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W4214443"
+      },
+      {
+        "paperId": "W13439346"
+      },
+      {
+        "paperId": "W69553326"
+      },
+      {
+        "paperId": "W86271205"
+      },
+      {
+        "paperId": "W108218230"
+      },
+      {
+        "paperId": "W127489715"
+      },
+      {
+        "paperId": "W154851090"
+      },
+      {
+        "paperId": "W162076806"
+      },
+      {
+        "paperId": "W629406306"
+      },
+      {
+        "paperId": "W835297943"
+      },
+      {
+        "paperId": "W851575271"
+      },
+      {
+        "paperId": "W893234787"
+      },
+      {
+        "paperId": "W1169198579"
+      },
+      {
+        "paperId": "W1482505375"
+      },
+      {
+        "paperId": "W1483733351"
+      },
+      {
+        "paperId": "W1695856642"
+      },
+      {
+        "paperId": "W1879433355"
+      },
+      {
+        "paperId": "W1915479549"
+      },
+      {
+        "paperId": "W1930907635"
+      },
+      {
+        "paperId": "W1936442755"
+      },
+      {
+        "paperId": "W1969717155"
+      },
+      {
+        "paperId": "W1987124439"
+      },
+      {
+        "paperId": "W1988600100"
+      },
+      {
+        "paperId": "W1990785016"
+      },
+      {
+        "paperId": "W1994130174"
+      },
+      {
+        "paperId": "W2038096741"
+      },
+      {
+        "paperId": "W2042473526"
+      },
+      {
+        "paperId": "W2055000704"
+      },
+      {
+        "paperId": "W2057248704"
+      },
+      {
+        "paperId": "W2075144441"
+      },
+      {
+        "paperId": "W2106278016"
+      },
+      {
+        "paperId": "W2151460988"
+      },
+      {
+        "paperId": "W2152090207"
+      },
+      {
+        "paperId": "W2168811232"
+      },
+      {
+        "paperId": "W2182301828"
+      },
+      {
+        "paperId": "W2185007194"
+      },
+      {
+        "paperId": "W2190730839"
+      },
+      {
+        "paperId": "W2211112469"
+      },
+      {
+        "paperId": "W2224439410"
+      },
+      {
+        "paperId": "W2253140477"
+      },
+      {
+        "paperId": "W2256663742"
+      },
+      {
+        "paperId": "W2261914718"
+      },
+      {
+        "paperId": "W2274428470"
+      },
+      {
+        "paperId": "W2293740362"
+      },
+      {
+        "paperId": "W2295594229"
+      },
+      {
+        "paperId": "W2335146458"
+      },
+      {
+        "paperId": "W2338828827"
+      },
+      {
+        "paperId": "W2402018040"
+      },
+      {
+        "paperId": "W2729396025"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W6624166757"
+      }
+    ]
+  },
+  {
+    "paperId": "W2963264685",
+    "title": "A survey on the security of blockchain systems",
+    "abstract": "",
+    "year": 2017,
+    "authors": [
+      {
+        "name": "Xiaoqi Li"
+      },
+      {
+        "name": "Peng Jiang"
+      },
+      {
+        "name": "Ting Chen"
+      },
+      {
+        "name": "Xiapu Luo"
+      },
+      {
+        "name": "Qiaoyan Wen"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W893234787"
+      },
+      {
+        "paperId": "W1444567531"
+      },
+      {
+        "paperId": "W1995488889"
+      },
+      {
+        "paperId": "W2113341218"
+      },
+      {
+        "paperId": "W2128672542"
+      },
+      {
+        "paperId": "W2146509753"
+      },
+      {
+        "paperId": "W2155793255"
+      },
+      {
+        "paperId": "W2278867595"
+      },
+      {
+        "paperId": "W2295565785"
+      },
+      {
+        "paperId": "W2338676105"
+      },
+      {
+        "paperId": "W2355227308"
+      },
+      {
+        "paperId": "W2512480767"
+      },
+      {
+        "paperId": "W2514994441"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2522324130"
+      },
+      {
+        "paperId": "W2522448907"
+      },
+      {
+        "paperId": "W2528982141"
+      },
+      {
+        "paperId": "W2533941064"
+      },
+      {
+        "paperId": "W2536137494"
+      },
+      {
+        "paperId": "W2536325433"
+      },
+      {
+        "paperId": "W2539190473"
+      },
+      {
+        "paperId": "W2561905839"
+      },
+      {
+        "paperId": "W2568588571"
+      },
+      {
+        "paperId": "W2598139937"
+      },
+      {
+        "paperId": "W2598801365"
+      },
+      {
+        "paperId": "W2604844934"
+      },
+      {
+        "paperId": "W2606100535"
+      },
+      {
+        "paperId": "W2611050176"
+      },
+      {
+        "paperId": "W2611626082"
+      },
+      {
+        "paperId": "W2751130135"
+      },
+      {
+        "paperId": "W2785028467"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W3029199802"
+      },
+      {
+        "paperId": "W4255535209"
+      },
+      {
+        "paperId": "W6704151888"
+      },
+      {
+        "paperId": "W6755850593"
+      }
+    ]
+  },
+  {
+    "paperId": "W2899357412",
+    "title": "Blockchain technology in the energy sector: A systematic review of challenges and opportunities",
+    "abstract": "Blockchains or distributed ledgers are an emerging technology that has drawn considerable interest from energy supply firms, startups, technology developers, financial institutions, national governments and the academic community. Numerous sources coming from these backgrounds identify blockchains as having the potential to bring significant benefits and innovation. Blockchains promise transparent, tamper-proof and secure systems that can enable novel business solutions, especially when combined with smart contracts. This work provides a comprehensive overview of fundamental principles that underpin blockchain technologies, such as system architectures and distributed consensus algorithms. Next, we focus on blockchain solutions for the energy industry and inform the state-of-the-art by thoroughly reviewing the literature and current business cases. To our knowledge, this is one of the first academic, peer-reviewed works to provide a systematic review of blockchain activities and initiatives in the energy sector. Our study reviews 140 blockchain research projects and startups from which we construct a map of the potential and relevance of blockchains for energy applications. These initiatives were systematically classified into different groups according to the field of activity, implementation platform and consensus strategy used.1 Opportunities, potential challenges and limitations for a number of use cases are discussed, ranging from emerging peer-to-peer (P2P) energy trading and Internet of Things (IoT) applications, to decentralised marketplaces, electric vehicle charging and e-mobility. For each of these use cases, our contribution is twofold: first, in identifying the technical challenges that blockchain technology can solve for that application as well as its potential drawbacks, and second in briefly presenting the research and industrial projects and startups that are currently applying blockchain technology to that area. The paper ends with a discussion of challenges and market barriers the technology needs to overcome to get past the hype phase, prove its commercial viability and finally be adopted in the mainstream.",
+    "year": 2018,
+    "authors": [
+      {
+        "name": "Merlinda Andoni"
+      },
+      {
+        "name": "Valentin Robu"
+      },
+      {
+        "name": "David Flynn"
+      },
+      {
+        "name": "Simone Abram"
+      },
+      {
+        "name": "Dale Geach"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W927592489"
+      },
+      {
+        "paperId": "W979699011"
+      },
+      {
+        "paperId": "W1595948665"
+      },
+      {
+        "paperId": "W1699476055"
+      },
+      {
+        "paperId": "W1712588751"
+      },
+      {
+        "paperId": "W1907324708"
+      },
+      {
+        "paperId": "W1982544809"
+      },
+      {
+        "paperId": "W1991971024"
+      },
+      {
+        "paperId": "W1999057198"
+      },
+      {
+        "paperId": "W2061561129"
+      },
+      {
+        "paperId": "W2063866856"
+      },
+      {
+        "paperId": "W2096786180"
+      },
+      {
+        "paperId": "W2108957974"
+      },
+      {
+        "paperId": "W2114296561"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2153339991"
+      },
+      {
+        "paperId": "W2156186849"
+      },
+      {
+        "paperId": "W2182035090"
+      },
+      {
+        "paperId": "W2205257244"
+      },
+      {
+        "paperId": "W2290426788"
+      },
+      {
+        "paperId": "W2395097544"
+      },
+      {
+        "paperId": "W2466306879"
+      },
+      {
+        "paperId": "W2486460265"
+      },
+      {
+        "paperId": "W2522769817"
+      },
+      {
+        "paperId": "W2529556398"
+      },
+      {
+        "paperId": "W2560122591"
+      },
+      {
+        "paperId": "W2560168210"
+      },
+      {
+        "paperId": "W2566245444"
+      },
+      {
+        "paperId": "W2588780890"
+      },
+      {
+        "paperId": "W2602440570"
+      },
+      {
+        "paperId": "W2616050841"
+      },
+      {
+        "paperId": "W2616876544"
+      },
+      {
+        "paperId": "W2629433172"
+      },
+      {
+        "paperId": "W2735042552"
+      },
+      {
+        "paperId": "W2743234589"
+      },
+      {
+        "paperId": "W2748010079"
+      },
+      {
+        "paperId": "W2762655110"
+      },
+      {
+        "paperId": "W2763293161"
+      },
+      {
+        "paperId": "W2765122585"
+      },
+      {
+        "paperId": "W2766028852"
+      },
+      {
+        "paperId": "W2766555291"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W3123299411"
+      },
+      {
+        "paperId": "W3123883137"
+      },
+      {
+        "paperId": "W3137092842"
+      },
+      {
+        "paperId": "W4235967827"
+      },
+      {
+        "paperId": "W6625564441"
+      },
+      {
+        "paperId": "W6630413558"
+      },
+      {
+        "paperId": "W6678832241"
+      },
+      {
+        "paperId": "W6745310359"
+      },
+      {
+        "paperId": "W6745422942"
+      }
+    ]
+  },
+  {
+    "paperId": "W4255535209",
+    "title": "Blockchain challenges and opportunities: a survey",
+    "abstract": "Blockchain has numerous benefits such as decentralisation, persistency, anonymity and auditability. There is a wide spectrum of blockchain applications ranging from cryptocurrency, financial services, risk management, internet of things (IoT) to public and social services. Although a number of studies focus on using the blockchain technology in various application aspects, there is no comprehensive survey on the blockchain technology in both technological and application perspectives. To fill this gap, we conduct a comprehensive survey on the blockchain technology. In particular, this paper gives the blockchain taxonomy, introduces typical blockchain consensus algorithms, reviews blockchain applications and discusses technical challenges as well as recent advances in tackling the challenges. Moreover, this paper also points out the future directions in the blockchain technology.",
+    "year": 2018,
+    "authors": [
+      {
+        "name": "Huaimin Wang"
+      },
+      {
+        "name": "Zibin Zheng"
+      },
+      {
+        "name": "Shaoan Xie"
+      },
+      {
+        "name": "Hong‐Ning Dai"
+      },
+      {
+        "name": "Xiangping Chen"
+      }
+    ],
+    "citations": []
+  },
+  {
+    "paperId": "W4229815470",
+    "title": "Blockchain",
+    "abstract": "",
+    "year": 2017,
+    "authors": [
+      {
+        "name": "Michael Nofer"
+      },
+      {
+        "name": "Peter Gomber"
+      },
+      {
+        "name": "Oliver Hinz"
+      },
+      {
+        "name": "Dirk Schiereck"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W1454642304"
+      },
+      {
+        "paperId": "W1559136758"
+      },
+      {
+        "paperId": "W1589846406"
+      },
+      {
+        "paperId": "W1969344535"
+      },
+      {
+        "paperId": "W2013686672"
+      },
+      {
+        "paperId": "W2214897964"
+      },
+      {
+        "paperId": "W2219874140"
+      },
+      {
+        "paperId": "W2295318496"
+      },
+      {
+        "paperId": "W2511446761"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2584454765"
+      },
+      {
+        "paperId": "W2735430654"
+      },
+      {
+        "paperId": "W2886706106"
+      }
+    ]
+  },
+  {
+    "paperId": "W2290426788",
+    "title": "Blockchain technology: principles and applications",
+    "abstract": "This chapter expounds the main principles behind blockchain technology and some of its cutting-edge applications. We first present the core concepts of the blockchain. Secondly, we discuss a definition put forward by Vitalik Buterin, we sketch out the shift toward hybrid solutions, and we sum up the main features of decentralized crypto-ledger platforms. Thirdly, we show why the blockchain is a disruptive and foundational technology, but we expose the potential risks and drawbacks of public distributed ledgers that account for the shift toward hybrid solutions. Finally, we present a non-exhaustive list of important applications, bearing in mind the most recent developments.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Marc Pilkington"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W1542856672"
+      },
+      {
+        "paperId": "W1588240659"
+      },
+      {
+        "paperId": "W2154505708"
+      }
+    ]
+  },
+  {
+    "paperId": "W2522448907",
+    "title": "MedRec: Using Blockchain for Medical Data Access and Permission Management",
+    "abstract": "Years of heavy regulation and bureaucratic inefficiency have slowed innovation for electronic medical records (EMRs). We now face a critical need for such innovation, as personalization and data science prompt patients to engage in the details of their healthcare and restore agency over their medical data. In this paper, we propose MedRec: a novel, decentralized record management system to handle EMRs, using blockchain technology. Our system gives patients a comprehensive, immutable log and easy access to their medical information across providers and treatment sites. Leveraging unique blockchain properties, MedRec manages authentication, confidentiality, accountability and data sharing- crucial considerations when handling sensitive information. A modular design integrates with providers' existing, local data storage solutions, facilitating interoperability and making our system convenient and adaptable. We incentivize medical stakeholders (researchers, public health authorities, etc.) to participate in the network as blockchain “miners”. This provides them with access to aggregate, anonymized data as mining rewards, in return for sustaining and securing the network via Proof of Work. MedRec thus enables the emergence of data economics, supplying big data to empower researchers while engaging patients and providers in the choice to release metadata. The purpose of this short paper is to expose, prior to field tests, a working prototype through which we analyze and discuss our approach.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Asaph Azaria"
+      },
+      {
+        "name": "Ariel Ekblaw"
+      },
+      {
+        "name": "Thiago Augusto Vieira"
+      },
+      {
+        "name": "Andrew Lippman"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W1529983430"
+      },
+      {
+        "paperId": "W1559136758"
+      },
+      {
+        "paperId": "W1600506198"
+      },
+      {
+        "paperId": "W2396529093"
+      },
+      {
+        "paperId": "W3151748982"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W6793285265"
+      }
+    ]
+  },
+  {
+    "paperId": "W2517744317",
+    "title": "Hawk: The Blockchain Model of Cryptography and Privacy-Preserving Smart Contracts",
+    "abstract": "Emerging smart contract systems over decentralized cryptocurrencies allow mutually distrustful parties to transact safely without trusted third parties. In the event of contractual breaches or aborts, the decentralized blockchain ensures that honest parties obtain commensurate compensation. Existing systems, however, lack transactional privacy. All transactions, including flow of money between pseudonyms and amount transacted, are exposed on the blockchain. We present Hawk, a decentralized smart contract system that does not store financial transactions in the clear on the blockchain, thus retaining transactional privacy from the public's view. A Hawk programmer can write a private smart contract in an intuitive manner without having to implement cryptography, and our compiler automatically generates an efficient cryptographic protocol where contractual parties interact with the blockchain, using cryptographic primitives such as zero-knowledge proofs. To formally define and reason about the security of our protocols, we are the first to formalize the blockchain model of cryptography. The formal modeling is of independent interest. We advocate the community to adopt such a formal model when designing applications atop decentralized blockchains.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Ahmed E. Kosba"
+      },
+      {
+        "name": "Andrew Miller"
+      },
+      {
+        "name": "Elaine Shi"
+      },
+      {
+        "name": "Zikai Alex Wen"
+      },
+      {
+        "name": "Charalampos Papamanthou"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W4180724"
+      },
+      {
+        "paperId": "W101616332"
+      },
+      {
+        "paperId": "W111114747"
+      },
+      {
+        "paperId": "W179922057"
+      },
+      {
+        "paperId": "W196573780"
+      },
+      {
+        "paperId": "W851575271"
+      },
+      {
+        "paperId": "W1424543055"
+      },
+      {
+        "paperId": "W1485800369"
+      },
+      {
+        "paperId": "W1499934958"
+      },
+      {
+        "paperId": "W1520270249"
+      },
+      {
+        "paperId": "W1531360494"
+      },
+      {
+        "paperId": "W1561641428"
+      },
+      {
+        "paperId": "W1562226375"
+      },
+      {
+        "paperId": "W1563556756"
+      },
+      {
+        "paperId": "W1574186939"
+      },
+      {
+        "paperId": "W1601458649"
+      },
+      {
+        "paperId": "W1907293129"
+      },
+      {
+        "paperId": "W1969344535"
+      },
+      {
+        "paperId": "W1972855376"
+      },
+      {
+        "paperId": "W1973568945"
+      },
+      {
+        "paperId": "W1976646754"
+      },
+      {
+        "paperId": "W2013686672"
+      },
+      {
+        "paperId": "W2015007620"
+      },
+      {
+        "paperId": "W2018746447"
+      },
+      {
+        "paperId": "W2022932831"
+      },
+      {
+        "paperId": "W2026857799"
+      },
+      {
+        "paperId": "W2031015560"
+      },
+      {
+        "paperId": "W2039275540"
+      },
+      {
+        "paperId": "W2043007983"
+      },
+      {
+        "paperId": "W2087900794"
+      },
+      {
+        "paperId": "W2100818808"
+      },
+      {
+        "paperId": "W2109116994"
+      },
+      {
+        "paperId": "W2123352750"
+      },
+      {
+        "paperId": "W2136025860"
+      },
+      {
+        "paperId": "W2138889053"
+      },
+      {
+        "paperId": "W2144238522"
+      },
+      {
+        "paperId": "W2150509722"
+      },
+      {
+        "paperId": "W2151460988"
+      },
+      {
+        "paperId": "W2158106499"
+      },
+      {
+        "paperId": "W2163902533"
+      },
+      {
+        "paperId": "W2171337840"
+      },
+      {
+        "paperId": "W2212762918"
+      },
+      {
+        "paperId": "W2231944250"
+      },
+      {
+        "paperId": "W2247376876"
+      },
+      {
+        "paperId": "W2293230997"
+      },
+      {
+        "paperId": "W2396888528"
+      },
+      {
+        "paperId": "W2430991892"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2529173666"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2950226614"
+      },
+      {
+        "paperId": "W2951209646"
+      },
+      {
+        "paperId": "W3028607946"
+      },
+      {
+        "paperId": "W3030624396"
+      },
+      {
+        "paperId": "W4246092823"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W4251083239"
+      },
+      {
+        "paperId": "W6600166115"
+      },
+      {
+        "paperId": "W6607361576"
+      },
+      {
+        "paperId": "W6628945002"
+      },
+      {
+        "paperId": "W6633969564"
+      },
+      {
+        "paperId": "W6657922479"
+      },
+      {
+        "paperId": "W6683890642"
+      },
+      {
+        "paperId": "W6690672677"
+      },
+      {
+        "paperId": "W6763986627"
+      },
+      {
+        "paperId": "W6764545765"
+      }
+    ]
+  },
+  {
+    "paperId": "W2803371618",
+    "title": "On blockchain and its integration with IoT. Challenges and opportunities",
+    "abstract": "In the Internet of Things (IoT) vision, conventional devices become smart and autonomous. This vision is turning into a reality thanks to advances in technology, but there are still challenges to address, particularly in the security domain e.g., data reliability. Taking into account the predicted evolution of the IoT in the coming years, it is necessary to provide confidence in this huge incoming information source. Blockchain has emerged as a key technology that will transform the way in which we share information. Building trust in distributed environments without the need for authorities is a technological advance that has the potential to change many industries, the IoT among them. Disruptive technologies such as big data and cloud computing have been leveraged by IoT to overcome its limitations since its conception, and we think blockchain will be one of the next ones. This paper focuses on this relationship, investigates challenges in blockchain IoT applications, and surveys the most relevant work in order to analyze how blockchain could potentially improve the IoT.",
+    "year": 2018,
+    "authors": [
+      {
+        "name": "Ana Reyna"
+      },
+      {
+        "name": "Cristian Martín"
+      },
+      {
+        "name": "Jaime Chen"
+      },
+      {
+        "name": "Enrique Soler"
+      },
+      {
+        "name": "Manuel Díáz"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W69553326"
+      },
+      {
+        "paperId": "W1559136758"
+      },
+      {
+        "paperId": "W1589846406"
+      },
+      {
+        "paperId": "W1978649650"
+      },
+      {
+        "paperId": "W1990509304"
+      },
+      {
+        "paperId": "W1992222710"
+      },
+      {
+        "paperId": "W1992479210"
+      },
+      {
+        "paperId": "W1995488889"
+      },
+      {
+        "paperId": "W2003544295"
+      },
+      {
+        "paperId": "W2013686672"
+      },
+      {
+        "paperId": "W2018524855"
+      },
+      {
+        "paperId": "W2043007983"
+      },
+      {
+        "paperId": "W2080858463"
+      },
+      {
+        "paperId": "W2083533476"
+      },
+      {
+        "paperId": "W2084952704"
+      },
+      {
+        "paperId": "W2125858711"
+      },
+      {
+        "paperId": "W2156580773"
+      },
+      {
+        "paperId": "W2182688186"
+      },
+      {
+        "paperId": "W2205797334"
+      },
+      {
+        "paperId": "W2251418013"
+      },
+      {
+        "paperId": "W2253140477"
+      },
+      {
+        "paperId": "W2262390119"
+      },
+      {
+        "paperId": "W2285841049"
+      },
+      {
+        "paperId": "W2288007454"
+      },
+      {
+        "paperId": "W2293230997"
+      },
+      {
+        "paperId": "W2335755599"
+      },
+      {
+        "paperId": "W2392113277"
+      },
+      {
+        "paperId": "W2397661077"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2522448907"
+      },
+      {
+        "paperId": "W2533941064"
+      },
+      {
+        "paperId": "W2539190473"
+      },
+      {
+        "paperId": "W2555049846"
+      },
+      {
+        "paperId": "W2567541028"
+      },
+      {
+        "paperId": "W2582562249"
+      },
+      {
+        "paperId": "W2588999644"
+      },
+      {
+        "paperId": "W2602445533"
+      },
+      {
+        "paperId": "W2604844934"
+      },
+      {
+        "paperId": "W2612128643"
+      },
+      {
+        "paperId": "W2729396025"
+      },
+      {
+        "paperId": "W2753941796"
+      },
+      {
+        "paperId": "W2758945826"
+      },
+      {
+        "paperId": "W2765928069"
+      },
+      {
+        "paperId": "W2768696376"
+      },
+      {
+        "paperId": "W2774387311"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2949515390"
+      },
+      {
+        "paperId": "W2950226614"
+      },
+      {
+        "paperId": "W2963264685"
+      },
+      {
+        "paperId": "W2964262836"
+      },
+      {
+        "paperId": "W3082286884"
+      },
+      {
+        "paperId": "W3102661748"
+      },
+      {
+        "paperId": "W4255535209"
+      },
+      {
+        "paperId": "W4300127641"
+      },
+      {
+        "paperId": "W6602830902"
+      },
+      {
+        "paperId": "W6633543543"
+      },
+      {
+        "paperId": "W6635179120"
+      },
+      {
+        "paperId": "W6644713785"
+      },
+      {
+        "paperId": "W6648576785"
+      },
+      {
+        "paperId": "W6653898244"
+      },
+      {
+        "paperId": "W6661583179"
+      },
+      {
+        "paperId": "W6671704426"
+      },
+      {
+        "paperId": "W6678642147"
+      },
+      {
+        "paperId": "W6682904396"
+      },
+      {
+        "paperId": "W6685807058"
+      },
+      {
+        "paperId": "W6686169942"
+      },
+      {
+        "paperId": "W6691583033"
+      },
+      {
+        "paperId": "W6696179503"
+      },
+      {
+        "paperId": "W6696598326"
+      },
+      {
+        "paperId": "W6726548542"
+      },
+      {
+        "paperId": "W6727277121"
+      },
+      {
+        "paperId": "W6728816433"
+      },
+      {
+        "paperId": "W6731453967"
+      },
+      {
+        "paperId": "W6735681089"
+      },
+      {
+        "paperId": "W6736162206"
+      },
+      {
+        "paperId": "W6742947867"
+      },
+      {
+        "paperId": "W6744140670"
+      },
+      {
+        "paperId": "W6744156814"
+      },
+      {
+        "paperId": "W6745246726"
+      },
+      {
+        "paperId": "W6746016334"
+      },
+      {
+        "paperId": "W6753751735"
+      },
+      {
+        "paperId": "W6755850593"
+      },
+      {
+        "paperId": "W6763986627"
+      },
+      {
+        "paperId": "W6778169130"
+      }
+    ]
+  },
+  {
+    "paperId": "W2768696376",
+    "title": "IoT security: Review, blockchain solutions, and open challenges",
+    "abstract": "",
+    "year": 2017,
+    "authors": [
+      {
+        "name": "Minhaj Ahmad Khan"
+      },
+      {
+        "name": "Khaled Salah"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W59804186"
+      },
+      {
+        "paperId": "W171106955"
+      },
+      {
+        "paperId": "W174668443"
+      },
+      {
+        "paperId": "W1497025005"
+      },
+      {
+        "paperId": "W1498777973"
+      },
+      {
+        "paperId": "W1536037961"
+      },
+      {
+        "paperId": "W1538271188"
+      },
+      {
+        "paperId": "W1545343755"
+      },
+      {
+        "paperId": "W1551333318"
+      },
+      {
+        "paperId": "W1598634176"
+      },
+      {
+        "paperId": "W1638163870"
+      },
+      {
+        "paperId": "W1639305476"
+      },
+      {
+        "paperId": "W1656678770"
+      },
+      {
+        "paperId": "W1671965234"
+      },
+      {
+        "paperId": "W1674145689"
+      },
+      {
+        "paperId": "W1825257541"
+      },
+      {
+        "paperId": "W1904483788"
+      },
+      {
+        "paperId": "W1909266099"
+      },
+      {
+        "paperId": "W1923289336"
+      },
+      {
+        "paperId": "W1954338761"
+      },
+      {
+        "paperId": "W1955972220"
+      },
+      {
+        "paperId": "W1963383688"
+      },
+      {
+        "paperId": "W1963971487"
+      },
+      {
+        "paperId": "W1966840275"
+      },
+      {
+        "paperId": "W1971673042"
+      },
+      {
+        "paperId": "W1976188976"
+      },
+      {
+        "paperId": "W1980035202"
+      },
+      {
+        "paperId": "W1984685140"
+      },
+      {
+        "paperId": "W1986755722"
+      },
+      {
+        "paperId": "W1986772032"
+      },
+      {
+        "paperId": "W1988600100"
+      },
+      {
+        "paperId": "W1988828201"
+      },
+      {
+        "paperId": "W1989643196"
+      },
+      {
+        "paperId": "W1996360405"
+      },
+      {
+        "paperId": "W2006943941"
+      },
+      {
+        "paperId": "W2009033060"
+      },
+      {
+        "paperId": "W2011778831"
+      },
+      {
+        "paperId": "W2021053379"
+      },
+      {
+        "paperId": "W2023532542"
+      },
+      {
+        "paperId": "W2028956415"
+      },
+      {
+        "paperId": "W2041374101"
+      },
+      {
+        "paperId": "W2052009734"
+      },
+      {
+        "paperId": "W2052666587"
+      },
+      {
+        "paperId": "W2052938009"
+      },
+      {
+        "paperId": "W2054397419"
+      },
+      {
+        "paperId": "W2054439668"
+      },
+      {
+        "paperId": "W2056973119"
+      },
+      {
+        "paperId": "W2060409434"
+      },
+      {
+        "paperId": "W2061826196"
+      },
+      {
+        "paperId": "W2065257335"
+      },
+      {
+        "paperId": "W2072425268"
+      },
+      {
+        "paperId": "W2077921734"
+      },
+      {
+        "paperId": "W2082735202"
+      },
+      {
+        "paperId": "W2087903610"
+      },
+      {
+        "paperId": "W2093678351"
+      },
+      {
+        "paperId": "W2093798919"
+      },
+      {
+        "paperId": "W2095788961"
+      },
+      {
+        "paperId": "W2101890615"
+      },
+      {
+        "paperId": "W2104149471"
+      },
+      {
+        "paperId": "W2104250954"
+      },
+      {
+        "paperId": "W2104927807"
+      },
+      {
+        "paperId": "W2105103777"
+      },
+      {
+        "paperId": "W2105442001"
+      },
+      {
+        "paperId": "W2108479938"
+      },
+      {
+        "paperId": "W2110221314"
+      },
+      {
+        "paperId": "W2113728917"
+      },
+      {
+        "paperId": "W2121720842"
+      },
+      {
+        "paperId": "W2124280970"
+      },
+      {
+        "paperId": "W2125648014"
+      },
+      {
+        "paperId": "W2127305011"
+      },
+      {
+        "paperId": "W2129646827"
+      },
+      {
+        "paperId": "W2129919733"
+      },
+      {
+        "paperId": "W2133282516"
+      },
+      {
+        "paperId": "W2138528159"
+      },
+      {
+        "paperId": "W2139928097"
+      },
+      {
+        "paperId": "W2142411122"
+      },
+      {
+        "paperId": "W2142772221"
+      },
+      {
+        "paperId": "W2146080444"
+      },
+      {
+        "paperId": "W2150411054"
+      },
+      {
+        "paperId": "W2157283388"
+      },
+      {
+        "paperId": "W2160484939"
+      },
+      {
+        "paperId": "W2164865362"
+      },
+      {
+        "paperId": "W2166323220"
+      },
+      {
+        "paperId": "W2179321763"
+      },
+      {
+        "paperId": "W2206531137"
+      },
+      {
+        "paperId": "W2231944250"
+      },
+      {
+        "paperId": "W2234639732"
+      },
+      {
+        "paperId": "W2253635105"
+      },
+      {
+        "paperId": "W2254691854"
+      },
+      {
+        "paperId": "W2256467669"
+      },
+      {
+        "paperId": "W2262390119"
+      },
+      {
+        "paperId": "W2274217660"
+      },
+      {
+        "paperId": "W2280971486"
+      },
+      {
+        "paperId": "W2293247967"
+      },
+      {
+        "paperId": "W2325877089"
+      },
+      {
+        "paperId": "W2392113277"
+      },
+      {
+        "paperId": "W2397275348"
+      },
+      {
+        "paperId": "W2476563174"
+      },
+      {
+        "paperId": "W2486528818"
+      },
+      {
+        "paperId": "W2521840454"
+      },
+      {
+        "paperId": "W2522941327"
+      },
+      {
+        "paperId": "W2540162589"
+      },
+      {
+        "paperId": "W2541307573"
+      },
+      {
+        "paperId": "W2546016631"
+      },
+      {
+        "paperId": "W2576765166"
+      },
+      {
+        "paperId": "W2587718313"
+      },
+      {
+        "paperId": "W2604813584"
+      },
+      {
+        "paperId": "W2607400578"
+      },
+      {
+        "paperId": "W2613516056"
+      },
+      {
+        "paperId": "W2624953603"
+      },
+      {
+        "paperId": "W2625461202"
+      },
+      {
+        "paperId": "W2690196614"
+      },
+      {
+        "paperId": "W2729396025"
+      },
+      {
+        "paperId": "W2751957793"
+      },
+      {
+        "paperId": "W2752019525"
+      },
+      {
+        "paperId": "W2755679140"
+      },
+      {
+        "paperId": "W2905949102"
+      },
+      {
+        "paperId": "W2911711196"
+      },
+      {
+        "paperId": "W2963264685"
+      },
+      {
+        "paperId": "W3016607949"
+      },
+      {
+        "paperId": "W3122025391"
+      },
+      {
+        "paperId": "W4230622395"
+      },
+      {
+        "paperId": "W4230628633"
+      },
+      {
+        "paperId": "W4231303510"
+      },
+      {
+        "paperId": "W4232836212"
+      },
+      {
+        "paperId": "W4233009033"
+      },
+      {
+        "paperId": "W4234785822"
+      },
+      {
+        "paperId": "W4236133059"
+      },
+      {
+        "paperId": "W4236546623"
+      },
+      {
+        "paperId": "W4237327205"
+      },
+      {
+        "paperId": "W4237805850"
+      },
+      {
+        "paperId": "W4238293744"
+      },
+      {
+        "paperId": "W4238814483"
+      },
+      {
+        "paperId": "W4239854033"
+      },
+      {
+        "paperId": "W4240661574"
+      },
+      {
+        "paperId": "W4240728382"
+      },
+      {
+        "paperId": "W4242515098"
+      },
+      {
+        "paperId": "W4244286857"
+      },
+      {
+        "paperId": "W4246349302"
+      },
+      {
+        "paperId": "W4250493067"
+      },
+      {
+        "paperId": "W4252367081"
+      },
+      {
+        "paperId": "W4253041633"
+      },
+      {
+        "paperId": "W4253927453"
+      },
+      {
+        "paperId": "W4255340499"
+      },
+      {
+        "paperId": "W4290473017"
+      },
+      {
+        "paperId": "W4292117754"
+      },
+      {
+        "paperId": "W4321850508"
+      },
+      {
+        "paperId": "W6606906269"
+      },
+      {
+        "paperId": "W6630191597"
+      },
+      {
+        "paperId": "W6631980496"
+      },
+      {
+        "paperId": "W6632764468"
+      },
+      {
+        "paperId": "W6633158095"
+      },
+      {
+        "paperId": "W6636005930"
+      },
+      {
+        "paperId": "W6636792427"
+      },
+      {
+        "paperId": "W6638786779"
+      },
+      {
+        "paperId": "W6640942456"
+      },
+      {
+        "paperId": "W6641078877"
+      },
+      {
+        "paperId": "W6641799361"
+      },
+      {
+        "paperId": "W6646767539"
+      },
+      {
+        "paperId": "W6647564887"
+      },
+      {
+        "paperId": "W6647621443"
+      },
+      {
+        "paperId": "W6647689952"
+      },
+      {
+        "paperId": "W6652219073"
+      },
+      {
+        "paperId": "W6652622719"
+      },
+      {
+        "paperId": "W6656420413"
+      },
+      {
+        "paperId": "W6663416973"
+      },
+      {
+        "paperId": "W6663859095"
+      },
+      {
+        "paperId": "W6664263674"
+      },
+      {
+        "paperId": "W6666363133"
+      },
+      {
+        "paperId": "W6668632166"
+      },
+      {
+        "paperId": "W6671054107"
+      },
+      {
+        "paperId": "W6676311722"
+      },
+      {
+        "paperId": "W6677159499"
+      },
+      {
+        "paperId": "W6678246843"
+      },
+      {
+        "paperId": "W6678797395"
+      },
+      {
+        "paperId": "W6678957990"
+      },
+      {
+        "paperId": "W6679102465"
+      },
+      {
+        "paperId": "W6680254163"
+      },
+      {
+        "paperId": "W6680833141"
+      },
+      {
+        "paperId": "W6680849993"
+      },
+      {
+        "paperId": "W6681573091"
+      },
+      {
+        "paperId": "W6683734711"
+      },
+      {
+        "paperId": "W6684351271"
+      },
+      {
+        "paperId": "W6685588562"
+      },
+      {
+        "paperId": "W6692700498"
+      },
+      {
+        "paperId": "W6712371521"
+      },
+      {
+        "paperId": "W6744033719"
+      },
+      {
+        "paperId": "W7043704029"
+      }
+    ]
+  },
+  {
+    "paperId": "W2963507231",
+    "title": "Untangling Blockchain: A Data Processing View of Blockchain Systems",
+    "abstract": "Blockchain technologies are gaining massive momentum in the last few years. Blockchains are distributed ledgers that enable parties who do not fully trust each other to maintain a set of global states. The parties agree on the existence, values, and histories of the states. As the technology landscape is expanding rapidly, it is both important and challenging to have a firm grasp of what the core technologies have to offer, especially with respect to their data processing capabilities. In this paper, we first survey the state of the art, focusing on private blockchains (in which parties are authenticated). We analyze both in-production and research systems in four dimensions: distributed ledger, cryptography, consensus protocol, and smart contract. We then present BLOCKBENCH, a benchmarking framework for understanding performance of private blockchains against data processing workloads. We conduct a comprehensive evaluation of three major blockchain systems based on BLOCKBENCH, namely Ethereum, Parity, and Hyperledger Fabric. The results demonstrate several trade-offs in the design space, as well as big performance gaps between blockchain and database systems. Drawing from design principles of database systems, we discuss several research directions for bringing blockchain performance closer to the realm of databases.",
+    "year": 2018,
+    "authors": [
+      {
+        "name": "Tien Tuan Anh Dinh"
+      },
+      {
+        "name": "Rui Liu"
+      },
+      {
+        "name": "Meihui Zhang"
+      },
+      {
+        "name": "Gang Chen"
+      },
+      {
+        "name": "Beng Chin Ooi"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W80036080"
+      },
+      {
+        "paperId": "W826557097"
+      },
+      {
+        "paperId": "W1250209992"
+      },
+      {
+        "paperId": "W1543669813"
+      },
+      {
+        "paperId": "W1607967859"
+      },
+      {
+        "paperId": "W1698117324"
+      },
+      {
+        "paperId": "W1816580784"
+      },
+      {
+        "paperId": "W1907293129"
+      },
+      {
+        "paperId": "W1972614536"
+      },
+      {
+        "paperId": "W1985229168"
+      },
+      {
+        "paperId": "W1987358714"
+      },
+      {
+        "paperId": "W2007888220"
+      },
+      {
+        "paperId": "W2013409485"
+      },
+      {
+        "paperId": "W2013686672"
+      },
+      {
+        "paperId": "W2014239329"
+      },
+      {
+        "paperId": "W2019183416"
+      },
+      {
+        "paperId": "W2022932831"
+      },
+      {
+        "paperId": "W2043007983"
+      },
+      {
+        "paperId": "W2060440895"
+      },
+      {
+        "paperId": "W2109213558"
+      },
+      {
+        "paperId": "W2112138431"
+      },
+      {
+        "paperId": "W2121510533"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2126377116"
+      },
+      {
+        "paperId": "W2139359217"
+      },
+      {
+        "paperId": "W2156580773"
+      },
+      {
+        "paperId": "W2178828050"
+      },
+      {
+        "paperId": "W2209943643"
+      },
+      {
+        "paperId": "W2261042760"
+      },
+      {
+        "paperId": "W2281208003"
+      },
+      {
+        "paperId": "W2324799740"
+      },
+      {
+        "paperId": "W2335755599"
+      },
+      {
+        "paperId": "W2397661077"
+      },
+      {
+        "paperId": "W2427525016"
+      },
+      {
+        "paperId": "W2511446761"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2533941064"
+      },
+      {
+        "paperId": "W2534313446"
+      },
+      {
+        "paperId": "W2535104337"
+      },
+      {
+        "paperId": "W2539190473"
+      },
+      {
+        "paperId": "W2567666263"
+      },
+      {
+        "paperId": "W2593026014"
+      },
+      {
+        "paperId": "W2604122668"
+      },
+      {
+        "paperId": "W2604861932"
+      },
+      {
+        "paperId": "W2607508925"
+      },
+      {
+        "paperId": "W2763398287"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2950226614"
+      },
+      {
+        "paperId": "W2951138026"
+      },
+      {
+        "paperId": "W2963517786"
+      },
+      {
+        "paperId": "W2963997141"
+      },
+      {
+        "paperId": "W2964262836"
+      },
+      {
+        "paperId": "W3105099041"
+      },
+      {
+        "paperId": "W3138135046"
+      },
+      {
+        "paperId": "W3158200125"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W6603247459"
+      },
+      {
+        "paperId": "W6628136156"
+      },
+      {
+        "paperId": "W6634624844"
+      },
+      {
+        "paperId": "W6639678854"
+      },
+      {
+        "paperId": "W6653712188"
+      },
+      {
+        "paperId": "W6678700732"
+      },
+      {
+        "paperId": "W6678832241"
+      },
+      {
+        "paperId": "W6682904396"
+      },
+      {
+        "paperId": "W6685719288"
+      },
+      {
+        "paperId": "W6685807058"
+      },
+      {
+        "paperId": "W6712179443"
+      },
+      {
+        "paperId": "W6728431054"
+      },
+      {
+        "paperId": "W6734559070"
+      },
+      {
+        "paperId": "W6755342462"
+      },
+      {
+        "paperId": "W6763986627"
+      },
+      {
+        "paperId": "W6929406701"
+      }
+    ]
+  },
+  {
+    "paperId": "W2536325433",
+    "title": "On the Security and Performance of Proof of Work Blockchains",
+    "abstract": "Proof of Work (PoW) powered blockchains currently account for more than 90% of the total market capitalization of existing digital cryptocurrencies. Although the security provisions of Bitcoin have been thoroughly analysed, the security guarantees of variant (forked) PoW blockchains (which were instantiated with different parameters) have not received much attention in the literature. This opens the question whether existing security analysis of Bitcoin's PoW applies to other implementations which have been instantiated with different consensus and/or network parameters.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Arthur Gervais"
+      },
+      {
+        "name": "Ghassan Karame"
+      },
+      {
+        "name": "Karl Wüst"
+      },
+      {
+        "name": "Vasileios Glykantzis"
+      },
+      {
+        "name": "Hubert Ritzdorf"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W851575271"
+      },
+      {
+        "paperId": "W1523833175"
+      },
+      {
+        "paperId": "W1593596963"
+      },
+      {
+        "paperId": "W1851144268"
+      },
+      {
+        "paperId": "W1995488889"
+      },
+      {
+        "paperId": "W2021146938"
+      },
+      {
+        "paperId": "W2057248704"
+      },
+      {
+        "paperId": "W2058897176"
+      },
+      {
+        "paperId": "W2095417570"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2181397138"
+      },
+      {
+        "paperId": "W2295940006"
+      },
+      {
+        "paperId": "W2314730948"
+      },
+      {
+        "paperId": "W2486460265"
+      },
+      {
+        "paperId": "W2511446761"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2950226614"
+      },
+      {
+        "paperId": "W2963517786"
+      },
+      {
+        "paperId": "W3029601907"
+      }
+    ]
+  },
+  {
+    "paperId": "W2901598045",
+    "title": "A systematic literature review of blockchain-based applications: Current status, classification and open issues",
+    "abstract": "This work provides a systematic literature review of blockchain-based applications across multiple domains. The aim is to investigate the current state of blockchain technology and its applications and to highlight how specific characteristics of this disruptive technology can revolutionise “business-as-usual” practices. To this end, the theoretical underpinnings of numerous research papers published in high ranked scientific journals during the last decade, along with several reports from grey literature as a means of streamlining our assessment and capturing the continuously expanding blockchain domain, are included in this review. Based on a structured, systematic review and thematic content analysis of the discovered literature, we present a comprehensive classification of blockchain-enabled applications across diverse sectors such as supply chain, business, healthcare, IoT, privacy, and data management, and we establish key themes, trends and emerging areas for research. We also point to the shortcomings identified in the relevant literature, particularly limitations the blockchain technology presents and how these limitations spawn across different sectors and industries. Building on these findings, we identify various research gaps and future exploratory directions that are anticipated to be of significant value both for academics and practitioners.",
+    "year": 2018,
+    "authors": [
+      {
+        "name": "Fran Casino"
+      },
+      {
+        "name": "Thomas K. Dasaklis"
+      },
+      {
+        "name": "Constantinos Patsakis"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W18125873"
+      },
+      {
+        "paperId": "W69553326"
+      },
+      {
+        "paperId": "W179922057"
+      },
+      {
+        "paperId": "W257294446"
+      },
+      {
+        "paperId": "W893234787"
+      },
+      {
+        "paperId": "W1497199863"
+      },
+      {
+        "paperId": "W1534643746"
+      },
+      {
+        "paperId": "W1559136758"
+      },
+      {
+        "paperId": "W1589846406"
+      },
+      {
+        "paperId": "W1598269861"
+      },
+      {
+        "paperId": "W1683537077"
+      },
+      {
+        "paperId": "W1797525358"
+      },
+      {
+        "paperId": "W1819513546"
+      },
+      {
+        "paperId": "W1837982953"
+      },
+      {
+        "paperId": "W1907293129"
+      },
+      {
+        "paperId": "W1936442755"
+      },
+      {
+        "paperId": "W1988600100"
+      },
+      {
+        "paperId": "W2013686672"
+      },
+      {
+        "paperId": "W2022932831"
+      },
+      {
+        "paperId": "W2026676775"
+      },
+      {
+        "paperId": "W2026857799"
+      },
+      {
+        "paperId": "W2046371402"
+      },
+      {
+        "paperId": "W2051100078"
+      },
+      {
+        "paperId": "W2092068344"
+      },
+      {
+        "paperId": "W2103018059"
+      },
+      {
+        "paperId": "W2114579022"
+      },
+      {
+        "paperId": "W2127612127"
+      },
+      {
+        "paperId": "W2165639205"
+      },
+      {
+        "paperId": "W2176225732"
+      },
+      {
+        "paperId": "W2231944250"
+      },
+      {
+        "paperId": "W2251599967"
+      },
+      {
+        "paperId": "W2278867595"
+      },
+      {
+        "paperId": "W2278982694"
+      },
+      {
+        "paperId": "W2288082358"
+      },
+      {
+        "paperId": "W2288515487"
+      },
+      {
+        "paperId": "W2290426788"
+      },
+      {
+        "paperId": "W2295445711"
+      },
+      {
+        "paperId": "W2296480372"
+      },
+      {
+        "paperId": "W2305084780"
+      },
+      {
+        "paperId": "W2311567330"
+      },
+      {
+        "paperId": "W2327198637"
+      },
+      {
+        "paperId": "W2335755599"
+      },
+      {
+        "paperId": "W2338676105"
+      },
+      {
+        "paperId": "W2392113277"
+      },
+      {
+        "paperId": "W2405518766"
+      },
+      {
+        "paperId": "W2418309354"
+      },
+      {
+        "paperId": "W2425051923"
+      },
+      {
+        "paperId": "W2468006377"
+      },
+      {
+        "paperId": "W2483525606"
+      },
+      {
+        "paperId": "W2486460265"
+      },
+      {
+        "paperId": "W2486646985"
+      },
+      {
+        "paperId": "W2507423119"
+      },
+      {
+        "paperId": "W2508208469"
+      },
+      {
+        "paperId": "W2511580607"
+      },
+      {
+        "paperId": "W2514202461"
+      },
+      {
+        "paperId": "W2514994441"
+      },
+      {
+        "paperId": "W2515094586"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2519293460"
+      },
+      {
+        "paperId": "W2520401385"
+      },
+      {
+        "paperId": "W2522237456"
+      },
+      {
+        "paperId": "W2522324130"
+      },
+      {
+        "paperId": "W2522448907"
+      },
+      {
+        "paperId": "W2523077978"
+      },
+      {
+        "paperId": "W2523331784"
+      },
+      {
+        "paperId": "W2526225084"
+      },
+      {
+        "paperId": "W2527800909"
+      },
+      {
+        "paperId": "W2531564265"
+      },
+      {
+        "paperId": "W2538325702"
+      },
+      {
+        "paperId": "W2546603560"
+      },
+      {
+        "paperId": "W2549211163"
+      },
+      {
+        "paperId": "W2551524776"
+      },
+      {
+        "paperId": "W2555113861"
+      },
+      {
+        "paperId": "W2555782333"
+      },
+      {
+        "paperId": "W2557090183"
+      },
+      {
+        "paperId": "W2559888240"
+      },
+      {
+        "paperId": "W2561379281"
+      },
+      {
+        "paperId": "W2563649753"
+      },
+      {
+        "paperId": "W2563930052"
+      },
+      {
+        "paperId": "W2563947283"
+      },
+      {
+        "paperId": "W2565510139"
+      },
+      {
+        "paperId": "W2566052079"
+      },
+      {
+        "paperId": "W2566758857"
+      },
+      {
+        "paperId": "W2578722880"
+      },
+      {
+        "paperId": "W2583031215"
+      },
+      {
+        "paperId": "W2583851542"
+      },
+      {
+        "paperId": "W2585414899"
+      },
+      {
+        "paperId": "W2585845239"
+      },
+      {
+        "paperId": "W2586094944"
+      },
+      {
+        "paperId": "W2586285803"
+      },
+      {
+        "paperId": "W2587444899"
+      },
+      {
+        "paperId": "W2588585573"
+      },
+      {
+        "paperId": "W2588749731"
+      },
+      {
+        "paperId": "W2591734994"
+      },
+      {
+        "paperId": "W2591793331"
+      },
+      {
+        "paperId": "W2592590941"
+      },
+      {
+        "paperId": "W2595024244"
+      },
+      {
+        "paperId": "W2596034521"
+      },
+      {
+        "paperId": "W2596115488"
+      },
+      {
+        "paperId": "W2602445533"
+      },
+      {
+        "paperId": "W2603829616"
+      },
+      {
+        "paperId": "W2604096638"
+      },
+      {
+        "paperId": "W2604528753"
+      },
+      {
+        "paperId": "W2604567462"
+      },
+      {
+        "paperId": "W2604844934"
+      },
+      {
+        "paperId": "W2605157201"
+      },
+      {
+        "paperId": "W2606002995"
+      },
+      {
+        "paperId": "W2606010969"
+      },
+      {
+        "paperId": "W2606467208"
+      },
+      {
+        "paperId": "W2608006758"
+      },
+      {
+        "paperId": "W2611308410"
+      },
+      {
+        "paperId": "W2611565958"
+      },
+      {
+        "paperId": "W2611626082"
+      },
+      {
+        "paperId": "W2612120022"
+      },
+      {
+        "paperId": "W2612374162"
+      },
+      {
+        "paperId": "W2612798110"
+      },
+      {
+        "paperId": "W2616308558"
+      },
+      {
+        "paperId": "W2616952686"
+      },
+      {
+        "paperId": "W2617689801"
+      },
+      {
+        "paperId": "W2618484221"
+      },
+      {
+        "paperId": "W2619935067"
+      },
+      {
+        "paperId": "W2620085947"
+      },
+      {
+        "paperId": "W2620090200"
+      },
+      {
+        "paperId": "W2620284884"
+      },
+      {
+        "paperId": "W2620636316"
+      },
+      {
+        "paperId": "W2621687283"
+      },
+      {
+        "paperId": "W2622621570"
+      },
+      {
+        "paperId": "W2623080722"
+      },
+      {
+        "paperId": "W2623182191"
+      },
+      {
+        "paperId": "W2623638981"
+      },
+      {
+        "paperId": "W2623950366"
+      },
+      {
+        "paperId": "W2624098821"
+      },
+      {
+        "paperId": "W2624101300"
+      },
+      {
+        "paperId": "W2624307925"
+      },
+      {
+        "paperId": "W2624744148"
+      },
+      {
+        "paperId": "W2624953603"
+      },
+      {
+        "paperId": "W2625569546"
+      },
+      {
+        "paperId": "W2626566727"
+      },
+      {
+        "paperId": "W2626748464"
+      },
+      {
+        "paperId": "W2626851879"
+      },
+      {
+        "paperId": "W2669932771"
+      },
+      {
+        "paperId": "W2724474800"
+      },
+      {
+        "paperId": "W2725193031"
+      },
+      {
+        "paperId": "W2727841152"
+      },
+      {
+        "paperId": "W2728360598"
+      },
+      {
+        "paperId": "W2728981145"
+      },
+      {
+        "paperId": "W2729396025"
+      },
+      {
+        "paperId": "W2729546405"
+      },
+      {
+        "paperId": "W2730380569"
+      },
+      {
+        "paperId": "W2731079083"
+      },
+      {
+        "paperId": "W2731088641"
+      },
+      {
+        "paperId": "W2732894263"
+      },
+      {
+        "paperId": "W2734349867"
+      },
+      {
+        "paperId": "W2735042552"
+      },
+      {
+        "paperId": "W2735558764"
+      },
+      {
+        "paperId": "W2735656452"
+      },
+      {
+        "paperId": "W2735913654"
+      },
+      {
+        "paperId": "W2736904962"
+      },
+      {
+        "paperId": "W2738959495"
+      },
+      {
+        "paperId": "W2740090788"
+      },
+      {
+        "paperId": "W2740274882"
+      },
+      {
+        "paperId": "W2740512985"
+      },
+      {
+        "paperId": "W2741050278"
+      },
+      {
+        "paperId": "W2741129431"
+      },
+      {
+        "paperId": "W2741141507"
+      },
+      {
+        "paperId": "W2741248492"
+      },
+      {
+        "paperId": "W2741347857"
+      },
+      {
+        "paperId": "W2742047516"
+      },
+      {
+        "paperId": "W2742329683"
+      },
+      {
+        "paperId": "W2743557879"
+      },
+      {
+        "paperId": "W2743557948"
+      },
+      {
+        "paperId": "W2744867514"
+      },
+      {
+        "paperId": "W2744908908"
+      },
+      {
+        "paperId": "W2745018080"
+      },
+      {
+        "paperId": "W2746343748"
+      },
+      {
+        "paperId": "W2746544169"
+      },
+      {
+        "paperId": "W2746553616"
+      },
+      {
+        "paperId": "W2746768139"
+      },
+      {
+        "paperId": "W2746876422"
+      },
+      {
+        "paperId": "W2746990014"
+      },
+      {
+        "paperId": "W2747969426"
+      },
+      {
+        "paperId": "W2748264495"
+      },
+      {
+        "paperId": "W2748692995"
+      },
+      {
+        "paperId": "W2749029156"
+      },
+      {
+        "paperId": "W2749108238"
+      },
+      {
+        "paperId": "W2749247755"
+      },
+      {
+        "paperId": "W2750322463"
+      },
+      {
+        "paperId": "W2750584562"
+      },
+      {
+        "paperId": "W2751179194"
+      },
+      {
+        "paperId": "W2751350604"
+      },
+      {
+        "paperId": "W2751987885"
+      },
+      {
+        "paperId": "W2752263663"
+      },
+      {
+        "paperId": "W2752599160"
+      },
+      {
+        "paperId": "W2753301243"
+      },
+      {
+        "paperId": "W2753941796"
+      },
+      {
+        "paperId": "W2753962503"
+      },
+      {
+        "paperId": "W2754192817"
+      },
+      {
+        "paperId": "W2754256791"
+      },
+      {
+        "paperId": "W2754931682"
+      },
+      {
+        "paperId": "W2755071912"
+      },
+      {
+        "paperId": "W2755153065"
+      },
+      {
+        "paperId": "W2755266291"
+      },
+      {
+        "paperId": "W2755280511"
+      },
+      {
+        "paperId": "W2755389678"
+      },
+      {
+        "paperId": "W2755569472"
+      },
+      {
+        "paperId": "W2755677134"
+      },
+      {
+        "paperId": "W2755779661"
+      },
+      {
+        "paperId": "W2755946751"
+      },
+      {
+        "paperId": "W2756149219"
+      },
+      {
+        "paperId": "W2756207517"
+      },
+      {
+        "paperId": "W2756450598"
+      },
+      {
+        "paperId": "W2756463386"
+      },
+      {
+        "paperId": "W2756839485"
+      },
+      {
+        "paperId": "W2757195693"
+      },
+      {
+        "paperId": "W2757315172"
+      },
+      {
+        "paperId": "W2757340856"
+      },
+      {
+        "paperId": "W2757509496"
+      },
+      {
+        "paperId": "W2757817063"
+      },
+      {
+        "paperId": "W2758039286"
+      },
+      {
+        "paperId": "W2758287746"
+      },
+      {
+        "paperId": "W2758749009"
+      },
+      {
+        "paperId": "W2759173497"
+      },
+      {
+        "paperId": "W2760222296"
+      },
+      {
+        "paperId": "W2760255851"
+      },
+      {
+        "paperId": "W2761843328"
+      },
+      {
+        "paperId": "W2762409084"
+      },
+      {
+        "paperId": "W2762845979"
+      },
+      {
+        "paperId": "W2763836263"
+      },
+      {
+        "paperId": "W2763950196"
+      },
+      {
+        "paperId": "W2764198340"
+      },
+      {
+        "paperId": "W2765096192"
+      },
+      {
+        "paperId": "W2765152469"
+      },
+      {
+        "paperId": "W2765226969"
+      },
+      {
+        "paperId": "W2765261858"
+      },
+      {
+        "paperId": "W2765426725"
+      },
+      {
+        "paperId": "W2765574007"
+      },
+      {
+        "paperId": "W2765923635"
+      },
+      {
+        "paperId": "W2766089955"
+      },
+      {
+        "paperId": "W2766286759"
+      },
+      {
+        "paperId": "W2766346067"
+      },
+      {
+        "paperId": "W2766427676"
+      },
+      {
+        "paperId": "W2766555291"
+      },
+      {
+        "paperId": "W2766800499"
+      },
+      {
+        "paperId": "W2767277120"
+      },
+      {
+        "paperId": "W2767307339"
+      },
+      {
+        "paperId": "W2767453223"
+      },
+      {
+        "paperId": "W2767654409"
+      },
+      {
+        "paperId": "W2767719512"
+      },
+      {
+        "paperId": "W2767801416"
+      },
+      {
+        "paperId": "W2768224956"
+      },
+      {
+        "paperId": "W2768225558"
+      },
+      {
+        "paperId": "W2768639942"
+      },
+      {
+        "paperId": "W2768696376"
+      },
+      {
+        "paperId": "W2769217938"
+      },
+      {
+        "paperId": "W2769227940"
+      },
+      {
+        "paperId": "W2769552776"
+      },
+      {
+        "paperId": "W2769903356"
+      },
+      {
+        "paperId": "W2770515996"
+      },
+      {
+        "paperId": "W2771012470"
+      },
+      {
+        "paperId": "W2771122023"
+      },
+      {
+        "paperId": "W2771396150"
+      },
+      {
+        "paperId": "W2771735732"
+      },
+      {
+        "paperId": "W2772148428"
+      },
+      {
+        "paperId": "W2772486733"
+      },
+      {
+        "paperId": "W2772893009"
+      },
+      {
+        "paperId": "W2773929027"
+      },
+      {
+        "paperId": "W2774185715"
+      },
+      {
+        "paperId": "W2774698549"
+      },
+      {
+        "paperId": "W2774802253"
+      },
+      {
+        "paperId": "W2775726906"
+      },
+      {
+        "paperId": "W2776789294"
+      },
+      {
+        "paperId": "W2776947388"
+      },
+      {
+        "paperId": "W2777080992"
+      },
+      {
+        "paperId": "W2777447168"
+      },
+      {
+        "paperId": "W2778126034"
+      },
+      {
+        "paperId": "W2779544641"
+      },
+      {
+        "paperId": "W2780306445"
+      },
+      {
+        "paperId": "W2780452505"
+      },
+      {
+        "paperId": "W2781445366"
+      },
+      {
+        "paperId": "W2783275103"
+      },
+      {
+        "paperId": "W2786484366"
+      },
+      {
+        "paperId": "W2786885474"
+      },
+      {
+        "paperId": "W2790202156"
+      },
+      {
+        "paperId": "W2790418303"
+      },
+      {
+        "paperId": "W2791113724"
+      },
+      {
+        "paperId": "W2791124241"
+      },
+      {
+        "paperId": "W2791307302"
+      },
+      {
+        "paperId": "W2791572971"
+      },
+      {
+        "paperId": "W2791902103"
+      },
+      {
+        "paperId": "W2792850657"
+      },
+      {
+        "paperId": "W2793215836"
+      },
+      {
+        "paperId": "W2793346081"
+      },
+      {
+        "paperId": "W2793610021"
+      },
+      {
+        "paperId": "W2793926897"
+      },
+      {
+        "paperId": "W2794161035"
+      },
+      {
+        "paperId": "W2794235646"
+      },
+      {
+        "paperId": "W2794647042"
+      },
+      {
+        "paperId": "W2794796499"
+      },
+      {
+        "paperId": "W2794925686"
+      },
+      {
+        "paperId": "W2795590040"
+      },
+      {
+        "paperId": "W2795806946"
+      },
+      {
+        "paperId": "W2796164278"
+      },
+      {
+        "paperId": "W2797481382"
+      },
+      {
+        "paperId": "W2797838170"
+      },
+      {
+        "paperId": "W2798448420"
+      },
+      {
+        "paperId": "W2801576183"
+      },
+      {
+        "paperId": "W2802300154"
+      },
+      {
+        "paperId": "W2802745431"
+      },
+      {
+        "paperId": "W2808808043"
+      },
+      {
+        "paperId": "W2809085855"
+      },
+      {
+        "paperId": "W2883609183"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2904119980"
+      },
+      {
+        "paperId": "W2914637266"
+      },
+      {
+        "paperId": "W2921921219"
+      },
+      {
+        "paperId": "W2950492121"
+      },
+      {
+        "paperId": "W2962941562"
+      },
+      {
+        "paperId": "W2963264685"
+      },
+      {
+        "paperId": "W2963509939"
+      },
+      {
+        "paperId": "W2963610883"
+      },
+      {
+        "paperId": "W2963799774"
+      },
+      {
+        "paperId": "W2964262836"
+      },
+      {
+        "paperId": "W2973816953"
+      },
+      {
+        "paperId": "W2991792334"
+      },
+      {
+        "paperId": "W2997998108"
+      },
+      {
+        "paperId": "W3082286884"
+      },
+      {
+        "paperId": "W3105573581"
+      },
+      {
+        "paperId": "W3105859607"
+      },
+      {
+        "paperId": "W3121729520"
+      },
+      {
+        "paperId": "W3121796453"
+      },
+      {
+        "paperId": "W3122548859"
+      },
+      {
+        "paperId": "W3123286733"
+      },
+      {
+        "paperId": "W3125186781"
+      },
+      {
+        "paperId": "W3139005440"
+      },
+      {
+        "paperId": "W3148820943"
+      },
+      {
+        "paperId": "W3158742479"
+      },
+      {
+        "paperId": "W3177149776"
+      },
+      {
+        "paperId": "W3202477666"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W4233210494"
+      },
+      {
+        "paperId": "W4233378883"
+      },
+      {
+        "paperId": "W4233863314"
+      },
+      {
+        "paperId": "W4236133059"
+      },
+      {
+        "paperId": "W4242622876"
+      },
+      {
+        "paperId": "W4243849915"
+      },
+      {
+        "paperId": "W4244446416"
+      },
+      {
+        "paperId": "W4246479268"
+      },
+      {
+        "paperId": "W4255535209"
+      },
+      {
+        "paperId": "W4285719527"
+      },
+      {
+        "paperId": "W4292935773"
+      },
+      {
+        "paperId": "W4294215472"
+      },
+      {
+        "paperId": "W4301329292"
+      },
+      {
+        "paperId": "W6609656081"
+      },
+      {
+        "paperId": "W6633543543"
+      },
+      {
+        "paperId": "W6639678854"
+      },
+      {
+        "paperId": "W6640568849"
+      },
+      {
+        "paperId": "W6647689952"
+      },
+      {
+        "paperId": "W6653898244"
+      },
+      {
+        "paperId": "W6657145324"
+      },
+      {
+        "paperId": "W6663242237"
+      },
+      {
+        "paperId": "W6685753056"
+      },
+      {
+        "paperId": "W6695099359"
+      },
+      {
+        "paperId": "W6697068697"
+      },
+      {
+        "paperId": "W6697601712"
+      },
+      {
+        "paperId": "W6713165493"
+      },
+      {
+        "paperId": "W6717269718"
+      },
+      {
+        "paperId": "W6727077162"
+      },
+      {
+        "paperId": "W6727277121"
+      },
+      {
+        "paperId": "W6727524379"
+      },
+      {
+        "paperId": "W6727956667"
+      },
+      {
+        "paperId": "W6730203975"
+      },
+      {
+        "paperId": "W6730597074"
+      },
+      {
+        "paperId": "W6731238743"
+      },
+      {
+        "paperId": "W6731302678"
+      },
+      {
+        "paperId": "W6731657173"
+      },
+      {
+        "paperId": "W6732656104"
+      },
+      {
+        "paperId": "W6732695106"
+      },
+      {
+        "paperId": "W6733061172"
+      },
+      {
+        "paperId": "W6733179660"
+      },
+      {
+        "paperId": "W6734732749"
+      },
+      {
+        "paperId": "W6734775349"
+      },
+      {
+        "paperId": "W6735544404"
+      },
+      {
+        "paperId": "W6736027184"
+      },
+      {
+        "paperId": "W6736162206"
+      },
+      {
+        "paperId": "W6736348719"
+      },
+      {
+        "paperId": "W6737210720"
+      },
+      {
+        "paperId": "W6737289860"
+      },
+      {
+        "paperId": "W6737556525"
+      },
+      {
+        "paperId": "W6738381809"
+      },
+      {
+        "paperId": "W6738571232"
+      },
+      {
+        "paperId": "W6738944136"
+      },
+      {
+        "paperId": "W6739349250"
+      },
+      {
+        "paperId": "W6739379882"
+      },
+      {
+        "paperId": "W6740328025"
+      },
+      {
+        "paperId": "W6740411258"
+      },
+      {
+        "paperId": "W6740428410"
+      },
+      {
+        "paperId": "W6740433223"
+      },
+      {
+        "paperId": "W6740631059"
+      },
+      {
+        "paperId": "W6740663064"
+      },
+      {
+        "paperId": "W6740705235"
+      },
+      {
+        "paperId": "W6742279440"
+      },
+      {
+        "paperId": "W6742342023"
+      },
+      {
+        "paperId": "W6742479420"
+      },
+      {
+        "paperId": "W6742726788"
+      },
+      {
+        "paperId": "W6743061178"
+      },
+      {
+        "paperId": "W6743576472"
+      },
+      {
+        "paperId": "W6743675308"
+      },
+      {
+        "paperId": "W6743684328"
+      },
+      {
+        "paperId": "W6743839339"
+      },
+      {
+        "paperId": "W6743965132"
+      },
+      {
+        "paperId": "W6744153656"
+      },
+      {
+        "paperId": "W6744407476"
+      },
+      {
+        "paperId": "W6744450712"
+      },
+      {
+        "paperId": "W6744604909"
+      },
+      {
+        "paperId": "W6744614093"
+      },
+      {
+        "paperId": "W6745011093"
+      },
+      {
+        "paperId": "W6745011904"
+      },
+      {
+        "paperId": "W6745111876"
+      },
+      {
+        "paperId": "W6745350966"
+      },
+      {
+        "paperId": "W6745412498"
+      },
+      {
+        "paperId": "W6745630761"
+      },
+      {
+        "paperId": "W6745670996"
+      },
+      {
+        "paperId": "W6745865189"
+      },
+      {
+        "paperId": "W6745961518"
+      },
+      {
+        "paperId": "W6746228887"
+      },
+      {
+        "paperId": "W6746363068"
+      },
+      {
+        "paperId": "W6746381356"
+      },
+      {
+        "paperId": "W6746719589"
+      },
+      {
+        "paperId": "W6747043366"
+      },
+      {
+        "paperId": "W6747417922"
+      },
+      {
+        "paperId": "W6749235529"
+      },
+      {
+        "paperId": "W6749492413"
+      },
+      {
+        "paperId": "W6749548732"
+      },
+      {
+        "paperId": "W6749779860"
+      },
+      {
+        "paperId": "W6750019884"
+      },
+      {
+        "paperId": "W6750203489"
+      },
+      {
+        "paperId": "W6750393096"
+      },
+      {
+        "paperId": "W6752551669"
+      },
+      {
+        "paperId": "W6755850593"
+      },
+      {
+        "paperId": "W6757014771"
+      },
+      {
+        "paperId": "W6768491274"
+      },
+      {
+        "paperId": "W6776839029"
+      },
+      {
+        "paperId": "W7075669521"
+      }
+    ]
+  },
+  {
+    "paperId": "W1559136758",
+    "title": "Decentralizing Privacy: Using Blockchain to Protect Personal Data",
+    "abstract": "The recent increase in reported incidents of surveillance and security breaches compromising users' privacy call into question the current model, in which third-parties collect and control massive amounts of personal data. Bit coin has demonstrated in the financial space that trusted, auditable computing is possible using a decentralized network of peers accompanied by a public ledger. In this paper, we describe a decentralized personal data management system that ensures users own and control their data. We implement a protocol that turns a block chain into an automated access-control manager that does not require trust in a third party. Unlike Bit coin, transactions in our system are not strictly financial -- they are used to carry instructions, such as storing, querying and sharing data. Finally, we discuss possible future extensions to block chains that could harness them into a well-rounded solution for trusted computing problems in society.",
+    "year": 2015,
+    "authors": [
+      {
+        "name": "Guy Zyskind"
+      },
+      {
+        "name": "Oz Nathan"
+      },
+      {
+        "name": "Alex Pentland"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W79807228"
+      },
+      {
+        "paperId": "W1593654896"
+      },
+      {
+        "paperId": "W1616788770"
+      },
+      {
+        "paperId": "W2006453614"
+      },
+      {
+        "paperId": "W2013613544"
+      },
+      {
+        "paperId": "W2031533839"
+      },
+      {
+        "paperId": "W2115240023"
+      },
+      {
+        "paperId": "W2119245106"
+      },
+      {
+        "paperId": "W2131949595"
+      },
+      {
+        "paperId": "W2134167315"
+      },
+      {
+        "paperId": "W2136114025"
+      },
+      {
+        "paperId": "W2141420453"
+      },
+      {
+        "paperId": "W2159024459"
+      },
+      {
+        "paperId": "W2911978475"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W6636270335"
+      },
+      {
+        "paperId": "W6758947373"
+      }
+    ]
+  },
+  {
+    "paperId": "W2544710688",
+    "title": "Blockchain beyond bitcoin",
+    "abstract": "Blockchain technology has the potential to revolutionize applications and redefine the digital economy.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Sarah Underwood"
+      }
+    ],
+    "citations": []
+  },
+  {
+    "paperId": "W2535104337",
+    "title": "A Secure Sharding Protocol For Open Blockchains",
+    "abstract": "Cryptocurrencies, such as Bitcoin and 250 similar alt-coins, embody at their core a blockchain protocol --- a mechanism for a distributed network of computational nodes to periodically agree on a set of new transactions. Designing a secure blockchain protocol relies on an open challenge in security, that of designing a highly-scalable agreement protocol open to manipulation by byzantine or arbitrarily malicious nodes. Bitcoin's blockchain agreement protocol exhibits security, but does not scale: it processes 3--7 transactions per second at present, irrespective of the available computation capacity at hand.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Loi Luu"
+      },
+      {
+        "name": "Viswesh Narayanan"
+      },
+      {
+        "name": "Chaodong Zheng"
+      },
+      {
+        "name": "Kunal Baweja"
+      },
+      {
+        "name": "Seth Gilbert"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W260189897"
+      },
+      {
+        "paperId": "W1130192991"
+      },
+      {
+        "paperId": "W1520914943"
+      },
+      {
+        "paperId": "W1542807488"
+      },
+      {
+        "paperId": "W1698117324"
+      },
+      {
+        "paperId": "W1760381732"
+      },
+      {
+        "paperId": "W1819513546"
+      },
+      {
+        "paperId": "W1831187082"
+      },
+      {
+        "paperId": "W1987161563"
+      },
+      {
+        "paperId": "W1999522397"
+      },
+      {
+        "paperId": "W2001271834"
+      },
+      {
+        "paperId": "W2003406796"
+      },
+      {
+        "paperId": "W2010256818"
+      },
+      {
+        "paperId": "W2011933679"
+      },
+      {
+        "paperId": "W2019890995"
+      },
+      {
+        "paperId": "W2038345682"
+      },
+      {
+        "paperId": "W2054584570"
+      },
+      {
+        "paperId": "W2075144441"
+      },
+      {
+        "paperId": "W2124037649"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2126924915"
+      },
+      {
+        "paperId": "W2130555261"
+      },
+      {
+        "paperId": "W2130923111"
+      },
+      {
+        "paperId": "W2144232511"
+      },
+      {
+        "paperId": "W2149623556"
+      },
+      {
+        "paperId": "W2165491783"
+      },
+      {
+        "paperId": "W2181397138"
+      },
+      {
+        "paperId": "W2182035090"
+      },
+      {
+        "paperId": "W2182442992"
+      },
+      {
+        "paperId": "W2232825151"
+      },
+      {
+        "paperId": "W2295804537"
+      },
+      {
+        "paperId": "W2318076643"
+      },
+      {
+        "paperId": "W2397661077"
+      },
+      {
+        "paperId": "W2553854225"
+      },
+      {
+        "paperId": "W2611515161"
+      },
+      {
+        "paperId": "W2949202389"
+      },
+      {
+        "paperId": "W2951145614"
+      },
+      {
+        "paperId": "W3031066431"
+      },
+      {
+        "paperId": "W3100217861"
+      },
+      {
+        "paperId": "W3137092842"
+      },
+      {
+        "paperId": "W3137759927"
+      },
+      {
+        "paperId": "W3203855581"
+      }
+    ]
+  },
+  {
+    "paperId": "W2511446761",
+    "title": "On Scaling Decentralized Blockchains",
+    "abstract": "",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "Kyle Croman"
+      },
+      {
+        "name": "Christian Decker"
+      },
+      {
+        "name": "Ittay Eyal"
+      },
+      {
+        "name": "Adem Efe Gencer"
+      },
+      {
+        "name": "Ari Juels"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W1424543055"
+      },
+      {
+        "paperId": "W1972614536"
+      },
+      {
+        "paperId": "W1978649650"
+      },
+      {
+        "paperId": "W2006732937"
+      },
+      {
+        "paperId": "W2007661053"
+      },
+      {
+        "paperId": "W2018746447"
+      },
+      {
+        "paperId": "W2021142034"
+      },
+      {
+        "paperId": "W2057248704"
+      },
+      {
+        "paperId": "W2086266870"
+      },
+      {
+        "paperId": "W2114780662"
+      },
+      {
+        "paperId": "W2126665244"
+      },
+      {
+        "paperId": "W2130555261"
+      },
+      {
+        "paperId": "W2142423295"
+      },
+      {
+        "paperId": "W2149623556"
+      },
+      {
+        "paperId": "W2157004711"
+      },
+      {
+        "paperId": "W2162233768"
+      },
+      {
+        "paperId": "W2182035090"
+      },
+      {
+        "paperId": "W2183126124"
+      },
+      {
+        "paperId": "W2245949953"
+      },
+      {
+        "paperId": "W2282592920"
+      },
+      {
+        "paperId": "W2288007454"
+      },
+      {
+        "paperId": "W2293624543"
+      },
+      {
+        "paperId": "W2293928399"
+      },
+      {
+        "paperId": "W2295318496"
+      },
+      {
+        "paperId": "W2295940006"
+      },
+      {
+        "paperId": "W2396888528"
+      },
+      {
+        "paperId": "W2517744317"
+      },
+      {
+        "paperId": "W2529173666"
+      },
+      {
+        "paperId": "W2964262836"
+      }
+    ]
+  },
+  {
+    "paperId": "W2892520153",
+    "title": "Blockchain technology overview",
+    "abstract": "The Information Technology Laboratory (ITL) at the National Institute of Standards and Technology (NIST) promotes the U.S. economy and public welfare by providing technical leadership for the Nation's measurement and standards infrastructure. ITL develops tests, test methods, reference data, proof of concept implementations, and technical analyses to advance the development and productive use of information technology. ITL's responsibilities include the development of management, administrative, technical, and physical",
+    "year": 2018,
+    "authors": [
+      {
+        "name": "Dylan Yaga"
+      },
+      {
+        "name": "Peter Mell"
+      },
+      {
+        "name": "Nik Roby"
+      },
+      {
+        "name": "Karen Scarfone"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W1665611244"
+      },
+      {
+        "paperId": "W2619630761"
+      },
+      {
+        "paperId": "W2762292395"
+      },
+      {
+        "paperId": "W2803836845"
+      },
+      {
+        "paperId": "W2895182117"
+      },
+      {
+        "paperId": "W2945978829"
+      },
+      {
+        "paperId": "W3137220996"
+      },
+      {
+        "paperId": "W4206595402"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W4248987559"
+      },
+      {
+        "paperId": "W6669650361"
+      }
+    ]
+  },
+  {
+    "paperId": "W2578476968",
+    "title": "The Truth about Blockchain",
+    "abstract": "",
+    "year": 2017,
+    "authors": [
+      {
+        "name": "Marco Iansiti"
+      },
+      {
+        "name": "Karim R. Lakhani"
+      }
+    ],
+    "citations": []
+  },
+  {
+    "paperId": "W2739845435",
+    "title": "Ouroboros: A Provably Secure Proof-of-Stake Blockchain Protocol",
+    "abstract": "",
+    "year": 2017,
+    "authors": [
+      {
+        "name": "Aggelos Kiayias"
+      },
+      {
+        "name": "Alexander Russell"
+      },
+      {
+        "name": "Bernardo David"
+      },
+      {
+        "name": "Roman Oliynykov"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W260189897"
+      },
+      {
+        "paperId": "W851575271"
+      },
+      {
+        "paperId": "W969103128"
+      },
+      {
+        "paperId": "W1972614536"
+      },
+      {
+        "paperId": "W1976385711"
+      },
+      {
+        "paperId": "W2003214215"
+      },
+      {
+        "paperId": "W2059875792"
+      },
+      {
+        "paperId": "W2068871408"
+      },
+      {
+        "paperId": "W2087811006"
+      },
+      {
+        "paperId": "W2103647628"
+      },
+      {
+        "paperId": "W2105685537"
+      },
+      {
+        "paperId": "W2112963602"
+      },
+      {
+        "paperId": "W2118179522"
+      },
+      {
+        "paperId": "W2199385070"
+      },
+      {
+        "paperId": "W2216069195"
+      },
+      {
+        "paperId": "W2295428206"
+      },
+      {
+        "paperId": "W2295804537"
+      },
+      {
+        "paperId": "W2399579591"
+      },
+      {
+        "paperId": "W2401756782"
+      },
+      {
+        "paperId": "W2408417311"
+      },
+      {
+        "paperId": "W2472053299"
+      },
+      {
+        "paperId": "W2508339054"
+      },
+      {
+        "paperId": "W2508573783"
+      },
+      {
+        "paperId": "W2573050643"
+      },
+      {
+        "paperId": "W2604428649"
+      },
+      {
+        "paperId": "W2613387059"
+      },
+      {
+        "paperId": "W2732281924"
+      },
+      {
+        "paperId": "W2738891482"
+      },
+      {
+        "paperId": "W2751555667"
+      },
+      {
+        "paperId": "W2770149261"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2891903667"
+      },
+      {
+        "paperId": "W2952926927"
+      },
+      {
+        "paperId": "W4231916799"
+      }
+    ]
+  },
+  {
+    "paperId": "W3123597155",
+    "title": "Corporate Governance and Blockchains",
+    "abstract": "Abstract Blockchains represent a novel application of cryptography and information technology to age-old problems of financial record-keeping, and they may lead to far-reaching changes in corporate governance. Many major players in the financial industry have began to invest in this new technology, and stock exchanges have proposed using blockchains as a new method for trading corporate equities and tracking their ownership. This essay evaluates the potential implications of these changes for managers, institutional investors, small shareholders, auditors, and other parties involved in corporate governance. The lower cost, greater liquidity, more accurate record-keeping, and transparency of ownership offered by blockchains may significantly upend the balance of power among these cohorts.",
+    "year": 2016,
+    "authors": [
+      {
+        "name": "David Yermack"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W4400945"
+      },
+      {
+        "paperId": "W211428396"
+      },
+      {
+        "paperId": "W1261669801"
+      },
+      {
+        "paperId": "W1495945271"
+      },
+      {
+        "paperId": "W1531758582"
+      },
+      {
+        "paperId": "W1607043068"
+      },
+      {
+        "paperId": "W1919189757"
+      },
+      {
+        "paperId": "W1985445641"
+      },
+      {
+        "paperId": "W1986300483"
+      },
+      {
+        "paperId": "W1989442752"
+      },
+      {
+        "paperId": "W2014182748"
+      },
+      {
+        "paperId": "W2026122661"
+      },
+      {
+        "paperId": "W2056672581"
+      },
+      {
+        "paperId": "W2107299975"
+      },
+      {
+        "paperId": "W2107735123"
+      },
+      {
+        "paperId": "W2151487897"
+      },
+      {
+        "paperId": "W2156594523"
+      },
+      {
+        "paperId": "W2160638522"
+      },
+      {
+        "paperId": "W2175896411"
+      },
+      {
+        "paperId": "W2195971199"
+      },
+      {
+        "paperId": "W2210053950"
+      },
+      {
+        "paperId": "W2271628430"
+      },
+      {
+        "paperId": "W2285354759"
+      },
+      {
+        "paperId": "W2319351637"
+      },
+      {
+        "paperId": "W2526729200"
+      },
+      {
+        "paperId": "W2527797060"
+      },
+      {
+        "paperId": "W2608016166"
+      },
+      {
+        "paperId": "W2732057417"
+      },
+      {
+        "paperId": "W2735777128"
+      },
+      {
+        "paperId": "W3003883893"
+      },
+      {
+        "paperId": "W3022435380"
+      },
+      {
+        "paperId": "W3022527834"
+      },
+      {
+        "paperId": "W3121303620"
+      },
+      {
+        "paperId": "W3121539549"
+      },
+      {
+        "paperId": "W3121573418"
+      },
+      {
+        "paperId": "W3121627570"
+      },
+      {
+        "paperId": "W3121889917"
+      },
+      {
+        "paperId": "W3122169829"
+      },
+      {
+        "paperId": "W3122719819"
+      },
+      {
+        "paperId": "W3122733032"
+      },
+      {
+        "paperId": "W3123120634"
+      },
+      {
+        "paperId": "W3123241264"
+      },
+      {
+        "paperId": "W3123258602"
+      },
+      {
+        "paperId": "W3123259192"
+      },
+      {
+        "paperId": "W3123389673"
+      },
+      {
+        "paperId": "W3123403629"
+      },
+      {
+        "paperId": "W3123774229"
+      },
+      {
+        "paperId": "W3123796032"
+      },
+      {
+        "paperId": "W3124062128"
+      },
+      {
+        "paperId": "W3124464265"
+      },
+      {
+        "paperId": "W3124659030"
+      },
+      {
+        "paperId": "W3124824127"
+      },
+      {
+        "paperId": "W3125677029"
+      },
+      {
+        "paperId": "W3125733354"
+      },
+      {
+        "paperId": "W6628051983"
+      },
+      {
+        "paperId": "W6629467560"
+      },
+      {
+        "paperId": "W6636429954"
+      },
+      {
+        "paperId": "W6646858399"
+      },
+      {
+        "paperId": "W6694282678"
+      },
+      {
+        "paperId": "W6740630365"
+      }
+    ]
+  },
+  {
+    "paperId": "W2947690458",
+    "title": "Blockchain for Internet of Things: A Survey",
+    "abstract": "Internet of Things (IoT) is reshaping the incumbent industry to smart industry featured with data-driven decision-making. However, intrinsic features of IoT result in a number of challenges, such as decentralization, poor interoperability, privacy, and security vulnerabilities. Blockchain technology brings the opportunities in addressing the challenges of IoT. In this paper, we investigate the integration of blockchain technology with IoT. We name such synthesis of blockchain and IoT as blockchain of things (BCoT). This paper presents an in-depth survey of BCoT and discusses the insights of this new paradigm. In particular, we first briefly introduce IoT and discuss the challenges of IoT. Then, we give an overview of blockchain technology. We next concentrate on introducing the convergence of blockchain and IoT and presenting the proposal of BCoT architecture. We further discuss the issues about using blockchain for fifth generation beyond in IoT as well as industrial applications of BCoT. Finally, we outline the open research directions in this promising area.",
+    "year": 2019,
+    "authors": [
+      {
+        "name": "Hong-Ning Dai"
+      },
+      {
+        "name": "Zibin Zheng"
+      },
+      {
+        "name": "Yan Zhang"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W1559136758"
+      },
+      {
+        "paperId": "W1988600100"
+      },
+      {
+        "paperId": "W2003544295"
+      },
+      {
+        "paperId": "W2013613544"
+      },
+      {
+        "paperId": "W2019611862"
+      },
+      {
+        "paperId": "W2092898013"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2224452678"
+      },
+      {
+        "paperId": "W2268751503"
+      },
+      {
+        "paperId": "W2277149566"
+      },
+      {
+        "paperId": "W2295318496"
+      },
+      {
+        "paperId": "W2338676105"
+      },
+      {
+        "paperId": "W2392113277"
+      },
+      {
+        "paperId": "W2401150670"
+      },
+      {
+        "paperId": "W2503207772"
+      },
+      {
+        "paperId": "W2511446761"
+      },
+      {
+        "paperId": "W2515615886"
+      },
+      {
+        "paperId": "W2522052520"
+      },
+      {
+        "paperId": "W2522237456"
+      },
+      {
+        "paperId": "W2531399364"
+      },
+      {
+        "paperId": "W2535104337"
+      },
+      {
+        "paperId": "W2557090183"
+      },
+      {
+        "paperId": "W2561715741"
+      },
+      {
+        "paperId": "W2576765166"
+      },
+      {
+        "paperId": "W2585631449"
+      },
+      {
+        "paperId": "W2596636257"
+      },
+      {
+        "paperId": "W2601306580"
+      },
+      {
+        "paperId": "W2604122668"
+      },
+      {
+        "paperId": "W2606537796"
+      },
+      {
+        "paperId": "W2611050176"
+      },
+      {
+        "paperId": "W2611626082"
+      },
+      {
+        "paperId": "W2613857102"
+      },
+      {
+        "paperId": "W2617697157"
+      },
+      {
+        "paperId": "W2619984247"
+      },
+      {
+        "paperId": "W2624307925"
+      },
+      {
+        "paperId": "W2624953603"
+      },
+      {
+        "paperId": "W2730380569"
+      },
+      {
+        "paperId": "W2734909543"
+      },
+      {
+        "paperId": "W2742375026"
+      },
+      {
+        "paperId": "W2751904527"
+      },
+      {
+        "paperId": "W2753580776"
+      },
+      {
+        "paperId": "W2753585338"
+      },
+      {
+        "paperId": "W2755207117"
+      },
+      {
+        "paperId": "W2763398287"
+      },
+      {
+        "paperId": "W2765226969"
+      },
+      {
+        "paperId": "W2765928069"
+      },
+      {
+        "paperId": "W2766309043"
+      },
+      {
+        "paperId": "W2767643860"
+      },
+      {
+        "paperId": "W2768182340"
+      },
+      {
+        "paperId": "W2769227940"
+      },
+      {
+        "paperId": "W2772929437"
+      },
+      {
+        "paperId": "W2773929027"
+      },
+      {
+        "paperId": "W2781583119"
+      },
+      {
+        "paperId": "W2782020667"
+      },
+      {
+        "paperId": "W2783275103"
+      },
+      {
+        "paperId": "W2783647977"
+      },
+      {
+        "paperId": "W2784570452"
+      },
+      {
+        "paperId": "W2785920116"
+      },
+      {
+        "paperId": "W2787232848"
+      },
+      {
+        "paperId": "W2789022255"
+      },
+      {
+        "paperId": "W2789063661"
+      },
+      {
+        "paperId": "W2791029640"
+      },
+      {
+        "paperId": "W2792035477"
+      },
+      {
+        "paperId": "W2793519446"
+      },
+      {
+        "paperId": "W2794566778"
+      },
+      {
+        "paperId": "W2795085730"
+      },
+      {
+        "paperId": "W2797816609"
+      },
+      {
+        "paperId": "W2799502406"
+      },
+      {
+        "paperId": "W2802340657"
+      },
+      {
+        "paperId": "W2803109435"
+      },
+      {
+        "paperId": "W2803371618"
+      },
+      {
+        "paperId": "W2805383889"
+      },
+      {
+        "paperId": "W2805690413"
+      },
+      {
+        "paperId": "W2805930283"
+      },
+      {
+        "paperId": "W2807754472"
+      },
+      {
+        "paperId": "W2807862198"
+      },
+      {
+        "paperId": "W2809644023"
+      },
+      {
+        "paperId": "W2811365937"
+      },
+      {
+        "paperId": "W2873943611"
+      },
+      {
+        "paperId": "W2885100636"
+      },
+      {
+        "paperId": "W2885597632"
+      },
+      {
+        "paperId": "W2886902508"
+      },
+      {
+        "paperId": "W2888442703"
+      },
+      {
+        "paperId": "W2890627666"
+      },
+      {
+        "paperId": "W2891232238"
+      },
+      {
+        "paperId": "W2895973886"
+      },
+      {
+        "paperId": "W2896883851"
+      },
+      {
+        "paperId": "W2897450989"
+      },
+      {
+        "paperId": "W2897675500"
+      },
+      {
+        "paperId": "W2898082692"
+      },
+      {
+        "paperId": "W2900616489"
+      },
+      {
+        "paperId": "W2903743879"
+      },
+      {
+        "paperId": "W2904351506"
+      },
+      {
+        "paperId": "W2904947504"
+      },
+      {
+        "paperId": "W2912620367"
+      },
+      {
+        "paperId": "W2912637295"
+      },
+      {
+        "paperId": "W2913196913"
+      },
+      {
+        "paperId": "W2914876238"
+      },
+      {
+        "paperId": "W2918143929"
+      },
+      {
+        "paperId": "W2947400732"
+      },
+      {
+        "paperId": "W2955535572"
+      },
+      {
+        "paperId": "W2962718753"
+      },
+      {
+        "paperId": "W2962894484"
+      },
+      {
+        "paperId": "W2963264685"
+      },
+      {
+        "paperId": "W2963507231"
+      },
+      {
+        "paperId": "W2963857659"
+      },
+      {
+        "paperId": "W3123722958"
+      },
+      {
+        "paperId": "W3124303716"
+      },
+      {
+        "paperId": "W4256613398"
+      },
+      {
+        "paperId": "W6746873430"
+      },
+      {
+        "paperId": "W6748300356"
+      },
+      {
+        "paperId": "W6756993594"
+      }
+    ]
+  },
+  {
+    "paperId": "W2921980263",
+    "title": "Security and Privacy on Blockchain",
+    "abstract": "Blockchain offers an innovative approach to storing information, executing transactions, performing functions, and establishing trust in an open environment. Many consider blockchain as a technology breakthrough for cryptography and cybersecurity, with use cases ranging from globally deployed cryptocurrency systems like Bitcoin, to smart contracts, smart grids over the Internet of Things, and so forth. Although blockchain has received growing interests in both academia and industry in the recent years, the security and privacy of blockchains continue to be at the center of the debate when deploying blockchain in different applications. This article presents a comprehensive overview of the security and privacy of blockchain. To facilitate the discussion, we first introduce the notion of blockchains and its utility in the context of Bitcoin-like online transactions. Then, we describe the basic security properties that are supported as the essential requirements and building blocks for Bitcoin-like cryptocurrency systems, followed by presenting the additional security and privacy properties that are desired in many blockchain applications. Finally, we review the security and privacy techniques for achieving these security properties in blockchain-based systems, including representative consensus algorithms, hash chained storage, mixing protocols, anonymous signatures, non-interactive zero-knowledge proof, and so forth. We conjecture that this survey can help readers to gain an in-depth understanding of the security and privacy of blockchain with respect to concept, attributes, techniques, and systems.",
+    "year": 2019,
+    "authors": [
+      {
+        "name": "Rui Zhang"
+      },
+      {
+        "name": "Rui Xue"
+      },
+      {
+        "name": "Ling Liu"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W69553326"
+      },
+      {
+        "paperId": "W851575271"
+      },
+      {
+        "paperId": "W1498316612"
+      },
+      {
+        "paperId": "W1534388293"
+      },
+      {
+        "paperId": "W1538440442"
+      },
+      {
+        "paperId": "W1553435762"
+      },
+      {
+        "paperId": "W1564449568"
+      },
+      {
+        "paperId": "W1572490578"
+      },
+      {
+        "paperId": "W1589846406"
+      },
+      {
+        "paperId": "W1595357546"
+      },
+      {
+        "paperId": "W1682451491"
+      },
+      {
+        "paperId": "W1763482972"
+      },
+      {
+        "paperId": "W1819513546"
+      },
+      {
+        "paperId": "W1890128745"
+      },
+      {
+        "paperId": "W1907293129"
+      },
+      {
+        "paperId": "W1970606468"
+      },
+      {
+        "paperId": "W1997911919"
+      },
+      {
+        "paperId": "W2008701790"
+      },
+      {
+        "paperId": "W2013613544"
+      },
+      {
+        "paperId": "W2018635958"
+      },
+      {
+        "paperId": "W2022932831"
+      },
+      {
+        "paperId": "W2027471022"
+      },
+      {
+        "paperId": "W2031015560"
+      },
+      {
+        "paperId": "W2031533839"
+      },
+      {
+        "paperId": "W2043007983"
+      },
+      {
+        "paperId": "W2048862659"
+      },
+      {
+        "paperId": "W2054584570"
+      },
+      {
+        "paperId": "W2065722310"
+      },
+      {
+        "paperId": "W2079913403"
+      },
+      {
+        "paperId": "W2088492763"
+      },
+      {
+        "paperId": "W2092422002"
+      },
+      {
+        "paperId": "W2103299932"
+      },
+      {
+        "paperId": "W2108834246"
+      },
+      {
+        "paperId": "W2125064106"
+      },
+      {
+        "paperId": "W2126087831"
+      },
+      {
+        "paperId": "W2126924915"
+      },
+      {
+        "paperId": "W2129483619"
+      },
+      {
+        "paperId": "W2132172731"
+      },
+      {
+        "paperId": "W2144752539"
+      },
+      {
+        "paperId": "W2156030242"
+      },
+      {
+        "paperId": "W2166670067"
+      },
+      {
+        "paperId": "W2182688186"
+      },
+      {
+        "paperId": "W2183126124"
+      },
+      {
+        "paperId": "W2231944250"
+      },
+      {
+        "paperId": "W2341655714"
+      },
+      {
+        "paperId": "W2534313446"
+      },
+      {
+        "paperId": "W2534895871"
+      },
+      {
+        "paperId": "W2573050643"
+      },
+      {
+        "paperId": "W2613387059"
+      },
+      {
+        "paperId": "W2614305404"
+      },
+      {
+        "paperId": "W2624307925"
+      },
+      {
+        "paperId": "W2738891482"
+      },
+      {
+        "paperId": "W2739845435"
+      },
+      {
+        "paperId": "W2762888877"
+      },
+      {
+        "paperId": "W2763398287"
+      },
+      {
+        "paperId": "W2797481382"
+      },
+      {
+        "paperId": "W2800068681"
+      },
+      {
+        "paperId": "W2888947553"
+      },
+      {
+        "paperId": "W2950300692"
+      },
+      {
+        "paperId": "W2963264685"
+      },
+      {
+        "paperId": "W2990399857"
+      },
+      {
+        "paperId": "W3122146873"
+      },
+      {
+        "paperId": "W3137092842"
+      },
+      {
+        "paperId": "W4205092462"
+      },
+      {
+        "paperId": "W4232836212"
+      },
+      {
+        "paperId": "W4246488344"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W6686169942"
+      }
+    ]
+  },
+  {
+    "paperId": "W2929438235",
+    "title": "Blockchain Technology in Healthcare: A Systematic Review",
+    "abstract": "Since blockchain was introduced through Bitcoin, research has been ongoing to extend its applications to non-financial use cases. Healthcare is one industry in which blockchain is expected to have significant impacts. Research in this area is relatively new but growing rapidly; so, health informatics researchers and practitioners are always struggling to keep pace with research progress in this area. This paper reports on a systematic review of the ongoing research in the application of blockchain technology in healthcare. The research methodology is based on the Preferred Reporting Items for Systematic Reviews and Meta-Analysis (PRISMA) guidelines and a systematic mapping study process, in which a well-designed search protocol is used to search four scientific databases, to identify, extract and analyze all relevant publications. The review shows that a number of studies have proposed different use cases for the application of blockchain in healthcare; however, there is a lack of adequate prototype implementations and studies to characterize the effectiveness of these proposed use cases. The review further highlights the state-of-the-art in the development of blockchain applications for healthcare, their limitations and the areas for future research. To this end, therefore, there is still the need for more research to better understand, characterize and evaluate the utility of blockchain in healthcare.",
+    "year": 2019,
+    "authors": [
+      {
+        "name": "Cornelius C. Agbo"
+      },
+      {
+        "name": "Qusay H. Mahmoud"
+      },
+      {
+        "name": "Johan Eklund"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W4214443"
+      },
+      {
+        "paperId": "W246286872"
+      },
+      {
+        "paperId": "W1915479549"
+      },
+      {
+        "paperId": "W1977742784"
+      },
+      {
+        "paperId": "W2032860265"
+      },
+      {
+        "paperId": "W2130205059"
+      },
+      {
+        "paperId": "W2156098321"
+      },
+      {
+        "paperId": "W2166881616"
+      },
+      {
+        "paperId": "W2468996569"
+      },
+      {
+        "paperId": "W2514994441"
+      },
+      {
+        "paperId": "W2522448907"
+      },
+      {
+        "paperId": "W2527800909"
+      },
+      {
+        "paperId": "W2538325702"
+      },
+      {
+        "paperId": "W2549211163"
+      },
+      {
+        "paperId": "W2555782333"
+      },
+      {
+        "paperId": "W2561097737"
+      },
+      {
+        "paperId": "W2582723196"
+      },
+      {
+        "paperId": "W2602679156"
+      },
+      {
+        "paperId": "W2606002995"
+      },
+      {
+        "paperId": "W2616934625"
+      },
+      {
+        "paperId": "W2624098821"
+      },
+      {
+        "paperId": "W2735656452"
+      },
+      {
+        "paperId": "W2736904962"
+      },
+      {
+        "paperId": "W2737252471"
+      },
+      {
+        "paperId": "W2738959495"
+      },
+      {
+        "paperId": "W2739275733"
+      },
+      {
+        "paperId": "W2739319684"
+      },
+      {
+        "paperId": "W2742329683"
+      },
+      {
+        "paperId": "W2751179194"
+      },
+      {
+        "paperId": "W2754931682"
+      },
+      {
+        "paperId": "W2756138490"
+      },
+      {
+        "paperId": "W2766920682"
+      },
+      {
+        "paperId": "W2767307339"
+      },
+      {
+        "paperId": "W2767972817"
+      },
+      {
+        "paperId": "W2769552776"
+      },
+      {
+        "paperId": "W2769789977"
+      },
+      {
+        "paperId": "W2771305575"
+      },
+      {
+        "paperId": "W2771396150"
+      },
+      {
+        "paperId": "W2771665408"
+      },
+      {
+        "paperId": "W2774782808"
+      },
+      {
+        "paperId": "W2784153116"
+      },
+      {
+        "paperId": "W2784208616"
+      },
+      {
+        "paperId": "W2786151040"
+      },
+      {
+        "paperId": "W2789950367"
+      },
+      {
+        "paperId": "W2791935104"
+      },
+      {
+        "paperId": "W2793333522"
+      },
+      {
+        "paperId": "W2795085730"
+      },
+      {
+        "paperId": "W2798320700"
+      },
+      {
+        "paperId": "W2799581224"
+      },
+      {
+        "paperId": "W2802653242"
+      },
+      {
+        "paperId": "W2802745431"
+      },
+      {
+        "paperId": "W2803762988"
+      },
+      {
+        "paperId": "W2805383889"
+      },
+      {
+        "paperId": "W2805677640"
+      },
+      {
+        "paperId": "W2807050405"
+      },
+      {
+        "paperId": "W2807743655"
+      },
+      {
+        "paperId": "W2807965149"
+      },
+      {
+        "paperId": "W2808136953"
+      },
+      {
+        "paperId": "W2808579374"
+      },
+      {
+        "paperId": "W2809092276"
+      },
+      {
+        "paperId": "W2809143401"
+      },
+      {
+        "paperId": "W2810381494"
+      },
+      {
+        "paperId": "W2810476200"
+      },
+      {
+        "paperId": "W2810536286"
+      },
+      {
+        "paperId": "W2810711254"
+      },
+      {
+        "paperId": "W2811112224"
+      },
+      {
+        "paperId": "W2811474420"
+      },
+      {
+        "paperId": "W2845081339"
+      },
+      {
+        "paperId": "W2878975049"
+      },
+      {
+        "paperId": "W2884623132"
+      },
+      {
+        "paperId": "W2884830739"
+      },
+      {
+        "paperId": "W2885815340"
+      },
+      {
+        "paperId": "W2886180210"
+      },
+      {
+        "paperId": "W2886332328"
+      },
+      {
+        "paperId": "W2890702538"
+      },
+      {
+        "paperId": "W2963993810"
+      },
+      {
+        "paperId": "W2964119695"
+      },
+      {
+        "paperId": "W3102661748"
+      },
+      {
+        "paperId": "W3121747242"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W4239439314"
+      },
+      {
+        "paperId": "W4256534172"
+      },
+      {
+        "paperId": "W4294215472"
+      },
+      {
+        "paperId": "W4300127641"
+      },
+      {
+        "paperId": "W4302558079"
+      },
+      {
+        "paperId": "W6729546044"
+      },
+      {
+        "paperId": "W6741706689"
+      },
+      {
+        "paperId": "W6750139865"
+      },
+      {
+        "paperId": "W6753286500"
+      }
+    ]
+  },
+  {
+    "paperId": "W3122636688",
+    "title": "Blockchain Disruption and Smart Contracts",
+    "abstract": "Blockchain technology provides decentralized consensus and potentially enlarges the contracting space through smart contracts. Meanwhile, generating decentralized consensus entails distributing information that necessarily alters the informational environment. We analyze how decentralization relates to consensus quality and how the quintessential features of blockchain remold the landscape of competition. Smart contracts can mitigate informational asymmetry and improve welfare and consumer surplus through enhanced entry and competition, yet distributing information during consensus generation may encourage greater collusion. In general, blockchains sustain market equilibria with a wider range of economic outcomes. We further discuss the implications for antitrust policies targeted at blockchain applications.Received May 31, 2017; editorial decision May 29, 2018 by Editor Itay Goldstein.",
+    "year": 2019,
+    "authors": [
+      {
+        "name": "Lin William Cong"
+      },
+      {
+        "name": "Zhiguo He"
+      }
+    ],
+    "citations": [
+      {
+        "paperId": "W1580191282"
+      },
+      {
+        "paperId": "W1969344535"
+      },
+      {
+        "paperId": "W1994352088"
+      },
+      {
+        "paperId": "W2016995324"
+      },
+      {
+        "paperId": "W2022730840"
+      },
+      {
+        "paperId": "W2071080659"
+      },
+      {
+        "paperId": "W2087660433"
+      },
+      {
+        "paperId": "W2091869658"
+      },
+      {
+        "paperId": "W2126160338"
+      },
+      {
+        "paperId": "W2129881428"
+      },
+      {
+        "paperId": "W2138595148"
+      },
+      {
+        "paperId": "W2155300024"
+      },
+      {
+        "paperId": "W2168876164"
+      },
+      {
+        "paperId": "W2188530018"
+      },
+      {
+        "paperId": "W2295506186"
+      },
+      {
+        "paperId": "W2313896093"
+      },
+      {
+        "paperId": "W2527797060"
+      },
+      {
+        "paperId": "W2598801365"
+      },
+      {
+        "paperId": "W2705871083"
+      },
+      {
+        "paperId": "W2738122318"
+      },
+      {
+        "paperId": "W2751010069"
+      },
+      {
+        "paperId": "W2752726215"
+      },
+      {
+        "paperId": "W2766660100"
+      },
+      {
+        "paperId": "W2768171704"
+      },
+      {
+        "paperId": "W2768978272"
+      },
+      {
+        "paperId": "W2769147736"
+      },
+      {
+        "paperId": "W2790611468"
+      },
+      {
+        "paperId": "W2794835353"
+      },
+      {
+        "paperId": "W2886706106"
+      },
+      {
+        "paperId": "W2895485960"
+      },
+      {
+        "paperId": "W3121889917"
+      },
+      {
+        "paperId": "W3121937569"
+      },
+      {
+        "paperId": "W3122965193"
+      },
+      {
+        "paperId": "W3123091046"
+      },
+      {
+        "paperId": "W3123597155"
+      },
+      {
+        "paperId": "W3123946675"
+      },
+      {
+        "paperId": "W3124177125"
+      },
+      {
+        "paperId": "W3124404715"
+      },
+      {
+        "paperId": "W3126104212"
+      },
+      {
+        "paperId": "W4211068006"
+      },
+      {
+        "paperId": "W4245451240"
+      },
+      {
+        "paperId": "W4248175462"
+      },
+      {
+        "paperId": "W6633926120"
+      },
+      {
+        "paperId": "W6642640664"
+      },
+      {
+        "paperId": "W6649926610"
+      },
+      {
+        "paperId": "W6686884436"
+      },
+      {
+        "paperId": "W6687902894"
+      },
+      {
+        "paperId": "W6728413577"
+      },
+      {
+        "paperId": "W6745347934"
+      },
+      {
+        "paperId": "W6746038172"
+      },
+      {
+        "paperId": "W6789389152"
+      },
+      {
+        "paperId": "W6835540395"
+      }
+    ]
+  }
+]
