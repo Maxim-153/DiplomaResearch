@@ -179,7 +179,53 @@ function App() {
       setIsLoading(false); 
     }
   };
-  // --- ИНТЕРФЕЙС ---
+  // --- ИНТЕРФЕЙС --
+  // --- ДИНАМИЧЕСКИЙ РЕНДЕР: РЕЖИМ ФОКУСА (БОРЬБА С ПАУТИНОЙ) ---
+  // Вычисляем, как должны выглядеть узлы ПРЯМО СЕЙЧАС (зависит от клика)
+  const displayNodes = nodes.map(node => {
+    // Если ни одна статья не выбрана, показываем все ярко
+    if (!selectedNode) return { ...node, style: { ...node.style, opacity: 1 } };
+
+    // Если выбрана, проверяем: это сама выбранная статья?
+    const isCurrent = node.id === selectedNode.id;
+    
+    // Или она связана с выбранной напрямую? (Проверяем по массиву edges)
+    const isConnected = edges.some(e => 
+      (e.source === selectedNode.id && e.target === node.id) || 
+      (e.target === selectedNode.id && e.source === node.id)
+    );
+
+    return {
+      ...node,
+      style: {
+        ...node.style,
+        opacity: isCurrent || isConnected ? 1 : 0.15, // Сильно гасим всех "чужих" (15% видимости)
+        transition: 'opacity 0.3s ease' // Плавное затухание
+      }
+    };
+  });
+
+  // Вычисляем, как должны выглядеть связи (прячем лишние нитки)
+  const displayEdges = edges.map(edge => {
+    // Если ничего не выбрано, делаем все нитки серыми и полупрозрачными
+    if (!selectedNode) {
+      return { ...edge, style: { stroke: '#666', strokeWidth: 1, opacity: 0.4 } };
+    }
+
+    // Линия касается выбранной статьи?
+    const isConnected = edge.source === selectedNode.id || edge.target === selectedNode.id;
+
+    return {
+      ...edge,
+      animated: isConnected, // МАГИЯ: Пускаем бегущую анимацию по активным связям!
+      style: {
+        stroke: isConnected ? '#007bff' : '#333', // Синие для активных, почти черные для фона
+        strokeWidth: isConnected ? 3 : 1, // Делаем активные толще
+        opacity: isConnected ? 1 : 0.05, // Чужие нитки прячем почти в ноль (5% видимости)
+        transition: 'opacity 0.3s ease, stroke-width 0.3s ease'
+      }
+    };
+  });
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '1200px', margin: '0 auto' }}>
       <h2>Semantic Research Graph</h2>
@@ -229,8 +275,8 @@ function App() {
       {/* Отрисовка холста графа */}
       <div style={{ position: 'relative', border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden' }}>
         <GraphMap 
-          nodes={nodes} 
-          edges={edges} 
+          nodes={displayNodes}
+          edges={displayEdges}
           onNodeClick={(event, node) => setSelectedNode(node)} 
           onInit={setRfInstance}
         />
