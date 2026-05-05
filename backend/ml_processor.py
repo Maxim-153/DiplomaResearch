@@ -1,17 +1,40 @@
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import KMeans
+from sklearn.feature_extraction.text import TfidfVectorizer
+import numpy as np
 
 # 1. Загружаем легковесную ИИ-модель для понимания текста
-# Она скачается один раз при первом запуске
 print("Загрузка ML-модели...")
 model = SentenceTransformer('all-MiniLM-L6-v2')
 print("Модель готова!")
 
+def get_cluster_name(abstracts, top_k=3):
+    """
+    Генерирует умное название для кластера на основе текстов его статей.
+    """
+    valid_texts = [text for text in abstracts if text and len(text.strip()) > 0]
+    if not valid_texts:
+        return "Разное"
+
+    try:
+        vectorizer = TfidfVectorizer(stop_words='english', max_features=1000)
+        tfidf_matrix = vectorizer.fit_transform(valid_texts)
+        feature_names = vectorizer.get_feature_names_out()
+        
+        summed_tfidf = np.sum(tfidf_matrix, axis=0)
+        top_indices = np.argsort(summed_tfidf).A1[-top_k:][::-1]
+        
+        top_words = [feature_names[i] for i in top_indices]
+        return ", ".join(top_words).title()
+        
+    except Exception as e:
+        print(f"Ошибка при генерации имени: {e}")
+        return "Группа статей"
+
 def process_clusters(papers, num_clusters=3):
     """
-    Принимает список статей, анализирует их тексты и добавляет каждой поле 'group'.
+    Принимает список статей, векторизует, кластеризует и дает названия группам.
     """
-    # ЗАЩИТА: Если статей меньше, чем кластеров, уменьшаем количество групп
     if len(papers) < num_clusters:
         num_clusters = max(1, len(papers))
 
@@ -20,26 +43,36 @@ def process_clusters(papers, num_clusters=3):
 
     # 2. Подготавливаем тексты
     for paper in papers:
-        # Пытаемся взять абстракт. Если его нет (None) - берем заголовок.
         text = paper.get("abstract") or paper.get("title") or ""
-        
-        if text.strip(): # Если текст не пустой
+        if text.strip():
             texts.append(text)
             valid_papers.append(paper)
 
-    # ЗАЩИТА: Если нет ни одного текста для анализа
     if not texts:
         return papers
 
-    # 3. Векторизация: превращаем человеческий текст в массивы чисел
+    # 3. Векторизация и Кластеризация
     embeddings = model.encode(texts)
-
-    # 4. Кластеризация (K-Means): находим 'num_clusters' центров и группируем статьи
     kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
     kmeans.fit(embeddings)
 
-    # 5. Раздаем статьям номера их групп (0, 1, 2...)
+    # 4. Распределяем тексты по корзинам (чтобы дать их почитать TF-IDF)
+    # Создаем словарь, где ключ - номер группы, а значение - список текстов
+    cluster_texts_dict = {i: [] for i in range(num_clusters)}
+    for i, text in enumerate(texts):
+        cluster_id = int(kmeans.labels_[i])
+        cluster_texts_dict[cluster_id].append(text)
+
+    # 5. Генерируем красивые названия для каждой корзины
+    cluster_names_dict = {}
+    for cluster_id, c_texts in cluster_texts_dict.items():
+         cluster_names_dict[cluster_id] = get_cluster_name(c_texts)
+
+    # 6. Раздаем статьям их номера и новые красивые имена
     for i, paper in enumerate(valid_papers):
-        paper["group"] = int(kmeans.labels_[i])
+        c_id = int(kmeans.labels_[i])
+        paper["group"] = c_id
+        # НОВОЕ: добавляем текстовое имя кластера
+        paper["group_name"] = cluster_names_dict[c_id] 
 
     return valid_papers

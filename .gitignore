@@ -1,10 +1,16 @@
 # Игнорируем только виртуальное окружение
+# Бэкенд (Python)
 backend/venv/
-
-# Игнорируем кэш Python (временные файлы)
 **/__pycache__/
 *.pyc
+backend/api_cache/
 
-# Игнорируем настройки IDE
+# Фронтенд (Node.js)
+frontend/node_modules/
+frontend/dist/
+.env
+
+# Системные файлы и IDE
 .vscode/
 .idea/
+.DS_Store

@@ -29,7 +29,9 @@ const Sidebar = ({ node, onClose }) => {
       <div style={{ margin: '15px 0', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px', fontSize: '13px', border: '1px solid #e9ecef' }}>
         <p style={{ margin: '0 0 8px 0' }}><strong>Год:</strong> {node.data.year || 'Неизвестно'}</p>
         <p style={{ margin: '0 0 8px 0' }}><strong>Авторы:</strong> {authorsText}</p>
-        <p style={{ margin: '0' }}><strong>ИИ Кластер:</strong> Группа {node.data.group}</p>
+<p style={{ margin: '0' }}>
+        <strong>ИИ Кластер:</strong> {node.data.group_name ? node.data.group_name : `Группа ${node.data.group}`}
+        </p>
       </div>
       
       <h4 style={{ borderBottom: '1px solid #eee', paddingBottom: '8px' }}>Абстракт:</h4>

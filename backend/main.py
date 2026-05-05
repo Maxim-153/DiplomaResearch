@@ -27,6 +27,13 @@ async def search(query: str):
         # 2. ML-обработка: Векторизация и кластеризация
         # На выходе получаем статьи, где у каждой есть поле 'group'
         processed_papers = process_clusters(raw_papers)
+        
+        # --- МАЯЧОК ДЛЯ ДЕБАГА ---
+        if processed_papers:
+            print("--- ДЕБАГ БЭКЕНДА ---")
+            print(f"Статья: {processed_papers[0].get('title')}")
+            print(f"Сгенерированное имя кластера: {processed_papers[0].get('group_name')}")
+            print("---------------------")
 
         # 3. Форматирование под React Flow
         nodes = []
@@ -41,7 +48,8 @@ async def search(query: str):
                     "abstract": paper.get("abstract", ""),
                     "group": paper.get("group", 0), # Группа от K-Means
                     "year": paper.get("year", 0),
-                 "authors": paper.get("authors", [])
+                 "authors": paper.get("authors", []),
+                 "group_name": paper.get("group_name")
                 }
             })
 
