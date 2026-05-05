@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { fetchGraphData } from './api'; 
-import GraphMap from './components/GraphMap'; // Наш холст для графа
+import GraphMap from './components/GraphMap'; 
 import { getLayoutedElements } from './layoutUtils';
 import Sidebar from './components/Sidebar';
 
 function App() {
   // --- СОСТОЯНИЯ (Память нашего компонента) ---
-  const [searchQuery, setSearchQuery] = useState(''); // То, что юзер вводит в поиск
-  const [nodes, setNodes] = useState([]); // Узлы графа
-  const [edges, setEdges] = useState([]); // Связи графа
-  const [isLoading, setIsLoading] = useState(false); // Крутилка загрузки
-  const [error, setError] = useState(null); // Текст ошибки, если что-то сломалось
-  const [selectedNode, setSelectedNode] = useState(null); // Память для кликнутой статьи
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [nodes, setNodes] = useState([]); 
+  const [edges, setEdges] = useState([]); 
+  const [isLoading, setIsLoading] = useState(false); 
+  const [error, setError] = useState(null); 
+  const [selectedNode, setSelectedNode] = useState(null); 
+
+  // --- НОВЫЕ СОСТОЯНИЯ: Память для годов ---
+  const [yearFrom, setYearFrom] = useState('');
+  const [yearTo, setYearTo] = useState('');
 
   // --- ПАЛИТРА ИИ-КЛАСТЕРОВ ---
-  // Эта функция берет номер группы от бэкенда и выдает красивый цвет
   const getClusterColor = (groupNumber) => {
-    // Массив пастельных цветов для наших тем
     const colors = ['#FFD1DC', '#AEC6CF', '#77DD77', '#FDFD96', '#CDB4DB'];
-    // Защита: если групп больше, чем цветов, идем по кругу
     return colors[groupNumber % colors.length];
   };
 
@@ -32,21 +33,21 @@ function App() {
     setError(null); 
 
     try {
-      const data = await fetchGraphData(searchQuery);
+      // ИЗМЕНЕНИЕ: Передаем года в нашу обновленную API-функцию
+      const data = await fetchGraphData(searchQuery, yearFrom, yearTo);
       console.log("Данные от Бэкенда:", data);
       
       if (!data.nodes || data.nodes.length === 0) {
-        setError("По вашему запросу ничего не найдено или сработал лимит API.");
+        setError("По вашему запросу ничего не найдено или все статьи отфильтрованы.");
         setNodes([]);
         setEdges([]);
         return;
       }
 
-      //  БЕЗОПАСНЫЙ ПАРСИНГ И РАСКРАСКА УЗЛОВ
+      // БЕЗОПАСНЫЙ ПАРСИНГ И РАСКРАСКА УЗЛОВ
       const safeNodes = data.nodes.map((node, index) => {
         return {
           ...node, 
-          // Ставим нули, так как Dagre всё равно их перезапишет
           position: { x: 0, y: 0 },
           style: { 
             backgroundColor: getClusterColor(node.data.group),
@@ -58,23 +59,18 @@ function App() {
         };
       });
 
-      //  ЗАЩИТА ОТ "ВЗРЫВА СВЯЗЕЙ" (EDGE FILTERING)
-      // 1. Создаем сверхбыстрый список (Set) из ID тех 30 статей, которые мы реально скачали
+      // ЗАЩИТА ОТ "ВЗРЫВА СВЯЗЕЙ" (EDGE FILTERING)
       const existingNodeIds = new Set(safeNodes.map(node => node.id));
-
-      // 2. Просеиваем связи. Оставляем ТОЛЬКО те, где оба конца линии существуют на экране
       const safeEdges = (data.edges || []).filter(edge => 
         existingNodeIds.has(edge.source) && existingNodeIds.has(edge.target)
       );
 
       // ПРОПУСКАЕМ ЧЕРЕЗ АЛГОРИТМ РАССТАНОВКИ 
-      // Важно: передаем очищенные safeEdges, а не все подряд!
       const { layoutedNodes, layoutedEdges } = getLayoutedElements(
         safeNodes, 
         safeEdges 
       );
 
-      // Сохраняем уже красивые, расставленные узлы и правильные связи
       setNodes(layoutedNodes);
       setEdges(layoutedEdges);
       
@@ -92,7 +88,7 @@ function App() {
       <h2>Semantic Research Graph</h2>
       
       {/* Форма поиска */}
-      <form onSubmit={handleSearch} style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
+      <form onSubmit={handleSearch} style={{ marginBottom: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
         <input 
           type="text" 
           value={searchQuery}
@@ -100,10 +96,27 @@ function App() {
           placeholder="Например: Blockchain..."
           style={{ padding: '10px', fontSize: '16px', width: '300px', borderRadius: '4px', border: '1px solid #ccc' }}
         />
+        
+        {/* НОВЫЕ ПОЛЯ ВВОДА ДЛЯ ГОДОВ */}
+        <input 
+          type="number" 
+          placeholder="Год от (напр. 2018)" 
+          value={yearFrom} 
+          onChange={(e) => setYearFrom(e.target.value)}
+          style={{ padding: '10px', fontSize: '16px', width: '150px', borderRadius: '4px', border: '1px solid #ccc' }}
+        />
+        <input 
+          type="number" 
+          placeholder="Год до (напр. 2024)" 
+          value={yearTo} 
+          onChange={(e) => setYearTo(e.target.value)}
+          style={{ padding: '10px', fontSize: '16px', width: '150px', borderRadius: '4px', border: '1px solid #ccc' }}
+        />
+
         <button 
           type="submit" 
           disabled={isLoading}
-          style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
+          style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', backgroundColor: isLoading ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: '4px' }}
         >
           {isLoading ? 'Ищем...' : 'Построить граф'}
         </button>
@@ -117,15 +130,13 @@ function App() {
       )}
 
       {/* Отрисовка холста графа */}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden' }}>
         <GraphMap 
           nodes={nodes} 
           edges={edges} 
-          // React Flow сам передаст нам событие (event) и узел (node), на который кликнули
           onNodeClick={(event, node) => setSelectedNode(node)} 
         />
         
-        {/* Выводим боковую панель. Если selectedNode пустой, она будет скрыта */}
         <Sidebar 
           node={selectedNode} 
           onClose={() => setSelectedNode(null)} 

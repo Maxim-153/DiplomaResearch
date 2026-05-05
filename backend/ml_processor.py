@@ -1,12 +1,21 @@
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import KMeans
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, ENGLISH_STOP_WORDS
 import numpy as np
 
 # 1. Загружаем легковесную ИИ-модель для понимания текста
 print("Загрузка ML-модели...")
 model = SentenceTransformer('all-MiniLM-L6-v2')
 print("Модель готова!")
+
+# 1. ЗАЩИТА: Создаем базовый словарь русских мусорных слов
+RU_STOP_WORDS = [
+    "на", "от", "для", "из", "по", "как", "что", "это", "или", "при", 
+    "то", "за", "об", "до", "со", "же", "вы", "мы", "они", "он", "она"
+]
+
+# Объединяем английский и русский словари
+COMBINED_STOP_WORDS = list(ENGLISH_STOP_WORDS) + RU_STOP_WORDS
 
 def get_cluster_name(abstracts, top_k=3):
     """
@@ -17,16 +26,24 @@ def get_cluster_name(abstracts, top_k=3):
         return "Разное"
 
     try:
-        vectorizer = TfidfVectorizer(stop_words='english', max_features=1000)
+        vectorizer = TfidfVectorizer(
+            stop_words=COMBINED_STOP_WORDS,
+            max_features=1000,
+            token_pattern=r'(?u)\b[a-zA-Zа-яА-ЯёЁ]{3,}\b' # Только слова из 3 и более букв
+        )
         tfidf_matrix = vectorizer.fit_transform(valid_texts)
         feature_names = vectorizer.get_feature_names_out()
+        
+        # ЗАЩИТА: Если после фильтрации слов не осталось вообще
+        if len(feature_names) == 0:
+            return "Общая тема"
         
         summed_tfidf = np.sum(tfidf_matrix, axis=0)
         top_indices = np.argsort(summed_tfidf).A1[-top_k:][::-1]
         
         top_words = [feature_names[i] for i in top_indices]
         return ", ".join(top_words).title()
-        
+    
     except Exception as e:
         print(f"Ошибка при генерации имени: {e}")
         return "Группа статей"

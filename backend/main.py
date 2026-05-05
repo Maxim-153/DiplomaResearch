@@ -15,19 +15,27 @@ app.add_middleware(
 )
 
 @app.get("/api/search")
-async def search(query: str):
+async def search(query: str, year_from: int = None, year_to: int = None):
     try:
-        # 1. Сбор данных через API Semantic Scholar
-        raw_papers = fetch_papers(query)
-        
-        # Если ничего не нашли, возвращаем пустые списки
+        # 1. Сбор данных
+        # ИЗМЕНЕНИЕ: Теперь мы передаем года прямо в наш Адаптер!
+        raw_papers = fetch_papers(query, year_from, year_to)
+
+        # --- ДЕБАГ-МАЯЧОК ДЛЯ ТЕРМИНАЛА ---
+        print("\n--- СТАТИСТИКА ФИЛЬТРАЦИИ ---")
+        print(f"Всего скачано из API: {len(raw_papers)}")
+        print(f"Осталось после фильтра по годам: {len(raw_papers)}")
+        print("-----------------------------\n")
+
+        # Если после фильтрации ничего не осталось
         if not raw_papers:
             return {"nodes": [], "edges": []}
+        # ---------------------------------------------------
 
         # 2. ML-обработка: Векторизация и кластеризация
         # На выходе получаем статьи, где у каждой есть поле 'group'
         processed_papers = process_clusters(raw_papers)
-        
+
         # --- МАЯЧОК ДЛЯ ДЕБАГА ---
         if processed_papers:
             print("--- ДЕБАГ БЭКЕНДА ---")
@@ -49,7 +57,8 @@ async def search(query: str):
                     "group": paper.get("group", 0), # Группа от K-Means
                     "year": paper.get("year", 0),
                  "authors": paper.get("authors", []),
-                 "group_name": paper.get("group_name")
+                 "group_name": paper.get("group_name"),
+                 "url": paper.get("url")
                 }
             })
 

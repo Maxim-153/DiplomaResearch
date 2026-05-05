@@ -1,19 +1,28 @@
+// Файл: /frontend/src/components/GraphMap.jsx
 import React from 'react';
-import ReactFlow, { Background, Controls } from 'reactflow';
-import 'reactflow/dist/style.css';
+import ReactFlow, { Background, Controls, MiniMap } from 'reactflow';
+import 'reactflow/dist/style.css'; // Обязательные стили
 
-// 1. ДОБАВИЛИ onNodeClick в параметры
 const GraphMap = ({ nodes, edges, onNodeClick }) => {
   return (
-    <div style={{ height: '70vh', width: '100%', border: '2px solid #ccc', borderRadius: '8px' }}>
+    <div style={{ height: '75vh', width: '100%', backgroundColor: '#1e1e1e', borderRadius: '8px' }}>
       <ReactFlow 
         nodes={nodes} 
-        edges={edges}
-        fitView
-        onNodeClick={onNodeClick} // 2. ПЕРЕДАЛИ его внутрь движка графа
+        edges={edges} 
+        onNodeClick={onNodeClick}
+        fitView // Автоматически центрирует камеру при загрузке[cite: 1]
+        fitViewOptions={{ padding: 0.2 }} // Оставляем 20% отступа по краям
+        nodesDraggable={true} // Разрешаем двигать карточки
+        theme="dark"
       >
-        <Background color="#aaa" gap={16} />
+        <Background color="#444" gap={16} />
         <Controls />
+        {/* Добавляем мини-карту, чтобы всегда видеть, где находится граф! */}
+        <MiniMap 
+          nodeColor="#007bff" 
+          maskColor="rgba(0, 0, 0, 0.5)" 
+          style={{ backgroundColor: '#2a2a2a' }} 
+        />
       </ReactFlow>
     </div>
   );
