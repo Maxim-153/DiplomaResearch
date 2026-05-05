@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchGraphData } from './api'; // Наш почтальон к Python
+import { fetchGraphData } from './api'; 
 import GraphMap from './components/GraphMap'; // Наш холст для графа
 import { getLayoutedElements } from './layoutUtils';
 import Sidebar from './components/Sidebar';
