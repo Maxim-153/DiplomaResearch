@@ -1,122 +1,88 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useState } from 'react';
+import { fetchGraphData } from './api'; // Наш почтальон к Python
+import GraphMap from './components/GraphMap'; // Наш холст для графа
 
 function App() {
-  const [count, setCount] = useState(0)
+  // --- СОСТОЯНИЯ (Память нашего компонента) ---
+  const [searchQuery, setSearchQuery] = useState(''); // То, что юзер вводит в поиск
+  const [nodes, setNodes] = useState([]); // Узлы графа
+  const [edges, setEdges] = useState([]); // Связи графа[cite: 1]
+  const [isLoading, setIsLoading] = useState(false); // Крутилка загрузки
+  const [error, setError] = useState(null); // Текст ошибки, если что-то сломалось
 
+  // --- ФУНКЦИЯ ПОИСКА ---
+const handleSearch = async (e) => {
+    e.preventDefault(); 
+
+    if (!searchQuery.trim()) return; 
+
+    setIsLoading(true);
+    setError(null); 
+
+    try {
+      const data = await fetchGraphData(searchQuery);
+      
+      if (!data.nodes || data.nodes.length === 0) {
+        setError("По вашему запросу ничего не найдено или сработал лимит API.");
+        setNodes([]);
+        setEdges([]);
+        return;
+      }
+
+      // БЕЗОПАСНЫЙ ПАРСИНГ (Защита от падения)
+      // Проходимся по всем узлам. Если у узла нет поля position, добавляем его сами
+      const safeNodes = data.nodes.map((node, index) => {
+        return {
+          ...node, // Берем все старые данные (id, data с title и abstract)
+          // Располагаем их "лесенкой", умножая индекс на 150, чтобы они не слиплись в одной точке
+          position: node.position || { x: index * 150, y: index * 100 } 
+        };
+      });
+
+      setNodes(safeNodes);
+      setEdges(data.edges || []);
+      
+    } catch (err) {
+      setError("Не удалось загрузить граф. Проверь консоль браузера.");
+    } finally {
+      setIsLoading(false); 
+    }
+  };
+
+  // --- ИНТЕРФЕЙС ---
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+    <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '1200px', margin: '0 auto' }}>
+      <h2>🎓 Semantic Research Graph</h2>
+      
+      {/* Форма поиска */}
+      <form onSubmit={handleSearch} style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
+        <input 
+          type="text" 
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Например: Machine Learning..."
+          style={{ padding: '10px', fontSize: '16px', width: '300px', borderRadius: '4px', border: '1px solid #ccc' }}
+        />
+        <button 
+          type="submit" 
+          disabled={isLoading}
+          style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
         >
-          Count is {count}
+          {isLoading ? 'Ищем...' : 'Построить граф'}
         </button>
-      </section>
+      </form>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      {/* Вывод ошибок */}
+      {error && (
+        <div style={{ color: 'red', marginBottom: '20px', padding: '10px', backgroundColor: '#ffe6e6', borderRadius: '4px' }}>
+          {error}
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      )}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Отрисовка холста графа */}
+      <GraphMap nodes={nodes} edges={edges} />
+    </div>
+  );
 }
 
-export default App
+export default App;
