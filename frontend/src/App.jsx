@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { fetchGraphData } from './api'; // Наш почтальон к Python
 import GraphMap from './components/GraphMap'; // Наш холст для графа
+import { getLayoutedElements } from './layoutUtils';
 
 function App() {
   // --- СОСТОЯНИЯ (Память нашего компонента) ---
@@ -10,8 +11,17 @@ function App() {
   const [isLoading, setIsLoading] = useState(false); // Крутилка загрузки
   const [error, setError] = useState(null); // Текст ошибки, если что-то сломалось
 
+// --- ПАЛИТРА ИИ-КЛАСТЕРОВ ---
+  // Эта функция берет номер группы от бэкенда и выдает красивый цвет
+  const getClusterColor = (groupNumber) => {
+    // Массив пастельных цветов для наших тем
+    const colors = ['#FFD1DC', '#AEC6CF', '#77DD77', '#FDFD96', '#CDB4DB'];
+    // Защита: если групп больше, чем цветов, идем по кругу
+    return colors[groupNumber % colors.length];
+  };
+
   // --- ФУНКЦИЯ ПОИСКА ---
-const handleSearch = async (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault(); 
 
     if (!searchQuery.trim()) return; 
@@ -29,18 +39,32 @@ const handleSearch = async (e) => {
         return;
       }
 
-      // БЕЗОПАСНЫЙ ПАРСИНГ (Защита от падения)
-      // Проходимся по всем узлам. Если у узла нет поля position, добавляем его сами
+// 🛡️ БЕЗОПАСНЫЙ ПАРСИНГ И РАСКРАСКА
       const safeNodes = data.nodes.map((node, index) => {
         return {
-          ...node, // Берем все старые данные (id, data с title и abstract)
-          // Располагаем их "лесенкой", умножая индекс на 150, чтобы они не слиплись в одной точке
-          position: node.position || { x: index * 150, y: index * 100 } 
+          ...node, 
+          // Убираем старую "лесенку" { x: index * 200, y: index * 100 }
+          // Ставим нули, так как Dagre всё равно их перезапишет
+          position: { x: 0, y: 0 },
+          style: { 
+            backgroundColor: getClusterColor(node.data.group),
+            borderRadius: '8px',
+            padding: '10px',
+            border: '2px solid #333',
+            boxShadow: '2px 2px 5px rgba(0,0,0,0.2)' 
+          }
         };
       });
 
-      setNodes(safeNodes);
-      setEdges(data.edges || []);
+      // 🔥 ПРОПУСКАЕМ ЧЕРЕЗ АЛГОРИТМ РАССТАНОВКИ 🔥
+      const { layoutedNodes, layoutedEdges } = getLayoutedElements(
+        safeNodes, 
+        data.edges || []
+      );
+
+      // Сохраняем уже красивые, расставленные узлы!
+      setNodes(layoutedNodes);
+      setEdges(layoutedEdges);
       
     } catch (err) {
       setError("Не удалось загрузить граф. Проверь консоль браузера.");
