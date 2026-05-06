@@ -272,15 +272,19 @@ function App() {
         </div>
       )}
 
-      {/* Отрисовка холста графа */}
-      <div style={{ position: 'relative', border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden' }}>
-        <GraphMap 
-          nodes={displayNodes}
-          edges={displayEdges}
-          onNodeClick={(event, node) => setSelectedNode(node)} 
-          onNodeDoubleClick={(event, node) => handleExpand(node.id)}// Добавляем двойной клик для расширения
-          onInit={setRfInstance}
-        />
+{/* Отрисовка холста графа */}
+      <div style={{ display: 'flex', flexDirection: 'row', height: '85vh', border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden' }}>
+        
+        {/* Контейнер графа занимает всё свободное место (flex: 1) */}
+        <div style={{ flex: 1, position: 'relative' }}>
+          <GraphMap 
+            nodes={displayNodes}
+            edges={displayEdges}
+            onNodeClick={(event, node) => setSelectedNode(node)} 
+            onNodeDoubleClick={(event, node) => handleExpand(node.id)} 
+            onInit={setRfInstance}
+          />
+        </div>
         
         <Sidebar 
           node={selectedNode} 

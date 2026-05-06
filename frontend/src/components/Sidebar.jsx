@@ -11,7 +11,7 @@ const Sidebar = ({ node, onClose, onExpand }) => {
 
   return (
     <div style={{
-      position: 'absolute', right: 0, top: 0, width: '350px', height: '100%',
+      position: 'relative', width: '350px', height: '100%',
       backgroundColor: '#f8f9fa', boxShadow: '-2px 0 10px rgba(0,0,0,0.1)',
       padding: '20px', zIndex: 10, display: 'flex', flexDirection: 'column',
       overflowY: 'auto' 

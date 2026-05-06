@@ -18,11 +18,19 @@ const GraphMap = ({ nodes, edges, onNodeClick, onNodeDoubleClick, onInit }) => {
       >
         <Background color="#444" gap={16} />
         <Controls />
-        {/* Добавляем мини-карту, чтобы всегда видеть, где находится граф! */}
+        {/* ИЗМЕНЕНИЕ: Умная мини-карта, реагирующая на режим фокуса! */}
         <MiniMap 
-          nodeColor="#007bff" 
+          nodeColor={(node) => {
+            // Если узел "погашен" нашим режимом фокуса (прозрачность меньше 1),
+            // мы красим его в темно-серый цвет, чтобы он не отвлекал на миникарте.
+            if (node.style?.opacity && node.style.opacity < 1) return '#2a2a2a';
+            
+            // Если узел активен (или мы просто смотрим на весь граф без фокуса), 
+            // берем цвет его ИИ-кластера. Если цвета вдруг нет - берем синий.
+            return node.style?.backgroundColor || '#007bff';
+          }}
           maskColor="rgba(0, 0, 0, 0.5)" 
-          style={{ backgroundColor: '#2a2a2a' }} 
+          style={{ backgroundColor: '#1e1e1e' }} 
         />
       </ReactFlow>
     </div>
