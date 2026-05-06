@@ -278,6 +278,7 @@ function App() {
           nodes={displayNodes}
           edges={displayEdges}
           onNodeClick={(event, node) => setSelectedNode(node)} 
+          onNodeDoubleClick={(event, node) => handleExpand(node.id)}// Добавляем двойной клик для расширения
           onInit={setRfInstance}
         />
         

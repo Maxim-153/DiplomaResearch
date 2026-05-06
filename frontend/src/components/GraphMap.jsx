@@ -1,17 +1,17 @@
-// Файл: /frontend/src/components/GraphMap.jsx
 import React from 'react';
 import ReactFlow, { Background, Controls, MiniMap } from 'reactflow';
 import 'reactflow/dist/style.css'; // Обязательные стили
 
-const GraphMap = ({ nodes, edges, onNodeClick, onInit }) => {
+const GraphMap = ({ nodes, edges, onNodeClick, onNodeDoubleClick, onInit }) => {
   return (
     <div style={{ height: '75vh', width: '100%', backgroundColor: '#1e1e1e', borderRadius: '8px' }}>
       <ReactFlow 
         nodes={nodes} 
         edges={edges} 
         onNodeClick={onNodeClick}
+        onNodeDoubleClick={onNodeDoubleClick}
         onInit={onInit}
-        fitView // Автоматически центрирует камеру при загрузке[cite: 1]
+        fitView // Автоматически центрирует камеру при загрузке
         fitViewOptions={{ padding: 0.2 }} // Оставляем 20% отступа по краям
         nodesDraggable={true} // Разрешаем двигать карточки
         theme="dark"
