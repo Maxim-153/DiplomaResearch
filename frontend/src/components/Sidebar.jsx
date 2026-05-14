@@ -38,7 +38,7 @@ const Sidebar = ({ node, onClose, onExpand }) => {
       {/* --- ИЗМЕНЕНИЕ 2: БЛОК С ДВУМЯ КНОПКАМИ --- */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
         
-        {/* Твоя старая кнопка: Читать оригинал */}
+        {/*старая кнопка: Читать оригинал */}
         {node.data.url ? (
           <a 
             href={node.data.url} 

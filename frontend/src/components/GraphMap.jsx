@@ -2,14 +2,17 @@ import React from 'react';
 import ReactFlow, { Background, Controls, MiniMap } from 'reactflow';
 import 'reactflow/dist/style.css'; // Обязательные стили
 
-const GraphMap = ({ nodes, edges, onNodeClick, onNodeDoubleClick, onInit }) => {
+const GraphMap = ({ nodes, edges, onNodesChange, onEdgesChange, onNodeClick, onNodeDoubleClick, onPaneClick, onInit }) => {
   return (
     <div style={{ height: '75vh', width: '100%', backgroundColor: '#1e1e1e', borderRadius: '8px' }}>
       <ReactFlow 
         nodes={nodes} 
         edges={edges} 
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         onNodeClick={onNodeClick}
         onNodeDoubleClick={onNodeDoubleClick}
+        onPaneClick={onPaneClick}
         onInit={onInit}
         fitView // Автоматически центрирует камеру при загрузке
         fitViewOptions={{ padding: 0.2 }} // Оставляем 20% отступа по краям

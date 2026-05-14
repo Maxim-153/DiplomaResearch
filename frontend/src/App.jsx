@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { applyNodeChanges, applyEdgeChanges } from 'reactflow';
 import { fetchGraphData, expandGraphData } from './api'; 
 import GraphMap from './components/GraphMap'; 
 import { getLayoutedElements } from './layoutUtils';
@@ -23,6 +24,16 @@ function App() {
     const colors = ['#FFD1DC', '#AEC6CF', '#77DD77', '#FDFD96', '#CDB4DB'];
     return colors[groupNumber % colors.length];
   };
+
+  // --- ОБРАБОТЧИКИ СОСТОЯНИЯ REACT FLOW (Защита от сброса координат) ---
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    []
+  );
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    []
+  );
 
   // --- ФУНКЦИЯ ПОИСКА ---
  const handleSearch = async (e) => {
@@ -180,52 +191,74 @@ function App() {
     }
   };
   // --- ИНТЕРФЕЙС --
+
+  // --- ОБРАБОТЧИКИ КЛИКОВ (Сброс золотых рамок) ---
+  const handlePaneClick = () => {
+    setSelectedNode(null);
+    setNodes(prev => prev.map(n => ({
+      ...n,
+      style: { ...n.style, border: '2px solid #333', boxShadow: '2px 2px 5px rgba(0,0,0,0.2)' }
+    })));
+  };
+
+  const handleNodeClick = (event, node) => {
+    setSelectedNode(node);
+    setNodes(prev => prev.map(n => ({
+      ...n,
+      style: { ...n.style, border: '2px solid #333', boxShadow: '2px 2px 5px rgba(0,0,0,0.2)' }
+    })));
+  };
+
   // --- ДИНАМИЧЕСКИЙ РЕНДЕР: РЕЖИМ ФОКУСА (БОРЬБА С ПАУТИНОЙ) ---
   // Вычисляем, как должны выглядеть узлы ПРЯМО СЕЙЧАС (зависит от клика)
   const displayNodes = nodes.map(node => {
+    const isCurrent = selectedNode && node.id === selectedNode.id;
+
     // Если ни одна статья не выбрана, показываем все ярко
     if (!selectedNode) return { ...node, style: { ...node.style, opacity: 1 } };
 
-    // Если выбрана, проверяем: это сама выбранная статья?
-    const isCurrent = node.id === selectedNode.id;
-    
     // Или она связана с выбранной напрямую? (Проверяем по массиву edges)
     const isConnected = edges.some(e => 
       (e.source === selectedNode.id && e.target === node.id) || 
       (e.target === selectedNode.id && e.source === node.id)
     );
 
-    return {
-      ...node,
-      style: {
-        ...node.style,
-        opacity: isCurrent || isConnected ? 1 : 0.15, // Сильно гасим всех "чужих" (15% видимости)
-        transition: 'opacity 0.3s ease' // Плавное затухание
-      }
+    // Базовые настройки для фокусного режима (гасим чужие узлы)
+    const dynamicStyle = {
+      ...node.style,
+      opacity: isCurrent || isConnected ? 1 : 0.15, // Сильно гасим всех "чужих"
+      transition: 'all 0.3s ease'
     };
-  });
 
-  // Вычисляем, как должны выглядеть связи (прячем лишние нитки)
-  const displayEdges = edges.map(edge => {
-    // Если ничего не выбрано, делаем все нитки серыми и полупрозрачными
-    if (!selectedNode) {
-      return { ...edge, style: { stroke: '#666', strokeWidth: 1, opacity: 0.4 } };
+    // ЯВНАЯ ПОДСВЕТКА ВЫБРАННОЙ СТАТЬИ
+    if (isCurrent) {
+      dynamicStyle.border = '3px solid #007bff';
+      dynamicStyle.boxShadow = '0px 0px 20px rgba(0, 123, 255, 0.8)';
     }
 
-    // Линия касается выбранной статьи?
-    const isConnected = edge.source === selectedNode.id || edge.target === selectedNode.id;
-
     return {
-      ...edge,
-      animated: isConnected, // МАГИЯ: Пускаем бегущую анимацию по активным связям!
-      style: {
-        stroke: isConnected ? '#007bff' : '#333', // Синие для активных, почти черные для фона
-        strokeWidth: isConnected ? 3 : 1, // Делаем активные толще
-        opacity: isConnected ? 1 : 0.05, // Чужие нитки прячем почти в ноль (5% видимости)
-        transition: 'opacity 0.3s ease, stroke-width 0.3s ease'
-      }
+      ...node,
+      style: dynamicStyle
     };
   });
+
+  // Вычисляем, как должны выглядеть связи (Используем свойство hidden)
+  const displayEdges = edges.map(edge => {
+    // Если ничего не выбрано - показываем все связи (режим обзора)
+    if (!selectedNode) {
+      return { ...edge, hidden: false, animated: false, style: { stroke: '#666', strokeWidth: 1, opacity: 0.4 } };
+    }
+
+    // Если статья выбрана - оставляем в памяти React Flow все связи, но чужие скрываем визуально
+    const isConnected = edge.source === selectedNode.id || edge.target === selectedNode.id;
+    return {
+      ...edge,
+      hidden: !isConnected, // Прячем связь, не удаляя её физически (спасает от глюка 0,0)
+      animated: isConnected,
+      style: { stroke: isConnected ? '#007bff' : '#666', strokeWidth: isConnected ? 3 : 1, opacity: 1 }
+    };
+  });
+
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '1200px', margin: '0 auto' }}>
       <h2>Semantic Research Graph</h2>
@@ -280,15 +313,18 @@ function App() {
           <GraphMap 
             nodes={displayNodes}
             edges={displayEdges}
-            onNodeClick={(event, node) => setSelectedNode(node)} 
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onNodeClick={handleNodeClick} 
             onNodeDoubleClick={(event, node) => handleExpand(node.id)} 
+            onPaneClick={handlePaneClick} // Клик по фону сбрасывает фокус и рамки
             onInit={setRfInstance}
           />
         </div>
         
         <Sidebar 
           node={selectedNode} 
-          onClose={() => setSelectedNode(null)} 
+          onClose={handlePaneClick} 
           onExpand={handleExpand}
         />
       </div>
