@@ -3,7 +3,14 @@ import requests
 import json
 import os
 
-CACHE_DIR = "api_cache"
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+except ModuleNotFoundError:
+    pass
+
+CACHE_DIR = os.path.join(os.path.dirname(__file__), "api_cache")
+OPENALEX_MAILTO = os.getenv("OPENALEX_MAILTO")
 
 if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
@@ -28,6 +35,14 @@ def reconstruct_abstract(inverted_index):
         print(f"Ошибка сборки текста: {e}")
         return ""
 
+def add_mailto(params):
+    if OPENALEX_MAILTO:
+        params["mailto"] = OPENALEX_MAILTO
+    return params
+
+def clean_openalex_id(value):
+    return (value or "").replace("https://openalex.org/", "")
+
 # ИЗМЕНЕНИЕ 1: Добавили year_from и year_to в параметры функции
 def fetch_papers(query: str, year_from: int = None, year_to: int = None, limit: int = 30):
     
@@ -47,11 +62,10 @@ def fetch_papers(query: str, year_from: int = None, year_to: int = None, limit: 
 
     # 2. ЗАПРОС К OPENALEX API
     url = "https://api.openalex.org/works"
-    params = {
+    params = add_mailto({
         "search": query,
-        "per_page": limit,
-        "mailto": "m46385650@gmail.com" 
-    }
+        "per_page": limit
+    })
     
     # ИЗМЕНЕНИЕ 3: Собираем фильтры для OpenAlex
     filter_parts = []
@@ -75,14 +89,22 @@ def fetch_papers(query: str, year_from: int = None, year_to: int = None, limit: 
             # 3. ПАТТЕРН АДАПТЕР (Превращаем OpenAlex в Semantic Scholar)
             formatted_data = []
             for item in results:
-                authors = [{"name": auth.get("author", {}).get("display_name", "Unknown")} 
-                           for auth in item.get("authorships", [])]
+                authors = [
+                    {
+                        "id": clean_openalex_id(auth.get("author", {}).get("id")),
+                        "name": auth.get("author", {}).get("display_name") or "Unknown"
+                    }
+                    for auth in item.get("authorships", [])
+                ]
                 
-                citations = [{"paperId": ref.replace("https://openalex.org/", "")} 
-                             for ref in item.get("referenced_works", [])]
+                citations = [
+                    {"paperId": clean_openalex_id(ref)}
+                    for ref in item.get("referenced_works", [])
+                    if ref
+                ]
                 
                 formatted_data.append({
-                    "paperId": item.get("id", "").replace("https://openalex.org/", ""),
+                    "paperId": clean_openalex_id(item.get("id")),
                     "title": item.get("title") or "Без названия",
                     "abstract": reconstruct_abstract(item.get("abstract_inverted_index")),
                     "year": item.get("publication_year", 0),
@@ -126,11 +148,10 @@ def fetch_citations_for_paper(paper_id: str, limit: int = 15):
 
     # 2. Запрос к OpenAlex со специальным фильтром
     url = "https://api.openalex.org/works"
-    params = {
+    params = add_mailto({
         "filter": f"cites:{paper_id}", # Магия здесь: ищем тех, кто цитирует этот ID
-        "per_page": limit,
-        "mailto": "m46385650@gmail.com" 
-    }
+        "per_page": limit
+    })
     
     print(f"--- [API] Ищу кто цитирует статью: {paper_id} ---")
     
@@ -143,19 +164,28 @@ def fetch_citations_for_paper(paper_id: str, limit: int = 15):
             
             # 3. Переупаковка в наш формат (Адаптер)
             for item in results:
-                authors = [{"name": auth.get("author", {}).get("display_name", "Unknown")} 
-                           for auth in item.get("authorships", [])]
+                authors = [
+                    {
+                        "id": clean_openalex_id(auth.get("author", {}).get("id")),
+                        "name": auth.get("author", {}).get("display_name") or "Unknown"
+                    }
+                    for auth in item.get("authorships", [])
+                ]
                 
-                citations = [{"paperId": ref.replace("https://openalex.org/", "")} 
-                             for ref in item.get("referenced_works", [])]
+                citations = [
+                    {"paperId": clean_openalex_id(ref)}
+                    for ref in item.get("referenced_works", [])
+                    if ref
+                ]
                 
                 formatted_data.append({
-                    "paperId": item.get("id", "").replace("https://openalex.org/", ""),
+                    "paperId": clean_openalex_id(item.get("id")),
                     "title": item.get("title") or "Без названия",
                     "abstract": reconstruct_abstract(item.get("abstract_inverted_index")),
                     "year": item.get("publication_year", 0),
                     "authors": authors[:5], 
-                    "citations": citations
+                    "citations": citations,
+                    "url": item.get("doi") or item.get("id")
                 })
             
             # Сохраняем в кэш

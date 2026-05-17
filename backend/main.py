@@ -1,14 +1,29 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from semantic_api import fetch_papers, fetch_citations_for_paper 
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+except ModuleNotFoundError:
+    pass
+
+from semantic_api import fetch_papers, fetch_citations_for_paper
 from ml_processor import process_clusters
+
+
+def get_cors_origins():
+    raw_origins = os.getenv("CORS_ORIGINS")
+    if not raw_origins:
+        return ["http://localhost:5173", "http://127.0.0.1:5173"]
+    return [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
 
 app = FastAPI()
 
 # ЗАЩИТА CORS: Критически важна, чтобы React смог достучаться до FastAPI
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Разрешаем запросы с любых адресов (для разработки)
+    allow_origins=get_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"], # Разрешаем все типы запросов (GET, POST и т.д.)
     allow_headers=["*"], # Разрешаем любые заголовки
@@ -47,7 +62,12 @@ async def search(query: str, year_from: int = None, year_to: int = None):
         nodes = []
         edges = []
 
+        paper_ids = {paper.get("paperId") for paper in processed_papers if paper.get("paperId")}
+
         for paper in processed_papers:
+            if not paper.get("paperId"):
+                continue
+
             # Создаем узел (Node)
             nodes.append({
                 "id": paper["paperId"],
@@ -67,6 +87,9 @@ async def search(query: str, year_from: int = None, year_to: int = None):
                 for citation in paper["citations"]:
                     # Проверяем, есть ли цитируемая статья в нашем списке найденных
                     # (чтобы не рисовать связи "в никуда")
+                    if citation.get("paperId") not in paper_ids:
+                        continue
+
                     edges.append({
                         "id": f"e-{paper['paperId']}-{citation['paperId']}",
                         "source": paper["paperId"],
@@ -96,7 +119,12 @@ async def expand_graph(paper_id: str):
         nodes = []
         edges = []
 
+        expanded_ids = {paper.get("paperId") for paper in processed_papers if paper.get("paperId")}
+
         for paper in processed_papers:
+            if not paper.get("paperId"):
+                continue
+
             nodes.append({
                 "id": paper.get("paperId"),
                 "position": {"x": 0, "y": 0},
@@ -122,6 +150,9 @@ async def expand_graph(paper_id: str):
             # На всякий случай сохраняем и внутренние ссылки между новыми статьями
             if "citations" in paper:
                 for citation in paper["citations"]:
+                    if citation.get("paperId") not in expanded_ids and citation.get("paperId") != paper_id:
+                        continue
+
                     edges.append({
                         "id": f"e-{paper.get('paperId')}-{citation.get('paperId')}",
                         "source": paper.get("paperId"),

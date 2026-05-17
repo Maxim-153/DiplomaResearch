@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Настраиваем "почтальона", который знает адрес нашего FastAPI-сервера
 const apiClient = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
     headers: {
         'Content-Type': 'application/json',
     },
@@ -35,9 +35,7 @@ export const fetchGraphData = async (searchQuery, yearFrom, yearTo) => {
     } catch (error) {
         // Обязательный перехват ошибок, чтобы сайт не превратился в белый экран
         console.error("Ошибка при получении данных с бэкенда:", error);
-        
-        // Возвращаем пустую структуру, чтобы React Flow не сломался
-        return { nodes: [], edges: [] };
+        throw error;
     }
 };
 export const expandGraphData = async (paperId) => {
@@ -53,9 +51,6 @@ export const expandGraphData = async (paperId) => {
     } catch (error) {
         // Обязательный перехват ошибок
         console.error(`Ошибка при расширении графа для статьи ${paperId}:`, error);
-        
-        // В случае ошибки (например, упал сервер), возвращаем пустые массивы,
-        // чтобы React Flow не завис с белым экраном
-        return { nodes: [], edges: [] };
+        throw error;
     }
 };

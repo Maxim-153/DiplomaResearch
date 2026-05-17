@@ -1,79 +1,111 @@
-// Файл: /frontend/src/components/Sidebar.jsx
 import React from 'react';
 
-// ИЗМЕНЕНИЕ 1: Добавили onExpand сюда
 const Sidebar = ({ node, onClose, onExpand }) => {
-  if (!node) return null;
+  const isOpen = Boolean(node);
 
+  if (!isOpen) {
+    return <aside className="details-drawer" aria-hidden="true" />;
+  }
+
+  const isAuthor = node.data.type === 'author';
   const authorsText = node.data.authors && node.data.authors.length > 0
-    ? node.data.authors.map(a => a.name).join(', ')
+    ? node.data.authors.map((author) => author.name).join(', ')
     : 'Неизвестно';
+  const yearsText = node.data.years?.length
+    ? `${node.data.years[0]}-${node.data.years[node.data.years.length - 1]}`
+    : 'Нет данных';
 
   return (
-    <div style={{
-      position: 'relative', width: '350px', height: '100%',
-      backgroundColor: '#f8f9fa', boxShadow: '-2px 0 10px rgba(0,0,0,0.1)',
-      padding: '20px', zIndex: 10, display: 'flex', flexDirection: 'column',
-      overflowY: 'auto' 
-    }}>
-      
-      {/* Шапка с кнопкой закрытия */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-        <h3 style={{ margin: 0, fontSize: '18px', paddingRight: '10px' }}>{node.data.label}</h3>
-        <button 
-          onClick={onClose} 
-          style={{ cursor: 'pointer', border: 'none', background: '#eee', padding: '5px 10px', borderRadius: '4px', fontWeight: 'bold' }}
-        >
+    <aside className="details-drawer open">
+      <div className="drawer-head">
+        <div>
+          <span className="drawer-kicker">{isAuthor ? 'Автор' : 'Статья'}</span>
+          <h2>{node.data.label}</h2>
+        </div>
+        <button type="button" className="icon-button" onClick={onClose} aria-label="Закрыть">
           X
         </button>
       </div>
 
-      {/* Метаданные (Карточка) */}
-      <div style={{ backgroundColor: '#fff', padding: '15px', borderRadius: '8px', border: '1px solid #e0e0e0', marginBottom: '20px' }}>
-        <p style={{ margin: '0 0 10px 0' }}><strong>Год:</strong> {node.data.year || 'Нет данных'}</p>
-        <p style={{ margin: '0 0 10px 0' }}><strong>Авторы:</strong> {authorsText}</p>
-        <p style={{ margin: 0 }}><strong>ИИ Кластер:</strong> {node.data.group_name || 'Без группы'}</p>
-      </div>
-
-      {/* --- ИЗМЕНЕНИЕ 2: БЛОК С ДВУМЯ КНОПКАМИ --- */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
-        
-        {/* Твоя старая кнопка: Читать оригинал */}
-        {node.data.url ? (
-          <a 
-            href={node.data.url} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            style={{ display: 'block', textAlign: 'center', padding: '12px', backgroundColor: '#007bff', color: 'white', textDecoration: 'none', borderRadius: '6px', fontWeight: 'bold', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}
-          >
-            Читать оригинал ↗
-          </a>
-        ) : (
-          <div style={{ textAlign: 'center', padding: '12px', backgroundColor: '#e9ecef', color: '#6c757d', borderRadius: '6px' }}>
-            Ссылка недоступна
+      {isAuthor ? (
+        <>
+          <div className="info-grid">
+            <div>
+              <span>Публикаций</span>
+              <strong>{node.data.paperCount}</strong>
+            </div>
+            <div>
+              <span>Годы</span>
+              <strong>{yearsText}</strong>
+            </div>
           </div>
-        )}
 
-        {/* НОВАЯ КНОПКА: Развернуть связи */}
-        <button 
-          onClick={() => onExpand(node.id)} 
-          style={{ 
-            padding: '12px', backgroundColor: '#28a745', color: 'white', 
-            border: 'none', borderRadius: '6px', fontWeight: 'bold', 
-            cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' 
-          }}
-        >
-          Развернуть связи
-        </button>
-      </div>
+          <section className="drawer-section">
+            <h3>Статьи автора</h3>
+            <div className="paper-stack">
+              {node.data.papers.map((paper) => {
+                const content = (
+                  <>
+                    <span>{paper.title}</span>
+                    <small>{paper.year || 'год не указан'}</small>
+                  </>
+                );
 
-      {/* Абстракт */}
-      <h4 style={{ borderBottom: '1px solid #ddd', paddingBottom: '8px', marginTop: 0 }}>Абстракт:</h4>
-      <p style={{ lineHeight: '1.6', fontSize: '14px', textAlign: 'justify', color: '#444', marginBottom: '30px' }}>
-        {node.data.abstract || "Абстракт отсутствует для данной статьи."}
-      </p>
+                return paper.url ? (
+                  <a
+                    key={paper.id}
+                    href={paper.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="paper-link"
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <div key={paper.id} className="paper-link">
+                    {content}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        </>
+      ) : (
+        <>
+          <div className="info-grid">
+            <div>
+              <span>Год</span>
+              <strong>{node.data.year || 'Нет данных'}</strong>
+            </div>
+            <div>
+              <span>Кластер</span>
+              <strong>{node.data.group_name || 'Без группы'}</strong>
+            </div>
+          </div>
 
-    </div>
+          <section className="drawer-section">
+            <h3>Авторы</h3>
+            <p>{authorsText}</p>
+          </section>
+
+          <div className="drawer-actions">
+            {node.data.url && (
+              <a href={node.data.url} target="_blank" rel="noopener noreferrer" className="primary-action">
+                Читать оригинал
+              </a>
+            )}
+            <button type="button" className="secondary-action" onClick={() => onExpand(node.id)}>
+              Развернуть связи
+            </button>
+          </div>
+
+          <section className="drawer-section">
+            <h3>Абстракт</h3>
+            <p>{node.data.abstract || 'Абстракт отсутствует для данной статьи.'}</p>
+          </section>
+        </>
+      )}
+    </aside>
   );
 };
 

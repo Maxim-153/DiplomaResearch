@@ -1,0 +1,54 @@
+# DiplomaResearch
+
+Semantic Research Graph — приложение для построения интерактивной карты научных статей и авторов на основе данных OpenAlex.
+
+## Что умеет
+
+- ищет научные статьи по теме и диапазону годов;
+- строит граф цитирований статей;
+- группирует статьи по смысловым кластерам через sentence-transformers + K-Means;
+- показывает граф авторов на основе соавторства;
+- догружает цитирующие статьи двойным кликом или через панель деталей;
+- кэширует ответы OpenAlex в файловой системе.
+
+## Запуск бэкенда
+
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+copy .env.example .env
+uvicorn main:app --reload
+```
+
+В `.env` можно указать почту для OpenAlex:
+
+```env
+OPENALEX_MAILTO=your_email@example.com
+CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+```
+
+## Запуск фронтенда
+
+```bash
+cd frontend
+npm install
+copy .env.example .env
+npm run dev
+```
+
+Фронтенд по умолчанию обращается к `http://127.0.0.1:8000`. Адрес можно поменять в `frontend/.env`:
+
+```env
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+## Структура
+
+- `backend/main.py` — FastAPI endpoints.
+- `backend/semantic_api.py` — адаптер к OpenAlex и кэширование.
+- `backend/ml_processor.py` — кластеризация и генерация названий кластеров.
+- `frontend/src/App.jsx` — главный экран приложения.
+- `frontend/src/graphUtils.js` — подготовка графа статей, авторов и связей.
+- `frontend/src/layoutUtils.js` — раскладка графа через Dagre.

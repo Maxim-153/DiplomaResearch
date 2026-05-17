@@ -1,297 +1,351 @@
-import React, { useState } from 'react';
-import { fetchGraphData, expandGraphData } from './api'; 
-import GraphMap from './components/GraphMap'; 
+import React, { useCallback, useMemo, useState } from 'react';
+import { applyEdgeChanges, applyNodeChanges } from 'reactflow';
+import { fetchGraphData, expandGraphData } from './api';
+import GraphMap from './components/GraphMap';
 import { getLayoutedElements } from './layoutUtils';
 import Sidebar from './components/Sidebar';
+import {
+  GRAPH_MODES,
+  buildAuthorGraph,
+  decoratePaperNode,
+  filterEdgesForNodes,
+  positionNodesAroundAnchor,
+} from './graphUtils';
+import './App.css';
 
 function App() {
-  // --- СОСТОЯНИЯ (Память нашего компонента) ---
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const [nodes, setNodes] = useState([]); 
-  const [edges, setEdges] = useState([]); 
-  const [isLoading, setIsLoading] = useState(false); 
-  const [error, setError] = useState(null); 
-  const [selectedNode, setSelectedNode] = useState(null); 
-  const [rfInstance, setRfInstance] = useState(null); // Хранилище для пульта от камеры
-
-  // --- НОВЫЕ СОСТОЯНИЯ: Память для годов ---
+  const [searchQuery, setSearchQuery] = useState('');
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
+  const [paperNodes, setPaperNodes] = useState([]);
+  const [paperEdges, setPaperEdges] = useState([]);
+  const [viewMode, setViewMode] = useState(GRAPH_MODES.PAPERS);
+  const [selectedNodeId, setSelectedNodeId] = useState(null);
+  const [rfInstance, setRfInstance] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // --- ПАЛИТРА ИИ-КЛАСТЕРОВ ---
-  const getClusterColor = (groupNumber) => {
-    const colors = ['#FFD1DC', '#AEC6CF', '#77DD77', '#FDFD96', '#CDB4DB'];
-    return colors[groupNumber % colors.length];
-  };
+  const authorGraph = useMemo(() => buildAuthorGraph(paperNodes), [paperNodes]);
+  const activeGraph = viewMode === GRAPH_MODES.AUTHORS
+    ? authorGraph
+    : { nodes: paperNodes, edges: paperEdges };
 
-  // --- ФУНКЦИЯ ПОИСКА ---
- const handleSearch = async (e) => {
-    e.preventDefault(); 
+  const activeNodes = activeGraph.nodes;
+  const activeEdges = activeGraph.edges;
 
-    if (!searchQuery.trim()) return; 
+  const selectedNode = useMemo(
+    () => activeNodes.find((node) => node.id === selectedNodeId) || null,
+    [activeNodes, selectedNodeId],
+  );
 
-    setIsLoading(true);
-    setError(null); 
+  const connectedNodeIds = useMemo(() => {
+    if (!selectedNode) return null;
 
-    try {
-      // Идем на бэкенд за статьями
-      const data = await fetchGraphData(searchQuery, yearFrom, yearTo);
-      console.log("Данные от Бэкенда:", data);
-      
-      if (!data.nodes || data.nodes.length === 0) {
-        setError("По вашему запросу ничего не найдено или все статьи отфильтрованы.");
-        setNodes([]);
-        setEdges([]);
-        return;
-      }
+    const ids = new Set([selectedNode.id]);
+    activeEdges.forEach((edge) => {
+      if (edge.source === selectedNode.id) ids.add(edge.target);
+      if (edge.target === selectedNode.id) ids.add(edge.source);
+    });
 
-      // БЕЗОПАСНЫЙ ПАРСИНГ И РАСКРАСКА УЗЛОВ
-      const safeNodes = data.nodes.map((node) => {
-        return {
-          ...node, 
-          position: { x: 0, y: 0 },
-          style: { 
-            // Убедись, что у тебя есть функция getClusterColor в App.jsx!
-            backgroundColor: getClusterColor(node.data.group),
-            borderRadius: '8px',
-            padding: '10px',
-            border: '2px solid #333',
-            boxShadow: '2px 2px 5px rgba(0,0,0,0.2)' 
-          }
-        };
-      });
+    return ids;
+  }, [activeEdges, selectedNode]);
 
-      // ЗАЩИТА ОТ "ВЗРЫВА СВЯЗЕЙ" (EDGE FILTERING)
-      const existingNodeIds = new Set(safeNodes.map(node => node.id));
-      const safeEdges = (data.edges || []).filter(edge => 
-        existingNodeIds.has(edge.source) && existingNodeIds.has(edge.target)
-      );
+  const handleNodesChange = useCallback((changes) => {
+    if (viewMode !== GRAPH_MODES.PAPERS) return;
+    setPaperNodes((currentNodes) => applyNodeChanges(changes, currentNodes));
+  }, [viewMode]);
 
-      // ПРОПУСКАЕМ ЧЕРЕЗ АЛГОРИТМ РАССТАНОВКИ 
-      // --- ИЗМЕНЕНИЕ: Ждем ключи nodes и edges! ---
-      const layouted = getLayoutedElements(safeNodes, safeEdges);
+  const handleEdgesChange = useCallback((changes) => {
+    if (viewMode !== GRAPH_MODES.PAPERS) return;
+    setPaperEdges((currentEdges) => applyEdgeChanges(changes, currentEdges));
+  }, [viewMode]);
 
-      // Сохраняем правильные данные в стейт React
-      setNodes(layouted.nodes);
-      setEdges(layouted.edges);
-      
-      // --- ИЗМЕНЕНИЕ: Добавили полет камеры ---
-      // Даем React чуть-чуть времени на рендер карточек (100 мс), а затем летим к графу
-      setTimeout(() => {
-        if (rfInstance) {
-          rfInstance.fitView({ padding: 0.2, duration: 800 });
-        }
-      }, 100);
-
-    } catch (err) {
-      console.error(err);
-      setError("Не удалось загрузить граф. Проверь консоль браузера.");
-    } finally {
-      setIsLoading(false); 
-    }
-  };
-
-// НОВАЯ ФУНКЦИЯ: Догрузка связей по клику на статью (С КАМЕРОЙ, ЛОГАМИ И СТИЛЯМИ)
-  const handleExpand = async (paperId) => {
-    setIsLoading(true); // Включаем крутилку загрузки
-    setError(null);
-
-    try {
-      // 1. Идем на бэкенд за новыми данными
-      const newData = await expandGraphData(paperId);
-      const fetchedNodes = newData?.nodes || [];
-      const fetchedEdges = newData?.edges || [];
-
-      if (fetchedNodes.length === 0) {
-        alert("Для этой статьи не найдено цитирований в нашей базе OpenAlex.");
-        setIsLoading(false);
-        return;
-      }
-
-      // 2. БЕЗОПАСНОЕ ОТСЕИВАНИЕ ДУБЛИКАТОВ
-      const safeNodes = nodes || [];
-      const safeEdges = edges || [];
-
-      const existingNodeIds = new Set(safeNodes.map(n => n.id));
-      
-      // Сначала просто фильтруем, чтобы оставить только уникальные (новые) статьи
-      const rawUniqueNodes = fetchedNodes.filter(n => !existingNodeIds.has(n.id));
-
-      // --- ИЗМЕНЕНИЕ 1: "Одеваем" новые узлы в НЕОНОВУЮ РАМКУ перед тем, как добавить на экран ---
-      const styledNewNodes = rawUniqueNodes.map((node) => {
-        return {
-          ...node,
-          position: { x: 0, y: 0 }, // Обязательное поле для React Flow
-          style: { 
-            backgroundColor: getClusterColor(node.data.group), // Красим по ML-кластеру
-            borderRadius: '8px',
-            padding: '10px',
-            // Делаем толстую пунктирную границу золотого цвета и свечение для НОВЫХ карточек!
-            border: '3px dashed #FFD700', 
-            boxShadow: '0px 0px 15px rgba(255, 215, 0, 0.6)',
-            transition: 'all 0.5s ease' // Плавное появление
-          }
-        };
-      });
-
-      const existingEdgeIds = new Set(safeEdges.map(e => e.id));
-      const uniqueNewEdges = fetchedEdges.filter(e => !existingEdgeIds.has(e.id));
-
-      console.log(`Пришло узлов: ${fetchedNodes.length}. Из них уникальных (новых): ${styledNewNodes.length}`);
-      if (styledNewNodes.length === 0) {
-        alert("Новые цитирования найдены, но все эти статьи УЖЕ отображены на экране!");
-        setIsLoading(false);
-        return;
-      }
-
-      // 3. Склеиваем старый граф и новые УЖЕ ОДЕТЫЕ данные
-      const combinedNodes = [...safeNodes, ...styledNewNodes];
-      const rawCombinedEdges = [...safeEdges, ...uniqueNewEdges];
-
-      // --- КРИТИЧЕСКОЕ ИЗМЕНЕНИЕ: ЗАЩИТА ОТ "ВЗРЫВА СВЯЗЕЙ" ---
-      // Убиваем связи-призраки, из-за которых рисовались бесконечные нитки
-      const allCombinedNodeIds = new Set(combinedNodes.map(n => n.id));
-      const combinedEdges = rawCombinedEdges.filter(edge => 
-        allCombinedNodeIds.has(edge.source) && allCombinedNodeIds.has(edge.target)
-      );
-
-      // 4. Пересчитываем координаты через Dagre
-      const layouted = getLayoutedElements(combinedNodes, combinedEdges);
-
-      // 5. Обновляем состояния React
-      setNodes(layouted.nodes);
-      setEdges(layouted.edges);
-
-      // --- ИЗМЕНЕНИЕ 2: Четкое уведомление для пользователя ---
-      alert(`Связи успешно развернуты!\nДобавлено новых статей: ${styledNewNodes.length}`);
-
-      // Полет камеры к обновленному графу
-      setTimeout(() => {
-        if (rfInstance) {
-          rfInstance.fitView({ padding: 0.2, duration: 800 });
-        }
-      }, 100);
-
-    } catch (err) {
-      console.error("Ошибка при расширении графа:", err);
-      setError("Не удалось загрузить связи для этой статьи.");
-    } finally {
-      setIsLoading(false); 
-    }
-  };
-  // --- ИНТЕРФЕЙС --
-  // --- ДИНАМИЧЕСКИЙ РЕНДЕР: РЕЖИМ ФОКУСА (БОРЬБА С ПАУТИНОЙ) ---
-  // Вычисляем, как должны выглядеть узлы ПРЯМО СЕЙЧАС (зависит от клика)
-  const displayNodes = nodes.map(node => {
-    // Если ни одна статья не выбрана, показываем все ярко
-    if (!selectedNode) return { ...node, style: { ...node.style, opacity: 1 } };
-
-    // Если выбрана, проверяем: это сама выбранная статья?
-    const isCurrent = node.id === selectedNode.id;
-    
-    // Или она связана с выбранной напрямую? (Проверяем по массиву edges)
-    const isConnected = edges.some(e => 
-      (e.source === selectedNode.id && e.target === node.id) || 
-      (e.target === selectedNode.id && e.source === node.id)
-    );
+  const displayNodes = useMemo(() => activeNodes.map((node) => {
+    const isSelected = node.id === selectedNode?.id;
+    const isConnected = connectedNodeIds?.has(node.id);
 
     return {
       ...node,
       style: {
         ...node.style,
-        opacity: isCurrent || isConnected ? 1 : 0.15, // Сильно гасим всех "чужих" (15% видимости)
-        transition: 'opacity 0.3s ease' // Плавное затухание
-      }
+        opacity: !selectedNode || isConnected ? 1 : 0.16,
+        outline: isSelected ? '3px solid #0ea5e9' : 'none',
+        transition: 'opacity 0.2s ease, outline 0.2s ease',
+      },
     };
-  });
+  }), [activeNodes, connectedNodeIds, selectedNode]);
 
-  // Вычисляем, как должны выглядеть связи (прячем лишние нитки)
-  const displayEdges = edges.map(edge => {
-    // Если ничего не выбрано, делаем все нитки серыми и полупрозрачными
-    if (!selectedNode) {
-      return { ...edge, style: { stroke: '#666', strokeWidth: 1, opacity: 0.4 } };
-    }
-
-    // Линия касается выбранной статьи?
-    const isConnected = edge.source === selectedNode.id || edge.target === selectedNode.id;
+  const displayEdges = useMemo(() => activeEdges.map((edge) => {
+    const isConnected = selectedNode
+      ? edge.source === selectedNode.id || edge.target === selectedNode.id
+      : false;
+    const baseStyle = edge.style || {};
 
     return {
       ...edge,
-      animated: isConnected, // МАГИЯ: Пускаем бегущую анимацию по активным связям!
+      hidden: selectedNode ? !isConnected : false,
+      animated: Boolean(isConnected),
       style: {
-        stroke: isConnected ? '#007bff' : '#333', // Синие для активных, почти черные для фона
-        strokeWidth: isConnected ? 3 : 1, // Делаем активные толще
-        opacity: isConnected ? 1 : 0.05, // Чужие нитки прячем почти в ноль (5% видимости)
-        transition: 'opacity 0.3s ease, stroke-width 0.3s ease'
-      }
+        ...baseStyle,
+        stroke: selectedNode ? (isConnected ? '#0ea5e9' : '#334155') : (baseStyle.stroke || '#64748b'),
+        strokeWidth: selectedNode ? (isConnected ? Math.max(baseStyle.strokeWidth || 1, 3) : 1) : (baseStyle.strokeWidth || 1.5),
+        opacity: selectedNode ? (isConnected ? 1 : 0) : (baseStyle.opacity ?? 0.5),
+        transition: 'opacity 0.2s ease, stroke-width 0.2s ease',
+      },
     };
-  });
+  }), [activeEdges, selectedNode]);
+
+  const centerNode = (node) => {
+    if (!rfInstance || !node?.position) return;
+
+    rfInstance.setCenter(node.position.x + 130, node.position.y + 50, {
+      zoom: 1.05,
+      duration: 500,
+    });
+  };
+
+  const handleSelectNode = (node) => {
+    setSelectedNodeId(node.id);
+    window.setTimeout(() => centerNode(node), 0);
+  };
+
+  const handlePaneClick = () => {
+    setSelectedNodeId(null);
+  };
+
+  const handleModeChange = (mode) => {
+    setViewMode(mode);
+    setSelectedNodeId(null);
+    window.setTimeout(() => rfInstance?.fitView({ padding: 0.18, duration: 500 }), 80);
+  };
+
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    if (!searchQuery.trim()) return;
+
+    setIsLoading(true);
+    setError(null);
+    setSelectedNodeId(null);
+
+    try {
+      const data = await fetchGraphData(searchQuery, yearFrom, yearTo);
+      if (data?.error) throw new Error(data.error);
+
+      const fetchedNodes = data.nodes || [];
+      if (fetchedNodes.length === 0) {
+        setPaperNodes([]);
+        setPaperEdges([]);
+        setError('По этому запросу ничего не найдено.');
+        return;
+      }
+
+      const styledNodes = fetchedNodes.map((node) => decoratePaperNode(node));
+      const safeEdges = filterEdgesForNodes(data.edges || [], styledNodes);
+      const layouted = getLayoutedElements(styledNodes, safeEdges);
+
+      setPaperNodes(layouted.nodes);
+      setPaperEdges(layouted.edges);
+
+      window.setTimeout(() => {
+        rfInstance?.fitView({ padding: 0.18, duration: 700 });
+      }, 120);
+    } catch (err) {
+      console.error(err);
+      setError('Бэкенд недоступен или вернул ошибку. Проверьте терминал с uvicorn.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleExpand = async (paperId) => {
+    if (viewMode !== GRAPH_MODES.PAPERS) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const newData = await expandGraphData(paperId);
+      if (newData?.error) throw new Error(newData.error);
+
+      const fetchedNodes = newData.nodes || [];
+      const fetchedEdges = newData.edges || [];
+      const existingNodeIds = new Set(paperNodes.map((node) => node.id));
+      const existingEdgeKeys = new Set(paperEdges.map((edge) => `${edge.source}->${edge.target}`));
+
+      const uniqueNewNodes = fetchedNodes
+        .filter((node) => node?.id && !existingNodeIds.has(node.id))
+        .map((node) => decoratePaperNode(node, { isNew: true }));
+
+      const positionedNewNodes = positionNodesAroundAnchor(paperNodes, uniqueNewNodes, paperId);
+      const combinedNodes = [...paperNodes, ...positionedNewNodes];
+      const combinedEdges = filterEdgesForNodes([...paperEdges, ...fetchedEdges], combinedNodes);
+      const addedEdgeCount = combinedEdges
+        .filter((edge) => !existingEdgeKeys.has(`${edge.source}->${edge.target}`))
+        .length;
+
+      if (positionedNewNodes.length === 0 && addedEdgeCount === 0) {
+        setError('Новых связей для этой статьи не найдено.');
+        return;
+      }
+
+      setPaperNodes(combinedNodes);
+      setPaperEdges(combinedEdges);
+      setSelectedNodeId(paperId);
+
+      const anchorNode = paperNodes.find((node) => node.id === paperId);
+      window.setTimeout(() => {
+        if (anchorNode) {
+          rfInstance?.setCenter(anchorNode.position.x + 130, anchorNode.position.y + 50, {
+            zoom: 0.78,
+            duration: 650,
+          });
+        }
+      }, 120);
+    } catch (err) {
+      console.error('Ошибка при расширении графа:', err);
+      setError('Не удалось загрузить связи. Проверьте терминал с uvicorn.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const renderListMeta = (node) => {
+    if (node.data.type === 'author') {
+      const years = node.data.years?.length
+        ? `${node.data.years[0]}-${node.data.years[node.data.years.length - 1]}`
+        : 'годы не указаны';
+      return `${node.data.paperCount} статей · ${years}`;
+    }
+
+    return `${node.data.year || 'год не указан'} · ${node.data.group_name || 'без кластера'}`;
+  };
+
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '1200px', margin: '0 auto' }}>
-      <h2>Semantic Research Graph</h2>
-      
-      {/* Форма поиска */}
-      <form onSubmit={handleSearch} style={{ marginBottom: '20px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-        <input 
-          type="text" 
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Например: Blockchain..."
-          style={{ padding: '10px', fontSize: '16px', width: '300px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-        
-        {/* НОВЫЕ ПОЛЯ ВВОДА ДЛЯ ГОДОВ */}
-        <input 
-          type="number" 
-          placeholder="Год от (напр. 2018)" 
-          value={yearFrom} 
-          onChange={(e) => setYearFrom(e.target.value)}
-          style={{ padding: '10px', fontSize: '16px', width: '150px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-        <input 
-          type="number" 
-          placeholder="Год до (напр. 2024)" 
-          value={yearTo} 
-          onChange={(e) => setYearTo(e.target.value)}
-          style={{ padding: '10px', fontSize: '16px', width: '150px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-
-        <button 
-          type="submit" 
-          disabled={isLoading}
-          style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', backgroundColor: isLoading ? '#ccc' : '#007bff', color: 'white', border: 'none', borderRadius: '4px' }}
-        >
-          {isLoading ? 'Ищем...' : 'Построить граф'}
-        </button>
-      </form>
-
-      {/* Вывод ошибок */}
-      {error && (
-        <div style={{ color: 'red', marginBottom: '20px', padding: '10px', backgroundColor: '#ffe6e6', borderRadius: '4px' }}>
-          {error}
+    <div className="app-shell">
+      <header className="topbar">
+        <div className="brand">
+          <div className="brand-mark">SR</div>
+          <div>
+            <h1>Semantic Research Graph</h1>
+            <p>OpenAlex · ML-кластеры · граф цитирований</p>
+          </div>
         </div>
-      )}
 
-{/* Отрисовка холста графа */}
-      <div style={{ display: 'flex', flexDirection: 'row', height: '85vh', border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden' }}>
-        
-        {/* Контейнер графа занимает всё свободное место (flex: 1) */}
-        <div style={{ flex: 1, position: 'relative' }}>
-          <GraphMap 
-            nodes={displayNodes}
-            edges={displayEdges}
-            onNodeClick={(event, node) => setSelectedNode(node)} 
-            onNodeDoubleClick={(event, node) => handleExpand(node.id)} 
-            onInit={setRfInstance}
+        <form className="search-form" onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Blockchain, neural networks..."
           />
+          <input
+            type="number"
+            value={yearFrom}
+            onChange={(event) => setYearFrom(event.target.value)}
+            placeholder="От"
+          />
+          <input
+            type="number"
+            value={yearTo}
+            onChange={(event) => setYearTo(event.target.value)}
+            placeholder="До"
+          />
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Ищем...' : 'Построить'}
+          </button>
+        </form>
+
+        <div className="mode-switch" role="tablist" aria-label="Режим графа">
+          <button
+            type="button"
+            className={viewMode === GRAPH_MODES.PAPERS ? 'active' : ''}
+            onClick={() => handleModeChange(GRAPH_MODES.PAPERS)}
+          >
+            Статьи
+          </button>
+          <button
+            type="button"
+            className={viewMode === GRAPH_MODES.AUTHORS ? 'active' : ''}
+            onClick={() => handleModeChange(GRAPH_MODES.AUTHORS)}
+          >
+            Авторы
+          </button>
         </div>
-        
-        <Sidebar 
-          node={selectedNode} 
-          onClose={() => setSelectedNode(null)} 
-          onExpand={handleExpand}
-        />
-      </div>
+      </header>
+
+      <main className="workspace">
+        <aside className="results-panel">
+          <div className="results-head">
+            <div>
+              <h2>{viewMode === GRAPH_MODES.AUTHORS ? 'Авторы' : 'Статьи'}</h2>
+              <p>{activeNodes.length} элементов</p>
+            </div>
+            {paperNodes.length > 0 && (
+              <button type="button" onClick={() => rfInstance?.fitView({ padding: 0.18, duration: 500 })}>
+                Весь граф
+              </button>
+            )}
+          </div>
+
+          <div className="results-list">
+            {activeNodes.length === 0 ? (
+              <div className="empty-list">Нет данных</div>
+            ) : activeNodes.map((node) => (
+              <button
+                type="button"
+                key={node.id}
+                className={`result-item ${selectedNodeId === node.id ? 'selected' : ''}`}
+                onClick={() => handleSelectNode(node)}
+              >
+                <span className="result-title">{node.data.label}</span>
+                <span className="result-meta">{renderListMeta(node)}</span>
+              </button>
+            ))}
+          </div>
+        </aside>
+
+        <section className="graph-stage">
+          {activeNodes.length > 0 ? (
+            <GraphMap
+              nodes={displayNodes}
+              edges={displayEdges}
+              onNodesChange={handleNodesChange}
+              onEdgesChange={handleEdgesChange}
+              onNodeClick={(event, node) => handleSelectNode(node)}
+              onNodeDoubleClick={(event, node) => {
+                if (node.data.type === 'paper') handleExpand(node.id);
+              }}
+              onPaneClick={handlePaneClick}
+              onInit={setRfInstance}
+            />
+          ) : (
+            <div className="empty-graph">
+              <h2>Граф появится здесь</h2>
+              <p>Ожидание данных OpenAlex.</p>
+            </div>
+          )}
+
+          {isLoading && (
+            <div className="loading-overlay">
+              <div className="loader" />
+              <span>Загрузка данных</span>
+            </div>
+          )}
+
+          {error && (
+            <div className="status-message">
+              <span>{error}</span>
+              <button type="button" onClick={() => setError(null)}>Закрыть</button>
+            </div>
+          )}
+
+          <Sidebar
+            node={selectedNode}
+            onClose={handlePaneClick}
+            onExpand={handleExpand}
+          />
+        </section>
+      </main>
     </div>
   );
 }

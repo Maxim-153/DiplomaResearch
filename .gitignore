@@ -9,6 +9,8 @@ backend/api_cache/
 frontend/node_modules/
 frontend/dist/
 .env
+backend/.env
+frontend/.env
 
 # Системные файлы и IDE
 .vscode/

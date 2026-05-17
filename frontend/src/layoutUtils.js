@@ -1,12 +1,10 @@
 // Файл: /frontend/src/layoutUtils.js
 import dagre from 'dagre';
 
-// Создаем "движок" графа
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
-
 // Функция, которая принимает узлы и связи, и возвращает их же, но с правильными координатами
 export const getLayoutedElements = (nodes, edges, direction = 'TB') => {
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
   
   // 1. ИЗМЕНЕНИЕ: НАСТРОЙКА ПЛОТНОСТИ ГРАФА
   // Жестко задаем отступы, чтобы 30 статей не разлетались на километры
