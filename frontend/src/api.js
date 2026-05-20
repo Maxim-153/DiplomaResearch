@@ -9,10 +9,10 @@ const apiClient = axios.create({
 });
 
 // Асинхронная функция для запроса данных графа (теперь поддерживает фильтр по годам)
-export const fetchGraphData = async (searchQuery, yearFrom, yearTo) => {
+export const fetchGraphData = async (searchQuery, yearFrom, yearTo, sortMode = 'relevance') => {
     try {
         // 1. Формируем базовый объект с параметрами (запрос обязателен)
-        const queryParams = { query: searchQuery };
+        const queryParams = { query: searchQuery, sort: sortMode };
         
         // 2. ЗАЩИТА: Превращаем текстовые строки из инпутов в числа.
         // Добавляем их в запрос ТОЛЬКО если пользователь действительно что-то ввел.

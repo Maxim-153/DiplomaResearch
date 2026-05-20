@@ -30,11 +30,11 @@ app.add_middleware(
 )
 
 @app.get("/api/search")
-async def search(query: str, year_from: int = None, year_to: int = None):
+async def search(query: str, year_from: int = None, year_to: int = None, sort: str = "relevance"):
     try:
         # 1. Сбор данных
         # ИЗМЕНЕНИЕ: Теперь мы передаем года прямо в наш Адаптер!
-        raw_papers = fetch_papers(query, year_from, year_to)
+        raw_papers = fetch_papers(query, year_from, year_to, sort)
 
         # --- ДЕБАГ-МАЯЧОК ДЛЯ ТЕРМИНАЛА ---
         print("\n--- СТАТИСТИКА ФИЛЬТРАЦИИ ---")
@@ -76,9 +76,21 @@ async def search(query: str, year_from: int = None, year_to: int = None):
                     "abstract": paper.get("abstract", ""),
                     "group": paper.get("group", 0), # Группа от K-Means
                     "year": paper.get("year", 0),
-                 "authors": paper.get("authors", []),
-                 "group_name": paper.get("group_name"),
-                 "url": paper.get("url")
+                    "authors": paper.get("authors", []),
+                    "group_name": paper.get("group_name"),
+                    "url": paper.get("url"),
+                    "doi": paper.get("doi"),
+                    "source": paper.get("source"),
+                    "primary_location": paper.get("primary_location"),
+                    "host_venue": paper.get("host_venue"),
+                    "volume": paper.get("volume"),
+                    "issue": paper.get("issue"),
+                    "first_page": paper.get("first_page"),
+                    "last_page": paper.get("last_page"),
+                    "landing_page_url": paper.get("landing_page_url"),
+                    "citation_count": paper.get("citation_count", 0),
+                    "reference_count": paper.get("reference_count", 0),
+                    "relevance_score": paper.get("relevance_score", 0)
                 }
             })
 
@@ -135,7 +147,19 @@ async def expand_graph(paper_id: str):
                     "year": paper.get("year", 0),
                     "authors": paper.get("authors", []),
                     "group_name": paper.get("group_name"),
-                    "url": paper.get("url")
+                    "url": paper.get("url"),
+                    "doi": paper.get("doi"),
+                    "source": paper.get("source"),
+                    "primary_location": paper.get("primary_location"),
+                    "host_venue": paper.get("host_venue"),
+                    "volume": paper.get("volume"),
+                    "issue": paper.get("issue"),
+                    "first_page": paper.get("first_page"),
+                    "last_page": paper.get("last_page"),
+                    "landing_page_url": paper.get("landing_page_url"),
+                    "citation_count": paper.get("citation_count", 0),
+                    "reference_count": paper.get("reference_count", 0),
+                    "relevance_score": paper.get("relevance_score", 0)
                 }
             })
 

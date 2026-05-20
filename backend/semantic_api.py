@@ -11,6 +11,13 @@ except ModuleNotFoundError:
 
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "api_cache")
 OPENALEX_MAILTO = os.getenv("OPENALEX_MAILTO")
+CACHE_VERSION = "v8"
+SEARCH_SORTS = {
+    "relevance": "relevance_score:desc",
+    "newest": "publication_date:desc,relevance_score:desc",
+    "cited": "cited_by_count:desc,relevance_score:desc",
+}
+CROSSREF_CACHE = {}
 
 if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
@@ -43,12 +50,139 @@ def add_mailto(params):
 def clean_openalex_id(value):
     return (value or "").replace("https://openalex.org/", "")
 
+def clean_doi_value(value):
+    return (value or "").replace("https://doi.org/", "").replace("http://dx.doi.org/", "").strip()
+
+def split_pages(page_value):
+    if not page_value:
+        return None, None
+
+    page_text = str(page_value).replace("–", "-").strip()
+    if "-" not in page_text:
+        return page_text, None
+
+    first_page, last_page = page_text.split("-", 1)
+    return first_page.strip() or None, last_page.strip() or None
+
+def get_crossref_year(message):
+    for field in ("published-print", "published-online", "issued"):
+        date_parts = (message.get(field) or {}).get("date-parts") or []
+        if date_parts and date_parts[0]:
+            return date_parts[0][0]
+    return None
+
+def fetch_crossref_metadata(doi):
+    doi_value = clean_doi_value(doi)
+    if not doi_value:
+        return {}
+    if doi_value in CROSSREF_CACHE:
+        return CROSSREF_CACHE[doi_value]
+
+    try:
+        response = requests.get(
+            f"https://api.crossref.org/works/{doi_value}",
+            params=add_mailto({}),
+            timeout=5,
+        )
+        if response.status_code != 200:
+            CROSSREF_CACHE[doi_value] = {}
+            return {}
+
+        message = response.json().get("message", {})
+        first_page, last_page = split_pages(message.get("page"))
+        authors = []
+        for author in message.get("author", []):
+            family = author.get("family")
+            given = author.get("given")
+            if family and given:
+                authors.append({"id": "", "name": f"{given} {family}"})
+            elif family:
+                authors.append({"id": "", "name": family})
+
+        metadata = {
+            "title": (message.get("title") or [None])[0],
+            "source": (message.get("container-title") or [None])[0],
+            "volume": message.get("volume"),
+            "issue": message.get("issue"),
+            "first_page": first_page,
+            "last_page": last_page,
+            "year": get_crossref_year(message),
+            "authors": authors,
+            "doi": f"https://doi.org/{doi_value}",
+            "landing_page_url": message.get("URL"),
+        }
+
+        CROSSREF_CACHE[doi_value] = {key: value for key, value in metadata.items() if value}
+        return CROSSREF_CACHE[doi_value]
+    except Exception as e:
+        print(f"!!! Ошибка Crossref для DOI {doi_value}: {e}")
+        CROSSREF_CACHE[doi_value] = {}
+        return {}
+
+def format_work_item(item):
+    biblio = item.get("biblio") or {}
+    primary_location = item.get("primary_location") or {}
+    host_venue = item.get("host_venue") or {}
+    source_name = (
+        (primary_location.get("source") or {}).get("display_name")
+        or host_venue.get("display_name")
+    )
+    doi = item.get("doi")
+
+    authors = [
+        {
+            "id": clean_openalex_id(auth.get("author", {}).get("id")),
+            "name": auth.get("author", {}).get("display_name") or "Unknown"
+        }
+        for auth in item.get("authorships", [])
+    ]
+
+    citations = [
+        {"paperId": clean_openalex_id(ref)}
+        for ref in item.get("referenced_works", [])
+        if ref
+    ]
+
+    metadata = {
+        "paperId": clean_openalex_id(item.get("id")),
+        "title": item.get("title") or "Без названия",
+        "abstract": reconstruct_abstract(item.get("abstract_inverted_index")),
+        "year": item.get("publication_year", 0),
+        "authors": authors[:5],
+        "citations": citations,
+        "url": doi or primary_location.get("landing_page_url") or item.get("id"),
+        "doi": doi,
+        "source": source_name,
+        "primary_location": item.get("primary_location"),
+        "host_venue": item.get("host_venue"),
+        "volume": biblio.get("volume"),
+        "issue": biblio.get("issue"),
+        "first_page": biblio.get("first_page"),
+        "last_page": biblio.get("last_page"),
+        "landing_page_url": primary_location.get("landing_page_url"),
+        "citation_count": item.get("cited_by_count", 0),
+        "reference_count": len(item.get("referenced_works", [])),
+        "relevance_score": item.get("relevance_score", 0),
+    }
+
+    missing_biblio = any(not metadata.get(key) for key in ("source", "volume", "issue", "first_page"))
+    if doi and missing_biblio:
+        crossref_metadata = fetch_crossref_metadata(doi)
+        for key, value in crossref_metadata.items():
+            if key == "authors" and not metadata.get("authors"):
+                metadata["authors"] = value[:5]
+            elif value and not metadata.get(key):
+                metadata[key] = value
+
+    return metadata
+
 # ИЗМЕНЕНИЕ 1: Добавили year_from и year_to в параметры функции
-def fetch_papers(query: str, year_from: int = None, year_to: int = None, limit: int = 30):
+def fetch_papers(query: str, year_from: int = None, year_to: int = None, sort: str = "relevance", limit: int = 30):
+    sort_key = sort if sort in SEARCH_SORTS else "relevance"
     
     # ИЗМЕНЕНИЕ 2: Делаем имя файла кэша уникальным для каждого набора дат!
     # Иначе запрос с годами выдаст старый кэш без годов.
-    cache_filename = f"{query.replace(' ', '_').lower()}_{year_from}_{year_to}.json"
+    cache_filename = f"{CACHE_VERSION}_{query.replace(' ', '_').lower()}_{year_from}_{year_to}_{sort_key}.json"
     cache_path = os.path.join(CACHE_DIR, cache_filename)
     
     # 1. ПРОВЕРКА КЭША
@@ -63,12 +197,15 @@ def fetch_papers(query: str, year_from: int = None, year_to: int = None, limit: 
     # 2. ЗАПРОС К OPENALEX API
     url = "https://api.openalex.org/works"
     params = add_mailto({
-        "search": query,
         "per_page": limit
     })
+    params["sort"] = SEARCH_SORTS[sort_key]
     
     # ИЗМЕНЕНИЕ 3: Собираем фильтры для OpenAlex
-    filter_parts = []
+    filter_parts = [
+        "type:article|preprint",
+        f"title_and_abstract.search:{query}",
+    ]
     if year_from is not None:
         filter_parts.append(f"from_publication_date:{year_from}-01-01")
     if year_to is not None:
@@ -78,7 +215,7 @@ def fetch_papers(query: str, year_from: int = None, year_to: int = None, limit: 
     if filter_parts:
         params["filter"] = ",".join(filter_parts)
     
-    print(f"--- [API] Ищу '{query}' с фильтрами: {params.get('filter', 'нет')} ---")
+    print(f"--- [API] Ищу '{query}' с фильтрами: {params.get('filter', 'нет')}, сортировка: {sort_key} ---")
     
     try:
         response = requests.get(url, params=params, timeout=15)
@@ -86,32 +223,8 @@ def fetch_papers(query: str, year_from: int = None, year_to: int = None, limit: 
         if response.status_code == 200:
             results = response.json().get("results", [])
             
-            # 3. ПАТТЕРН АДАПТЕР (Превращаем OpenAlex в Semantic Scholar)
-            formatted_data = []
-            for item in results:
-                authors = [
-                    {
-                        "id": clean_openalex_id(auth.get("author", {}).get("id")),
-                        "name": auth.get("author", {}).get("display_name") or "Unknown"
-                    }
-                    for auth in item.get("authorships", [])
-                ]
-                
-                citations = [
-                    {"paperId": clean_openalex_id(ref)}
-                    for ref in item.get("referenced_works", [])
-                    if ref
-                ]
-                
-                formatted_data.append({
-                    "paperId": clean_openalex_id(item.get("id")),
-                    "title": item.get("title") or "Без названия",
-                    "abstract": reconstruct_abstract(item.get("abstract_inverted_index")),
-                    "year": item.get("publication_year", 0),
-                    "authors": authors[:5], 
-                    "citations": citations,
-                    "url": item.get("doi") or item.get("id")
-                })
+            # 3. ПАТТЕРН АДАПТЕР (Превращаем OpenAlex в формат приложения)
+            formatted_data = [format_work_item(item) for item in results]
             
             # Сохраняем в кэш
             if formatted_data:
@@ -135,7 +248,7 @@ def fetch_citations_for_paper(paper_id: str, limit: int = 15):
     Ищет статьи, которые ссылаются (цитируют) конкретную статью по её ID.
     """
     # 1. Уникальный кэш для цитирований
-    cache_filename = f"citations_{paper_id}.json"
+    cache_filename = f"{CACHE_VERSION}_citations_{paper_id}.json"
     cache_path = os.path.join(CACHE_DIR, cache_filename)
 
     if os.path.exists(cache_path):
@@ -160,33 +273,8 @@ def fetch_citations_for_paper(paper_id: str, limit: int = 15):
         
         if response.status_code == 200:
             results = response.json().get("results", [])
-            formatted_data = []
-            
             # 3. Переупаковка в наш формат (Адаптер)
-            for item in results:
-                authors = [
-                    {
-                        "id": clean_openalex_id(auth.get("author", {}).get("id")),
-                        "name": auth.get("author", {}).get("display_name") or "Unknown"
-                    }
-                    for auth in item.get("authorships", [])
-                ]
-                
-                citations = [
-                    {"paperId": clean_openalex_id(ref)}
-                    for ref in item.get("referenced_works", [])
-                    if ref
-                ]
-                
-                formatted_data.append({
-                    "paperId": clean_openalex_id(item.get("id")),
-                    "title": item.get("title") or "Без названия",
-                    "abstract": reconstruct_abstract(item.get("abstract_inverted_index")),
-                    "year": item.get("publication_year", 0),
-                    "authors": authors[:5], 
-                    "citations": citations,
-                    "url": item.get("doi") or item.get("id")
-                })
+            formatted_data = [format_work_item(item) for item in results]
             
             # Сохраняем в кэш
             if formatted_data:

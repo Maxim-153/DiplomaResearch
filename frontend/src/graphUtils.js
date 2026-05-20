@@ -96,6 +96,183 @@ export const positionNodesAroundAnchor = (existingNodes, newNodes, anchorId) => 
   });
 };
 
+const clamp01 = (value) => Math.max(0, Math.min(1, value));
+
+export const calculatePaperMetrics = (nodes = [], edges = []) => {
+  const nodeIds = new Set(nodes.map((node) => node.id));
+  const degreeById = new Map(nodes.map((node) => [node.id, 0]));
+
+  edges.forEach((edge) => {
+    if (!nodeIds.has(edge.source) || !nodeIds.has(edge.target)) return;
+    degreeById.set(edge.source, (degreeById.get(edge.source) || 0) + 1);
+    degreeById.set(edge.target, (degreeById.get(edge.target) || 0) + 1);
+  });
+
+  const currentYear = new Date().getFullYear();
+  const maxCitationLog = Math.max(
+    1,
+    ...nodes.map((node) => Math.log1p(Number(node.data?.citation_count || 0))),
+  );
+  const maxDegree = Math.max(1, ...Array.from(degreeById.values()));
+  const maxRelevance = Math.max(
+    1,
+    ...nodes.map((node) => Number(node.data?.relevance_score || 0)),
+  );
+
+  return nodes.map((node) => {
+    const citationCount = Number(node.data?.citation_count || 0);
+    const degree = degreeById.get(node.id) || 0;
+    const year = Number(node.data?.year || 0);
+    const relevance = Number(node.data?.relevance_score || 0);
+
+    const citationScore = Math.log1p(citationCount) / maxCitationLog;
+    const centralityScore = degree / maxDegree;
+    const recencyScore = year ? clamp01(1 - (currentYear - year) / 12) : 0;
+    const relevanceScore = relevance / maxRelevance;
+    const influenceScore = Math.round(
+      100 * (
+        0.45 * citationScore
+        + 0.25 * centralityScore
+        + 0.2 * recencyScore
+        + 0.1 * relevanceScore
+      ),
+    );
+
+    return {
+      ...node,
+      data: {
+        ...node.data,
+        citation_count: citationCount,
+        graph_degree: degree,
+        influence_score: influenceScore,
+        metric_scores: {
+          citations: Math.round(citationScore * 100),
+          centrality: Math.round(centralityScore * 100),
+          recency: Math.round(recencyScore * 100),
+          relevance: Math.round(relevanceScore * 100),
+        },
+      },
+    };
+  });
+};
+
+export const getTimelineRange = (nodes = []) => {
+  const yearCounts = new Map();
+
+  nodes.forEach((node) => {
+    const year = Number(node.data?.year || 0);
+    if (!year) return;
+    yearCounts.set(year, (yearCounts.get(year) || 0) + 1);
+  });
+
+  const years = Array.from(yearCounts.keys()).sort((a, b) => a - b);
+  if (years.length === 0) return null;
+
+  return {
+    min: years[0],
+    max: years[years.length - 1],
+    years,
+    counts: yearCounts,
+  };
+};
+
+export const filterGraphByYear = (nodes = [], edges = [], maxYear = null) => {
+  if (!maxYear) return { nodes, edges };
+
+  const filteredNodes = nodes.filter((node) => {
+    const year = Number(node.data?.year || 0);
+    return !year || year <= maxYear;
+  });
+
+  return {
+    nodes: filteredNodes,
+    edges: filterEdgesForNodes(edges, filteredNodes),
+  };
+};
+
+export const getTopInfluentialPapers = (nodes = [], limit = 3) => (
+  [...nodes]
+    .filter((node) => node.data?.type === 'paper')
+    .sort((a, b) => (b.data?.influence_score || 0) - (a.data?.influence_score || 0))
+    .slice(0, limit)
+);
+
+export const buildResearchGaps = (nodes = [], edges = [], limit = 3) => {
+  const clusters = new Map();
+  const nodeToCluster = new Map();
+  const years = nodes
+    .map((node) => Number(node.data?.year || 0))
+    .filter(Boolean);
+  const maxYear = years.length ? Math.max(...years) : new Date().getFullYear();
+
+  nodes.forEach((node) => {
+    if (node.data?.type !== 'paper') return;
+    const group = Number(node.data?.group || 0);
+    const cluster = clusters.get(group) || {
+      id: group,
+      name: node.data?.group_name || `Кластер ${group + 1}`,
+      nodes: [],
+      recentCount: 0,
+    };
+
+    cluster.nodes.push(node);
+    if (Number(node.data?.year || 0) >= maxYear - 3) {
+      cluster.recentCount += 1;
+    }
+
+    clusters.set(group, cluster);
+    nodeToCluster.set(node.id, group);
+  });
+
+  const clusterList = Array.from(clusters.values()).filter((cluster) => cluster.nodes.length > 0);
+  if (clusterList.length < 2) return [];
+
+  const crossEdges = new Map();
+  edges.forEach((edge) => {
+    const sourceCluster = nodeToCluster.get(edge.source);
+    const targetCluster = nodeToCluster.get(edge.target);
+    if (sourceCluster === undefined || targetCluster === undefined || sourceCluster === targetCluster) return;
+
+    const key = [sourceCluster, targetCluster].sort((a, b) => a - b).join(':');
+    crossEdges.set(key, (crossEdges.get(key) || 0) + 1);
+  });
+
+  const gaps = [];
+  for (let i = 0; i < clusterList.length; i += 1) {
+    for (let j = i + 1; j < clusterList.length; j += 1) {
+      const left = clusterList[i];
+      const right = clusterList[j];
+      const key = [left.id, right.id].sort((a, b) => a - b).join(':');
+      const edgeCount = crossEdges.get(key) || 0;
+      const possibleEdges = Math.max(1, left.nodes.length * right.nodes.length);
+      const connectionDensity = edgeCount / possibleEdges;
+      const leftRecentShare = left.recentCount / left.nodes.length;
+      const rightRecentShare = right.recentCount / right.nodes.length;
+      const activityScore = (leftRecentShare + rightRecentShare) / 2;
+      const balanceScore = Math.min(left.nodes.length, right.nodes.length) / Math.max(left.nodes.length, right.nodes.length);
+      const gapScore = Math.round(100 * clamp01(
+        0.55 * (1 - connectionDensity)
+        + 0.3 * activityScore
+        + 0.15 * balanceScore,
+      ));
+
+      gaps.push({
+        id: `${left.id}-${right.id}`,
+        left,
+        right,
+        edgeCount,
+        gapScore,
+        connectionDensity,
+        description: `${left.name} + ${right.name}`,
+      });
+    }
+  }
+
+  return gaps
+    .sort((a, b) => b.gapScore - a.gapScore)
+    .slice(0, limit);
+};
+
 const getAuthorId = (author) => {
   const rawId = author?.id || author?.name || 'unknown';
   return `author:${String(rawId).trim().toLowerCase().replace(/[^a-zа-яё0-9]+/gi, '-')}`;

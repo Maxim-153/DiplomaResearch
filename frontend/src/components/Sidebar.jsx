@@ -1,6 +1,7 @@
 import React from 'react';
+import ExportMenu from './ExportMenu';
 
-const Sidebar = ({ node, onClose, onExpand }) => {
+const Sidebar = ({ node, onClose, onExpand, isExpanded = false, onExport }) => {
   const isOpen = Boolean(node);
 
   if (!isOpen) {
@@ -81,7 +82,39 @@ const Sidebar = ({ node, onClose, onExpand }) => {
               <span>Кластер</span>
               <strong>{node.data.group_name || 'Без группы'}</strong>
             </div>
+            <div>
+              <span>Влияние</span>
+              <strong>{node.data.influence_score ?? 0}/100</strong>
+            </div>
+            <div>
+              <span>Цитирований</span>
+              <strong>{node.data.citation_count ?? 0}</strong>
+            </div>
           </div>
+
+          {node.data.metric_scores && (
+            <section className="drawer-section">
+              <h3>Формула влияния</h3>
+              <div className="metric-bars">
+                <div>
+                  <span>Цитирования</span>
+                  <strong>{node.data.metric_scores.citations}%</strong>
+                </div>
+                <div>
+                  <span>Центральность</span>
+                  <strong>{node.data.metric_scores.centrality}%</strong>
+                </div>
+                <div>
+                  <span>Новизна</span>
+                  <strong>{node.data.metric_scores.recency}%</strong>
+                </div>
+                <div>
+                  <span>Релевантность</span>
+                  <strong>{node.data.metric_scores.relevance}%</strong>
+                </div>
+              </div>
+            </section>
+          )}
 
           <section className="drawer-section">
             <h3>Авторы</h3>
@@ -95,8 +128,9 @@ const Sidebar = ({ node, onClose, onExpand }) => {
               </a>
             )}
             <button type="button" className="secondary-action" onClick={() => onExpand(node.id)}>
-              Развернуть связи
+              {isExpanded ? 'Скрыть связи' : 'Развернуть связи'}
             </button>
+            <ExportMenu label="Экспорт связей" onSelect={onExport} />
           </div>
 
           <section className="drawer-section">

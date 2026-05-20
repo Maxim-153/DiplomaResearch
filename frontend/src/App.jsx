@@ -1,37 +1,64 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { applyEdgeChanges, applyNodeChanges } from 'reactflow';
 import { fetchGraphData, expandGraphData } from './api';
+import ExportDialog from './components/ExportDialog';
+import ExportMenu from './components/ExportMenu';
 import GraphMap from './components/GraphMap';
 import { getLayoutedElements } from './layoutUtils';
 import Sidebar from './components/Sidebar';
 import {
   GRAPH_MODES,
   buildAuthorGraph,
+  buildResearchGaps,
+  calculatePaperMetrics,
   decoratePaperNode,
   filterEdgesForNodes,
+  filterGraphByYear,
+  getTimelineRange,
+  getTopInfluentialPapers,
   positionNodesAroundAnchor,
 } from './graphUtils';
+import { getConnectedPaperNodes, getPaperNodes } from './exportUtils';
 import './App.css';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [yearFrom, setYearFrom] = useState('');
   const [yearTo, setYearTo] = useState('');
+  const [sortMode, setSortMode] = useState('relevance');
   const [paperNodes, setPaperNodes] = useState([]);
   const [paperEdges, setPaperEdges] = useState([]);
   const [viewMode, setViewMode] = useState(GRAPH_MODES.PAPERS);
   const [selectedNodeId, setSelectedNodeId] = useState(null);
+  const [expandedPaperIds, setExpandedPaperIds] = useState([]);
+  const [timelineYear, setTimelineYear] = useState(null);
   const [rfInstance, setRfInstance] = useState(null);
+  const [exportDialog, setExportDialog] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const authorGraph = useMemo(() => buildAuthorGraph(paperNodes), [paperNodes]);
+  const timelineInfo = useMemo(() => getTimelineRange(paperNodes), [paperNodes]);
+  const timelineGraph = useMemo(
+    () => filterGraphByYear(paperNodes, paperEdges, timelineYear),
+    [paperNodes, paperEdges, timelineYear],
+  );
+  const authorGraph = useMemo(() => buildAuthorGraph(timelineGraph.nodes), [timelineGraph.nodes]);
   const activeGraph = viewMode === GRAPH_MODES.AUTHORS
     ? authorGraph
-    : { nodes: paperNodes, edges: paperEdges };
+    : timelineGraph;
+  const topInfluentialPapers = useMemo(
+    () => getTopInfluentialPapers(timelineGraph.nodes, 3),
+    [timelineGraph.nodes],
+  );
+  const researchGaps = useMemo(
+    () => buildResearchGaps(timelineGraph.nodes, timelineGraph.edges, 3),
+    [timelineGraph.nodes, timelineGraph.edges],
+  );
 
   const activeNodes = activeGraph.nodes;
   const activeEdges = activeGraph.edges;
+  const visiblePaperNodes = useMemo(() => getPaperNodes(timelineGraph.nodes), [timelineGraph.nodes]);
+  const expandedPaperSet = useMemo(() => new Set(expandedPaperIds), [expandedPaperIds]);
 
   const selectedNode = useMemo(
     () => activeNodes.find((node) => node.id === selectedNodeId) || null,
@@ -49,6 +76,13 @@ function App() {
 
     return ids;
   }, [activeEdges, selectedNode]);
+
+  const localExportNodes = useMemo(
+    () => getConnectedPaperNodes(selectedNode, timelineGraph.nodes, timelineGraph.edges),
+    [selectedNode, timelineGraph.nodes, timelineGraph.edges],
+  );
+
+  const selectedNodeExpanded = Boolean(selectedNode && expandedPaperSet.has(selectedNode.id));
 
   const handleNodesChange = useCallback((changes) => {
     if (viewMode !== GRAPH_MODES.PAPERS) return;
@@ -119,6 +153,26 @@ function App() {
     window.setTimeout(() => rfInstance?.fitView({ padding: 0.18, duration: 500 }), 80);
   };
 
+  const handleOpenGlobalExport = (format) => {
+    if (!visiblePaperNodes.length) return;
+    setExportDialog({
+      title: 'Экспорт всего графа',
+      scopeLabel: 'all-graph',
+      format,
+      nodes: visiblePaperNodes,
+    });
+  };
+
+  const handleOpenLocalExport = (format) => {
+    if (!localExportNodes.length || selectedNode?.data?.type !== 'paper') return;
+    setExportDialog({
+      title: selectedNode.data.label,
+      scopeLabel: 'paper-links',
+      format,
+      nodes: localExportNodes,
+    });
+  };
+
   const handleSearch = async (event) => {
     event.preventDefault();
     if (!searchQuery.trim()) return;
@@ -126,25 +180,43 @@ function App() {
     setIsLoading(true);
     setError(null);
     setSelectedNodeId(null);
+    setExpandedPaperIds([]);
 
     try {
-      const data = await fetchGraphData(searchQuery, yearFrom, yearTo);
+      const data = await fetchGraphData(searchQuery, yearFrom, yearTo, sortMode);
       if (data?.error) throw new Error(data.error);
 
       const fetchedNodes = data.nodes || [];
       if (fetchedNodes.length === 0) {
         setPaperNodes([]);
         setPaperEdges([]);
+        setExpandedPaperIds([]);
         setError('По этому запросу ничего не найдено.');
         return;
       }
 
-      const styledNodes = fetchedNodes.map((node) => decoratePaperNode(node));
-      const safeEdges = filterEdgesForNodes(data.edges || [], styledNodes);
+      const styledNodes = fetchedNodes.map((node) => decoratePaperNode({
+        ...node,
+        data: {
+          ...node.data,
+          origin: 'search',
+        },
+      }));
+      const searchEdges = (data.edges || []).map((edge) => ({
+        ...edge,
+        data: {
+          ...edge.data,
+          origin: 'search',
+        },
+      }));
+      const safeEdges = filterEdgesForNodes(searchEdges, styledNodes);
       const layouted = getLayoutedElements(styledNodes, safeEdges);
+      const scoredNodes = calculatePaperMetrics(layouted.nodes, layouted.edges);
+      const nextTimelineInfo = getTimelineRange(scoredNodes);
 
-      setPaperNodes(layouted.nodes);
+      setPaperNodes(scoredNodes);
       setPaperEdges(layouted.edges);
+      setTimelineYear(nextTimelineInfo?.max || null);
 
       window.setTimeout(() => {
         rfInstance?.fitView({ padding: 0.18, duration: 700 });
@@ -157,8 +229,43 @@ function App() {
     }
   };
 
+  const handleCollapse = (paperId) => {
+    const remainingExpandedIds = expandedPaperIds.filter((id) => id !== paperId);
+    const remainingExpandedSet = new Set(remainingExpandedIds);
+    const remainingEdges = paperEdges.filter((edge) => edge.data?.expandedBy !== paperId);
+    const connectedIds = new Set();
+
+    remainingEdges.forEach((edge) => {
+      connectedIds.add(edge.source);
+      connectedIds.add(edge.target);
+    });
+
+    const remainingNodes = paperNodes.filter((node) => {
+      if (node.data?.origin !== 'expanded') return true;
+      return connectedIds.has(node.id) || remainingExpandedSet.has(node.id);
+    });
+    const safeEdges = filterEdgesForNodes(remainingEdges, remainingNodes);
+    const scoredNodes = calculatePaperMetrics(remainingNodes, safeEdges);
+    const nextTimelineInfo = getTimelineRange(scoredNodes);
+
+    setPaperNodes(scoredNodes);
+    setPaperEdges(safeEdges);
+    setExpandedPaperIds(remainingExpandedIds);
+    setTimelineYear(nextTimelineInfo?.max || null);
+    setSelectedNodeId(paperId);
+
+    window.setTimeout(() => {
+      rfInstance?.fitView({ padding: 0.18, duration: 500 });
+    }, 80);
+  };
+
   const handleExpand = async (paperId) => {
     if (viewMode !== GRAPH_MODES.PAPERS) return;
+
+    if (expandedPaperSet.has(paperId)) {
+      handleCollapse(paperId);
+      return;
+    }
 
     setIsLoading(true);
     setError(null);
@@ -174,11 +281,28 @@ function App() {
 
       const uniqueNewNodes = fetchedNodes
         .filter((node) => node?.id && !existingNodeIds.has(node.id))
-        .map((node) => decoratePaperNode(node, { isNew: true }));
+        .map((node) => decoratePaperNode({
+          ...node,
+          data: {
+            ...node.data,
+            origin: 'expanded',
+            expandedBy: paperId,
+          },
+        }, { isNew: true }));
 
       const positionedNewNodes = positionNodesAroundAnchor(paperNodes, uniqueNewNodes, paperId);
       const combinedNodes = [...paperNodes, ...positionedNewNodes];
-      const combinedEdges = filterEdgesForNodes([...paperEdges, ...fetchedEdges], combinedNodes);
+      const scopedFetchedEdges = fetchedEdges.map((edge) => ({
+        ...edge,
+        data: {
+          ...edge.data,
+          origin: 'expanded',
+          expandedBy: paperId,
+        },
+      }));
+      const combinedEdges = filterEdgesForNodes([...paperEdges, ...scopedFetchedEdges], combinedNodes);
+      const scoredCombinedNodes = calculatePaperMetrics(combinedNodes, combinedEdges);
+      const nextTimelineInfo = getTimelineRange(scoredCombinedNodes);
       const addedEdgeCount = combinedEdges
         .filter((edge) => !existingEdgeKeys.has(`${edge.source}->${edge.target}`))
         .length;
@@ -188,9 +312,13 @@ function App() {
         return;
       }
 
-      setPaperNodes(combinedNodes);
+      setPaperNodes(scoredCombinedNodes);
       setPaperEdges(combinedEdges);
       setSelectedNodeId(paperId);
+      setExpandedPaperIds((currentIds) => (
+        currentIds.includes(paperId) ? currentIds : [...currentIds, paperId]
+      ));
+      setTimelineYear(nextTimelineInfo?.max || null);
 
       const anchorNode = paperNodes.find((node) => node.id === paperId);
       window.setTimeout(() => {
@@ -217,7 +345,10 @@ function App() {
       return `${node.data.paperCount} статей · ${years}`;
     }
 
-    return `${node.data.year || 'год не указан'} · ${node.data.group_name || 'без кластера'}`;
+    const influence = node.data.influence_score !== undefined
+      ? ` · влияние ${node.data.influence_score}/100`
+      : '';
+    return `${node.data.year || 'год не указан'} · ${node.data.group_name || 'без кластера'}${influence}`;
   };
 
   return (
@@ -250,6 +381,15 @@ function App() {
             onChange={(event) => setYearTo(event.target.value)}
             placeholder="До"
           />
+          <select
+            value={sortMode}
+            onChange={(event) => setSortMode(event.target.value)}
+            aria-label="Сортировка статей"
+          >
+            <option value="relevance">Релевантные</option>
+            <option value="newest">Сначала новые</option>
+            <option value="cited">Сначала цитируемые</option>
+          </select>
           <button type="submit" disabled={isLoading}>
             {isLoading ? 'Ищем...' : 'Построить'}
           </button>
@@ -281,11 +421,83 @@ function App() {
               <p>{activeNodes.length} элементов</p>
             </div>
             {paperNodes.length > 0 && (
-              <button type="button" onClick={() => rfInstance?.fitView({ padding: 0.18, duration: 500 })}>
-                Весь граф
-              </button>
+              <div className="results-head-actions">
+                <button type="button" onClick={() => rfInstance?.fitView({ padding: 0.18, duration: 500 })}>
+                  Весь граф
+                </button>
+                <ExportMenu label="Экспорт графа" onSelect={handleOpenGlobalExport} disabled={!visiblePaperNodes.length} />
+              </div>
             )}
           </div>
+
+          {paperNodes.length > 0 && (
+            <div className="analysis-panel">
+              {timelineInfo && (
+                <section className="analysis-section">
+                  <div className="analysis-title">
+                    <span>Timeline</span>
+                    <strong>до {timelineYear || timelineInfo.max}</strong>
+                  </div>
+                  <input
+                    type="range"
+                    min={timelineInfo.min}
+                    max={timelineInfo.max}
+                    value={timelineYear || timelineInfo.max}
+                    onChange={(event) => {
+                      setSelectedNodeId(null);
+                      setTimelineYear(Number(event.target.value));
+                    }}
+                  />
+                  <div className="timeline-meta">
+                    <span>{timelineInfo.min}</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedNodeId(null);
+                        setTimelineYear(timelineInfo.max);
+                      }}
+                    >
+                      Все годы
+                    </button>
+                    <span>{timelineInfo.max}</span>
+                  </div>
+                </section>
+              )}
+
+              <section className="analysis-section">
+                <div className="analysis-title">
+                  <span>Ключевые статьи</span>
+                  <strong>Influence</strong>
+                </div>
+                <div className="mini-list">
+                  {topInfluentialPapers.map((node) => (
+                    <button type="button" key={node.id} onClick={() => handleSelectNode(node)}>
+                      <span>{node.data.label}</span>
+                      <strong>{node.data.influence_score}/100</strong>
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <section className="analysis-section">
+                <div className="analysis-title">
+                  <span>Research gaps</span>
+                  <strong>{researchGaps.length}</strong>
+                </div>
+                <div className="gap-list">
+                  {researchGaps.length === 0 ? (
+                    <p>Нужно минимум два кластера.</p>
+                  ) : researchGaps.map((gap) => (
+                    <div className="gap-item" key={gap.id}>
+                      <span>{gap.description}</span>
+                      <strong>{gap.gapScore}/100</strong>
+                      <small>Связей между кластерами: {gap.edgeCount}</small>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          )}
 
           <div className="results-list">
             {activeNodes.length === 0 ? (
@@ -343,9 +555,13 @@ function App() {
             node={selectedNode}
             onClose={handlePaneClick}
             onExpand={handleExpand}
+            isExpanded={selectedNodeExpanded}
+            onExport={handleOpenLocalExport}
           />
         </section>
       </main>
+
+      <ExportDialog config={exportDialog} onClose={() => setExportDialog(null)} />
     </div>
   );
 }
